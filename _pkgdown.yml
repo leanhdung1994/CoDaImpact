@@ -7,7 +7,7 @@ destination: docs
 
 reference:
 - title: "lmCoDa"
-- subtitle: "Construtors"
+- subtitle: "Constructors"
   contents:
   - lmCoDa
   - ToSimplex

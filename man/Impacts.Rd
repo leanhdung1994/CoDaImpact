@@ -11,8 +11,8 @@ Impacts(object, Xvar, Xdir = NULL)
 
 \item{Xvar}{a character indicating the name of one explanatory variable}
 
-\item{Xdir}{a numeric vector, a single character, or \code{NULL}, only used when
-X is compositional:
+\item{Xdir}{a numeric vector, a single character, or \code{NULL}, only used when X
+is compositional:
 \itemize{
 \item if numeric, \code{Xdir} is the direction u in the simplex
 \item if character, \code{Xdir} is one part of X and u is the direction towards it
