@@ -1,5 +1,15 @@
 # CoDaImpact (development version)
 
+## Bug fixes
+
+* `VariationTable()` computed the new value of a scalar response as
+  `y0 * (1 + h * eta)` instead of `y0 + h * eta`, so its rows "New value",
+  "Variation in %" and "Variation in units" were wrong for a scalar response.
+* `VariationTable()` now stops with its own message when neither `Xvar` nor
+  the response is compositional, and rejects invalid `obs`, `inc_size`,
+  `inc_rate`, `Ytotal` and `normalize_Xdir`. It warns when `inc_rate` is
+  given with a numeric `Xdir`, where it is ignored.
+
 ## Breaking changes
 
 * `VariationScenario()` always names the columns of its result `Y` and `X`;

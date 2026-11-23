@@ -128,28 +128,40 @@ VariationTable <- function(
     inc_rates <- inc_rates * inc_size
   }
 
-  Ytotal <- if (scalar_y) 1 else Ytotal
-  Y1 <- Y0 * (1 + elasti * inc_size)
-  YD <- Y1 - Y0
-  explanation <- c(
-    "Y0" = if (scalar_y) "Initial value" else "Initial parts",
-    "Y1" = if (scalar_y) "New value" else "New parts",
-    "elasti" = if (scalar_y || scalar_x) "Semi elasticity" else "Elasticity",
-    "YD/Y0*100" = "Variation in %",
-    "YD*100" = if (scalar_y) NULL else "Variation in % points",
-    "YD*Ytotal" = if (scalar_y || Ytotal != 1) "Variation in units" else NULL
-  )
-
-  evalString <- function(s) {
-    eval(str2lang(s), environment())
+  # new value of Y to first order: additive for a scalar Y, relative for each
+  # part of a compositional Y
+  if (scalar_y) {
+    Y1 <- Y0 + elasti * inc_size
+  } else {
+    Y1 <- Y0 * (1 + elasti * inc_size)
   }
-  explanation <- explanation[!is.null(explanation)]
-  result <- lapply(names(explanation), evalString)
-  result <- data.frame(
-    Reduce("rbind", result),
-    row.names = explanation,
-    check.names = FALSE
-  )
+  YD <- Y1 - Y0
+
+  if (scalar_y) {
+    result <- rbind(Y0, Y1, elasti, YD / Y0 * 100, YD)
+    rownames(result) <- c(
+      "Initial value",
+      "New value",
+      "Semi elasticity",
+      "Variation in %",
+      "Variation in units"
+    )
+  } else {
+    result <- rbind(Y0, Y1, elasti, YD / Y0 * 100, YD * 100)
+    rownames(result) <- c(
+      "Initial parts",
+      "New parts",
+      if (scalar_x) "Semi elasticity" else "Elasticity",
+      "Variation in %",
+      "Variation in % points"
+    )
+    if (Ytotal != 1) {
+      units <- YD * Ytotal
+      rownames(units) <- "Variation in units"
+      result <- rbind(result, units)
+    }
+  }
+  result <- data.frame(result, check.names = FALSE)
 
   if (scalar_x) {
     Xdir <- inc_rates <- NULL

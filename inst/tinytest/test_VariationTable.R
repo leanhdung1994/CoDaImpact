@@ -79,3 +79,39 @@ expect_error(
   VariationTable(vt_fit_s, Xvar = "PRECIPITATION"),
   pattern = "Variation tables are only meaningful"
 )
+
+# ---- first-order values, compared with VariationScenario() --------------------
+vt_u <- c(.2, .5, .3)
+
+# scalar Y: the model is linear in h, so the new value is exact
+vt_h <- .5
+vt_tab <- VariationTable(vt_fit_s, "TEMPERATURES", Xdir = vt_u, obs = 2,
+  inc_size = vt_h)
+vt_vs <- VariationScenario(vt_fit_s, "TEMPERATURES", Xdir = vt_u, obs = 2,
+  inc_size = vt_h, n_steps = 1, add_opposite = FALSE)
+vt_y <- as.numeric(vt_vs[[1]])
+expect_equal(vt_tab["Initial value", 1], vt_y[1])
+expect_equal(vt_tab["New value", 1], vt_y[2], info = "additive for scalar Y")
+expect_equal(vt_tab["Variation in units", 1], vt_y[2] - vt_y[1])
+expect_equal(
+  vt_tab["New value", 1],
+  vt_tab["Initial value", 1] + vt_h * vt_tab["Semi elasticity", 1]
+)
+
+# compositional Y: agrees with the exact scenario to first order
+vt_h <- 1e-4
+vt_tab <- VariationTable(vt_fit, vt_X, Xdir = "Age_1839", inc_size = vt_h,
+  Ytotal = 1000)
+vt_vs <- VariationScenario(vt_fit, vt_X, Xdir = "Age_1839", inc_size = vt_h,
+  n_steps = 1, add_opposite = FALSE)
+vt_y <- unclass(vt_vs[[1]])
+expect_equal(as.numeric(vt_tab["Initial parts", ]), as.numeric(vt_y[1, ]))
+expect_equal(as.numeric(vt_tab["New parts", ]), as.numeric(vt_y[2, ]),
+  tolerance = 1e-6)
+expect_equal(
+  as.numeric(vt_tab["Variation in units", ]),
+  1000 * as.numeric(vt_tab["New parts", ] - vt_tab["Initial parts", ])
+)
+expect_equal(rownames(vt_tab), c("Initial parts", "New parts", "Elasticity",
+  "Variation in %", "Variation in % points", "Variation in units"))
+expect_equal(colnames(vt_tab), c("left", "right", "extreme_right"))
