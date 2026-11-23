@@ -11,9 +11,9 @@ An object of class \code{data.frame} with 1890 rows and 6 columns.
 rice_yields
 }
 \description{
-The data is presented in  Trinh et al. (2023) for studying the impact
-of climate change on  rice production in Vietnam. \cr
-It contains the following information:
+The data is presented in Trinh et al. (2023) for studying the impact of
+climate change on rice production in Vietnam. \cr It contains the following
+information:
 \itemize{
 \item \code{PROVINCE}: a factor for the 63 provinces of Vietnam
 \item \code{REGION}: a factor with the 6 main regions
@@ -27,10 +27,10 @@ temperature (in Celsius degrees) falls into one of the three categories:
 }
 }
 \references{
-Thi-Huong Trinh, Michel Simioni, and Christine Thomas-Agnan,
-“Discrete and Smooth Scalar-on-Density Compositional Regression
-for Assessing the Impact of Climate Change on Rice Yield in Vietnam”,
-TSE Working Paper, n. 23-1410, February 2023.
+Thi-Huong Trinh, Michel Simioni, and Christine Thomas-Agnan, “Discrete and
+Smooth Scalar-on-Density Compositional Regression for Assessing the Impact of
+Climate Change on Rice Yield in Vietnam”, TSE Working Paper, n. 23-1410,
+February 2023.
 }
 \author{
 Lukas Dargel, Christine Thomas-Agnan

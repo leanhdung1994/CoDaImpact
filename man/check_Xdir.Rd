@@ -11,7 +11,8 @@ check_Xdir(Xdir, Xopts, normalize = FALSE)
 
 \item{Xopts}{a character indicating the names of the vertices}
 
-\item{normalize}{a logical if true Xdir is normalized to have an Aitchison norm of 1}
+\item{normalize}{a logical if true Xdir is normalized to have an Aitchison
+norm of 1}
 }
 \value{
 a numeric vector

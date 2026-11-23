@@ -17,9 +17,8 @@ Impacts(object, Xvar = NULL, obs = 1)
 a matrix
 }
 \description{
-This function computes elasticities and semi-elasticities for CoDa
-regression model.
-where we have to distinguish four cases:
+This function computes elasticities and semi-elasticities for CoDa regression
+model. where we have to distinguish four cases:
 \itemize{
 \item Y and X are both compositional: this leads to an elasticity
 \item Y is compositional and X is scalar: this leads to a semi-elasticity
@@ -29,11 +28,14 @@ where we have to distinguish four cases:
 }
 \details{
 The mathematical foundation for elasticity computations in CoDa model come
-from Morais and Thomas-Agnan (2021).
-Dargel and Thomas-Agnan (2024) present further results and illustrations.
+from Morais and Thomas-Agnan (2021). Dargel and Thomas-Agnan (2024) present
+further results and illustrations.
 }
 \examples{
-res <- lmCoDa(YIELD ~ PRECIPITATION + ilr(TEMPERATURES), data = head(rice_yields,20))
+res <- lmCoDa(
+  YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
+  data = head(rice_yields, 20)
+)
 Impacts(res, Xvar = "TEMPERATURES")
 
 }

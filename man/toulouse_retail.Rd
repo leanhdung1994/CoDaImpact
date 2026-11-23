@@ -20,9 +20,10 @@ An object of class \code{sf} (inherits from \code{data.table}, \code{data.frame}
 toulouse_retail
 }
 \description{
-This data set provides an example for the use of CoDa models in geomarketing applications.
-The data is simulated, but realistic in the sense that the parameters used for the simulation
-were estimated on a real, but confidential data set (Dargel and Thomas-Agnan 2024).
+This data set provides an example for the use of CoDa models in geomarketing
+applications. The data is simulated, but realistic in the sense that the
+parameters used for the simulation were estimated on a real, but confidential
+data set (Dargel and Thomas-Agnan 2024).
 }
 \details{
 \itemize{

@@ -14,23 +14,26 @@ lmCoDa(formula, data, ...)
 \item{...}{arguments passed on to \code{\link[=lm]{lm()}}}
 }
 \value{
-an object of class "lm" and "lmCoDa" if the formula include at least
-one log-transformation
+an object of class "lm" and "lmCoDa" if the formula include at least one
+log-transformation
 }
 \description{
-This is a thin wrapper around \code{\link[=lm]{lm()}} followed by \code{\link[=ToSimplex]{ToSimplex()}}, which
-allows to create a lmCoDa object in one step.
+This is a thin wrapper around \code{\link[=lm]{lm()}} followed by \code{\link[=ToSimplex]{ToSimplex()}}, which allows
+to create a lmCoDa object in one step.
 }
 \examples{
-
 # XY-compositional model
 res <- lmCoDa(
   ilr(cbind(left, right, extreme_right)) ~
-  ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
-  data =  head(election, 20))
+    ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
+  data = head(election, 20)
+)
 
 # X-compositional model
-res <- lmCoDa(YIELD ~ PRECIPITATION + ilr(TEMPERATURES), data = head(rice_yields, 20))
+res <- lmCoDa(
+  YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
+  data = head(rice_yields, 20)
+)
 
 }
 \seealso{

@@ -18,12 +18,10 @@ log-ratio transformations of the variables and the parameters.
 }
 \details{
 The structure of the return value resembles a data.frame where most columns
-are lists instead of vectors.
-The rows in this data.frame correspond to the variables used for fitting
-the model.
-The columns store information on the log-ratio transformations and their
-associated bases (K and F).
-Additionally the clr parameters and the covariance matrices are retained.
+are lists instead of vectors. The rows in this data.frame correspond to the
+variables used for fitting the model. The columns store information on the
+log-ratio transformations and their associated bases (K and F). Additionally
+the clr parameters and the covariance matrices are retained.
 }
 \author{
 Lukas Dargel

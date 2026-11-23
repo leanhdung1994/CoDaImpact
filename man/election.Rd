@@ -18,9 +18,9 @@ election
 }
 \description{
 The data is used by Nguyen et. al (2020) and originally disseminated by the
-French ministry (Ministère de l'Intérieur et des Outre-Mer).
-Information about the population characteristics comes from the french
-national statistics institute (INSEE).
+French ministry (Ministère de l'Intérieur et des Outre-Mer). Information
+about the population characteristics comes from the french national
+statistics institute (INSEE).
 }
 \details{
 \itemize{
@@ -33,7 +33,10 @@ national statistics institute (INSEE).
 }
 }
 \references{
-Nguyen THA, Laurent T, Thomas-Agnan C, Ruiz-Gazen A. Analyzing the impacts of socio-economic factors on French departmental elections with CoDa methods. J Appl Stat. 2020 Dec 9;49(5):1235-1251. doi: 10.1080/02664763.2020.1858274. PMID: 35707505; PMCID: PMC9041641.
+Nguyen THA, Laurent T, Thomas-Agnan C, Ruiz-Gazen A. Analyzing the impacts of
+socio-economic factors on French departmental elections with CoDa methods. J
+Appl Stat. 2020 Dec 9;49(5):1235-1251. doi: 10.1080/02664763.2020.1858274.
+PMID: 35707505; PMCID: PMC9041641.
 }
 \author{
 Lukas Dargel, Christine Thomas-Agnan
