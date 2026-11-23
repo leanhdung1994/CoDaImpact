@@ -13,17 +13,19 @@ NULL
 #'
 #' @description
 #' The data is presented in Trinh et al. (2023) for studying the impact of
-#' climate change on rice production in Vietnam. \cr It contains the following
-#' information:
+#' climate change on rice production in Vietnam. One row is one province in one
+#' year, for the 63 provinces and the years 1987 to 2016. \cr It contains the
+#' following information:
 #'   +  `PROVINCE`: a factor for the 63 provinces of Vietnam
 #'   +  `REGION`: a factor with the 6 main regions
 #'   +  `YEAR`: a numeric corresponding to the year
-#'   +  `YIELD`: a numeric for the rice production in tons per hectare
+#'   +  `YIELD`: a numeric for the rice yield in tons per hectare
 #'   +  `PRECIPITATION`: a numeric for the annual precipitation in liters
 #'   +  `TEMPERATURES`: a compositional variable represented as a matrix \cr
-#'       whose columns correspond to the proportion of days in a year where the maximal
-#'       temperature (in Celsius degrees) falls into one of the three categories:
-#'       "LOW" (from -6, to 25.1), "MEDIUM" (from 25.1 to 35.4)  and "HIGH" (from 35.4 to 45).
+#'     whose columns correspond to the proportion of days in a year where the
+#'     maximal temperature (in Celsius degrees) falls into one of the three
+#'     categories: "LOW" (from -6 to 25.1), "MEDIUM" (from 25.1 to 35.4) and "HIGH"
+#'     (from 35.4 to 45).
 #'
 #' @references
 #' Thi-Huong Trinh, Michel Simioni, and Christine Thomas-Agnan, “Discrete and
