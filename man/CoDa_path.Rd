@@ -19,9 +19,9 @@ CoDa_path(
 \item{comp_from}{A numeric vector, an initial point in the simplex - defaults
 to a balanced composition, which represents the origin in the simplex}
 
-\item{step_size}{A numeric, indicting the step size}
+\item{step_size}{A numeric, indicating the step size}
 
-\item{n_steps}{A numeric, indicating the number of steps to be taking from
+\item{n_steps}{A numeric, indicating the number of steps to be taken from
 \code{comp_from}}
 
 \item{add_opposite}{A logical, if \code{TRUE} steps in the opposite direction are
@@ -38,8 +38,8 @@ to 1
 Create a linear path in the simplex by defining a direction and a step size
 }
 \details{
-The function is very similar to \code{\link[=CoDa_seq]{CoDa_seq()}}. However, of drawing a line
-between a starting and end point it uses only a starting point and a
+The function is very similar to \code{\link[=CoDa_seq]{CoDa_seq()}}. However, instead of drawing a
+line between a starting and end point it uses only a starting point and a
 direction.
 }
 \examples{
