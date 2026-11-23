@@ -9,9 +9,9 @@ An object of class \code{data.frame} with 152 rows and 10 columns.
 }
 \source{
 \itemize{
-\item The figures for GDP and household expenditure are originally provided by the The National Institute of Statistics and Economic Studies (INSEE).
-\item The gas prices are from the OECD.
-\item The market share of each segment of come from a simulation by Renault.
+\item The figures for GDP and household expenditure are originally provided by the National Institute of Statistics and Economic Studies (INSEE).
+\item The diesel prices are from the OECD.
+\item The market shares of the segments come from a simulation by Renault.
 }
 }
 \usage{
@@ -20,17 +20,19 @@ car_market
 \description{
 This data set shows monthly data of the French car market between 2003 and
 2015. The market is divided into 5 main segments (A to E), according to the
-size of the vehicle chassis. Morais et. al (2018) first used this data to
+size of the vehicle chassis. Morais et al. (2018) first used this data to
 compare compositional and Dirichlet models for market shares.
 }
 \details{
 \itemize{
-\item \code{SEG_}: Corresponds to the shares of sales in each of the five market
-segments A,B,C,D and E. Where A are the smallest cars and E the largest.
-The segmentation is explained in \href{https://en.wikipedia.org/wiki/Car_classification}{Wikipedia}.
+\item \code{DATE}: The month of the sales, as the first day of the month
+\item \code{SEG_A}, \code{SEG_B}, \code{SEG_C}, \code{SEG_D}, \code{SEG_E}: The shares of sales in each of
+the five market segments A, B, C, D and E, where A are the smallest cars and
+E the largest. The segmentation is explained in
+\href{https://en.wikipedia.org/wiki/Car_classification}{Wikipedia}.
 \item \code{GDP}: GDP figures in millions at current prices
 \item \code{HOUSEHOLD_EXPENDITURE}: total household expenditure in millions at previous years prices
-\item \code{GAS_PRICE}: Corresponds to the gas price including VAT.
+\item \code{GAS_PRICE}: The price of diesel fuel including VAT.
 \item \code{SCRAPPING_SUBSIDY}: A dummy indicating periods where the French government provided subsidies for scrapping a car.
 }
 }

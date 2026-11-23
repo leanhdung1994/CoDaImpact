@@ -76,22 +76,24 @@ NULL
 #'
 #' This data set shows monthly data of the French car market between 2003 and
 #' 2015. The market is divided into 5 main segments (A to E), according to the
-#' size of the vehicle chassis. Morais et. al (2018) first used this data to
+#' size of the vehicle chassis. Morais et al. (2018) first used this data to
 #' compare compositional and Dirichlet models for market shares.
 #'
 #' @details
-#'   + `SEG_`: Corresponds to the shares of sales in each of the five market
-#'     segments A,B,C,D and E. Where A are the smallest cars and E the largest.
-#'     The segmentation is explained in [Wikipedia](https://en.wikipedia.org/wiki/Car_classification).
+#'   + `DATE`: The month of the sales, as the first day of the month
+#'   + `SEG_A`, `SEG_B`, `SEG_C`, `SEG_D`, `SEG_E`: The shares of sales in each of
+#'     the five market segments A, B, C, D and E, where A are the smallest cars and
+#'     E the largest. The segmentation is explained in
+#'     [Wikipedia](https://en.wikipedia.org/wiki/Car_classification).
 #'   + `GDP`: GDP figures in millions at current prices
 #'   + `HOUSEHOLD_EXPENDITURE`: total household expenditure in millions at previous years prices
-#'   + `GAS_PRICE`: Corresponds to the gas price including VAT.
+#'   + `GAS_PRICE`: The price of diesel fuel including VAT.
 #'   + `SCRAPPING_SUBSIDY`: A dummy indicating periods where the French government provided subsidies for scrapping a car.
 #'
 #' @source
-#'   + The figures for GDP and household expenditure are originally provided by the The National Institute of Statistics and Economic Studies (INSEE).
-#'   + The gas prices are from the OECD.
-#'   + The market share of each segment of come from a simulation by Renault.
+#'   + The figures for GDP and household expenditure are originally provided by the National Institute of Statistics and Economic Studies (INSEE).
+#'   + The diesel prices are from the OECD.
+#'   + The market shares of the segments come from a simulation by Renault.
 #' @references
 #' Joanna Morais, Christine Thomas-Agnan & Michel Simioni (2018) Using
 #' compositional and Dirichlet models for market share regression, Journal of
