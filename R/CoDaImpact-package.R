@@ -41,16 +41,17 @@ NULL
 # ... Elections ----
 #' Results of french departmental elections in 2015
 #'
-#' The data is used by Nguyen et. al (2020) and originally disseminated by the
+#' The data is used by Nguyen et al. (2020) and originally disseminated by the
 #' French ministry (Ministère de l'Intérieur et des Outre-Mer). Information
-#' about the population characteristics comes from the french national
-#' statistics institute (INSEE).
+#' about the population characteristics (in 2014) comes from the french national
+#' statistics institute (INSEE). One row is one of 95 French departments.
 #'
 #' @details
 #'
 #'   + `left`, `right`, `extreme_right`: Vote shares during the election grouped into three blocks
-#'   + `Age_1839`, `Age_4064`, `Age_65plus`: Share of the population falling into one of three age categories
-#'   + `Educ_BeforeHighschool`, `Educ_Highschool`, `Educ_Higher`: Share of the population having completed a certain level of education.
+#'   + `Age_1839`, `Age_4064`, `Age_65plus`: Share of the population aged 18 to 39, 40 to 64, and 65 or more years
+#'   + `Educ_BeforeHighschool`, `Educ_Highschool`, `Educ_Higher`: Share of the population with at most some secondary education, with at most a high school diploma, and with a university diploma
+#'   + `unemp_rate`: The unemployment rate
 #'   + `asset_owner_rate`: The proportion of people who own assets
 #'   + `income_taxpayer_rate`: The proportion of people who pay income tax
 #'   + `forgeigner_rate`: The proportion of foreigners

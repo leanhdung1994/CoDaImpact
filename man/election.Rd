@@ -17,16 +17,17 @@ An object of class \code{data.frame} with 95 rows and 13 columns.
 election
 }
 \description{
-The data is used by Nguyen et. al (2020) and originally disseminated by the
+The data is used by Nguyen et al. (2020) and originally disseminated by the
 French ministry (Ministère de l'Intérieur et des Outre-Mer). Information
-about the population characteristics comes from the french national
-statistics institute (INSEE).
+about the population characteristics (in 2014) comes from the french national
+statistics institute (INSEE). One row is one of 95 French departments.
 }
 \details{
 \itemize{
 \item \code{left}, \code{right}, \code{extreme_right}: Vote shares during the election grouped into three blocks
-\item \code{Age_1839}, \code{Age_4064}, \code{Age_65plus}: Share of the population falling into one of three age categories
-\item \code{Educ_BeforeHighschool}, \code{Educ_Highschool}, \code{Educ_Higher}: Share of the population having completed a certain level of education.
+\item \code{Age_1839}, \code{Age_4064}, \code{Age_65plus}: Share of the population aged 18 to 39, 40 to 64, and 65 or more years
+\item \code{Educ_BeforeHighschool}, \code{Educ_Highschool}, \code{Educ_Higher}: Share of the population with at most some secondary education, with at most a high school diploma, and with a university diploma
+\item \code{unemp_rate}: The unemployment rate
 \item \code{asset_owner_rate}: The proportion of people who own assets
 \item \code{income_taxpayer_rate}: The proportion of people who pay income tax
 \item \code{forgeigner_rate}: The proportion of foreigners
