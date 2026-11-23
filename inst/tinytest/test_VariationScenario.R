@@ -35,3 +35,21 @@ expect_equal({
     VariationScenario(res, "PRECIPITATION", n_steps = 5, add_opposite = FALSE))
 },info = "Y scalar & (X compo + X scalar)")
 
+
+# ---- argument checks ---------------------------------------------------------
+vs_fit <- lmCoDa(
+  YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
+  data = head(rice_yields, 20)
+)
+expect_error(VariationScenario(vs_fit, "TEMPERATURES", "MEDIUM", obs = 1.5))
+expect_error(VariationScenario(vs_fit, "TEMPERATURES", "MEDIUM", inc_size = 0))
+expect_error(VariationScenario(vs_fit, "TEMPERATURES", "MEDIUM", inc_size = -1))
+expect_error(VariationScenario(vs_fit, "TEMPERATURES", "MEDIUM", inc_size = Inf))
+expect_error(VariationScenario(vs_fit, "TEMPERATURES", "MEDIUM", inc_size = NA_real_))
+expect_error(VariationScenario(vs_fit, "TEMPERATURES", "MEDIUM", n_steps = 0))
+expect_error(VariationScenario(vs_fit, "TEMPERATURES", "MEDIUM", n_steps = 2.5))
+expect_error(VariationScenario(vs_fit, "PRECIPITATION", normalize_Xdir = NA))
+expect_error(
+  VariationScenario(vs_fit, "TEMPERATURES"),
+  pattern = "Xdir must be supplied"
+)

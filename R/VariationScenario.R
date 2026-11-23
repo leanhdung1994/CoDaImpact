@@ -85,9 +85,14 @@ VariationScenario <- function(
     is.character(Xvar) && length(Xvar) == 1,
     missing(Xdir) || is.character(Xdir) || is.numeric(Xdir),
     is.numeric(obs) && isTRUE(obs >= 1) && obs <= nobs(object),
+    obs == round(obs),
     is.numeric(inc_size) && length(inc_size) == 1,
+    is.finite(inc_size) && inc_size > 0,
     is.numeric(n_steps) && length(n_steps) == 1,
-    isTRUE(add_opposite) || isFALSE(add_opposite)
+    is.finite(n_steps) && n_steps >= 1,
+    n_steps == round(n_steps),
+    isTRUE(add_opposite) || isFALSE(add_opposite),
+    isTRUE(normalize_Xdir) || isFALSE(normalize_Xdir)
   )
 
   clo2 <- function(x) {
@@ -124,6 +129,9 @@ VariationScenario <- function(
   }
 
   if (!scalar_x) {
+    if (missing(Xdir)) {
+      stop("Xdir must be supplied when Xvar is compositional!")
+    }
     Xdir <- check_Xdir(Xdir, colnames(X0), normalize_Xdir)
     Xcoef <- trSry$COEF_CLR[[Xvar]]
 
