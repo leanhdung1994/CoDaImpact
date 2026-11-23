@@ -1,5 +1,21 @@
 # CoDaImpact (development version)
 
+## Breaking changes
+
+* `VariationScenario()` always names the columns of its result `Y` and `X`;
+  a scalar variable kept its own name before (e.g. `VS$YIELD`). The names of
+  the variables are in the attributes `Yvar` and `Xvar`, and a print method
+  shows them. A scalar response is now a vector instead of a one-column
+  matrix.
+
+## Bug fixes
+
+* `VariationScenario()`: `normalize_Xdir = FALSE` had no effect for a
+  compositional `Xvar`; the direction was always scaled to norm 1.
+* `VariationScenario()` rejects invalid `obs`, `inc_size`, `n_steps` and
+  `normalize_Xdir`, and stops with a clear message when `Xdir` is missing for
+  a compositional `Xvar`.
+
 ## Minor improvements and fixes
 
 * A numeric direction `Xdir` (in `ShareRatioElasticities()`,

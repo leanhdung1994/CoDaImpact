@@ -244,8 +244,8 @@ VS2 <- VariationScenario(
   add_opposite = TRUE,
   obs=43)
 
-yield_color <- whitered_pal(length(VS2$YIELD))
-yield_color <- yield_color[rank(VS2$YIELD,ties.method = "first")]
+yield_color <- whitered_pal(length(VS2$Y))
+yield_color <- yield_color[rank(VS2$Y,ties.method = "first")]
 plot(acomp(VS2$X), col = yield_color, pch = 16)
 plot(acomp(VS2["0", "X"]), add = TRUE, pch = 16)
 
@@ -428,13 +428,13 @@ vs_exp2 <- VariationScenario(
 ```
 
 ```{r}
-plot(x = vs_exp2$HOUSEHOLD_EXPENDITURE, y = vs_exp2$Y[,1],type = "l", col = "red",
+plot(x = vs_exp2$X, y = vs_exp2$Y[,1],type = "l", col = "red",
      main = "Variation scenario of houshold expenditure for observation 1",
      xlab = "Household expenditure", ylab = "Market share of segment")
-lines(x = vs_exp2$HOUSEHOLD_EXPENDITURE, y = vs_exp2$Y[,2],type = "l", col = "blue" )
-lines(x = vs_exp2$HOUSEHOLD_EXPENDITURE, y = vs_exp2$Y[,3],type = "l", col = "green")
-lines(x = vs_exp2$HOUSEHOLD_EXPENDITURE, y = vs_exp2$Y[,4],type = "l", col = "orange")
-lines(x = vs_exp2$HOUSEHOLD_EXPENDITURE, y = vs_exp2$Y[,5],type = "l", col = "black")
+lines(x = vs_exp2$X, y = vs_exp2$Y[,2],type = "l", col = "blue" )
+lines(x = vs_exp2$X, y = vs_exp2$Y[,3],type = "l", col = "green")
+lines(x = vs_exp2$X, y = vs_exp2$Y[,4],type = "l", col = "orange")
+lines(x = vs_exp2$X, y = vs_exp2$Y[,5],type = "l", col = "black")
 legend("topleft",
        legend = paste0("SEG_", LETTERS[1:5]),
        col = c("red", "blue", "green", "orange", "black"),

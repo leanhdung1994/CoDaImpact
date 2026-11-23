@@ -48,8 +48,10 @@ have an Aitchison norm of 1, allowing to interpret \code{inc_size} as the
 Aitchison distance}
 }
 \value{
-a data.frame containing the scenario of X and the corresponding predicted
-values of Y
+a data.frame of class "VariationScenario" with one row per step k. The column
+\code{Y} holds the predicted values of the response and the column \code{X} the
+scenario of \code{Xvar}; each is a matrix when the variable is compositional. The
+attributes \code{Yvar} and \code{Xvar} give the names of the two variables.
 }
 \description{
 Scenarios of this type are illustrated in Dargel and Thomas-Agnan (2024).

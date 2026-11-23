@@ -38,8 +38,10 @@
 #'   have an Aitchison norm of 1, allowing to interpret `inc_size` as the
 #'   Aitchison distance
 #' @return
-#' a data.frame containing the scenario of X and the corresponding predicted
-#' values of Y
+#' a data.frame of class "VariationScenario" with one row per step k. The column
+#' `Y` holds the predicted values of the response and the column `X` the
+#' scenario of `Xvar`; each is a matrix when the variable is compositional. The
+#' attributes `Yvar` and `Xvar` give the names of the two variables.
 #' @author Lukas Dargel
 #' @references
 #'   - Dargel, Lukas and Christine Thomas-Agnan, “Pairwise share ratio interpretations of compositional regression models”, Computational Statistics & Data Analysis 195 (2024), p. 107945
@@ -96,9 +98,6 @@ VariationScenario <- function(
     isTRUE(normalize_Xdir) || isFALSE(normalize_Xdir)
   )
 
-  clo2 <- function(x) {
-    x / rowSums(x)
-  }
   trSry <- object$trSry
 
   # get X0
@@ -149,21 +148,46 @@ VariationScenario <- function(
     Yscenario <- h %*% (unclass(clr(u)) %*% Xcoef) + Yscenario
   }
 
-  if (!scalar_x) {
-    Xvar <- "X"
-  }
-  if (!scalar_y) {
-    Yvar <- "Y"
+  if (scalar_y) {
+    Yscenario <- Yscenario[, 1]
   } else {
-    Yvar <- rownames(trSry)[1]
+    Yscenario <- unclass(clrInv(Yscenario))
   }
-  if (!scalar_y) {
-    Yscenario <- clo2(exp(Yscenario))
-  }
+
   result <- data.frame(row.names = as.character(inc_seq))
-  result[[Yvar]] <- Yscenario
-  result[[Xvar]] <- Xscenario
+  result$Y <- Yscenario
+  result$X <- Xscenario
   attr(result, "inc_size") <- inc_size
   attr(result, "obs") <- obs
+  attr(result, "Yvar") <- trSry$NAME_SIMPLEX[[1]]
+  attr(result, "Xvar") <- trSry$NAME_SIMPLEX[[Xvar]]
+  class(result) <- c("VariationScenario", class(result))
   return(result)
+}
+
+#' Print a scenario computed by VariationScenario()
+#'
+#' Prints the names and types (scalar or compositional) of the response and of
+#' the explanatory variable that changes, followed by the scenario.
+#'
+#' @param x an object of class "VariationScenario"
+#' @param ... passed on to [print.data.frame()]
+#' @return `x`, invisibly
+#' @exportS3Method
+print.VariationScenario <- function(x, ...) {
+  if (!is.null(attr(x, "Yvar"))) {
+    # a compositional variable is stored as a matrix column
+    Ytype <- if (is.matrix(x$Y)) "compositional" else "scalar"
+    Xtype <- if (is.matrix(x$X)) "compositional" else "scalar"
+    cat("Y: ", Ytype, " response `", attr(x, "Yvar"), "`\n", sep = "")
+    cat(
+      "X: ",
+      Xtype,
+      " explanatory variable `",
+      attr(x, "Xvar"),
+      "`\n\n",
+      sep = ""
+    )
+  }
+  NextMethod()
 }

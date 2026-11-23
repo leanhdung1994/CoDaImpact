@@ -95,3 +95,30 @@ vs_exp <- vs_expect(vs_clr(vs_u) / sqrt(sum(vs_clr(vs_u)^2)))
 expect_equal(unname(unclass(vs_out[[2]])), unname(vs_exp$X), info = "X, unit Xdir")
 expect_equal(unname(unclass(vs_out[[1]])), unname(vs_exp$Y), info = "Y, unit Xdir")
 expect_equal(colnames(vs_out[[2]]), vs_age)
+
+# ---- output: columns Y and X, attributes and print method --------------------
+vs_out <- VariationScenario(vs_fit, "PRECIPITATION", n_steps = 2)
+expect_equal(names(vs_out), c("Y", "X"))
+expect_true(inherits(vs_out, "VariationScenario"))
+expect_true(is.numeric(vs_out$Y) && is.null(dim(vs_out$Y)))
+expect_equal(attr(vs_out, "Yvar"), "YIELD")
+expect_equal(attr(vs_out, "Xvar"), "PRECIPITATION")
+expect_stdout(print(vs_out), pattern = "scalar response `YIELD`")
+
+vs_out <- VariationScenario(vs_fit2, vs_X, Xdir = "Age_1839", n_steps = 2)
+expect_equal(names(vs_out), c("Y", "X"))
+expect_true(is.matrix(vs_out$Y) && is.matrix(vs_out$X))
+expect_equal(unname(rowSums(vs_out$Y)), rep(1, 5))
+expect_equal(attr(vs_out, "Yvar"), "cbind(left, right, extreme_right)")
+expect_equal(attr(vs_out, "Xvar"), vs_X)
+expect_stdout(print(vs_out), pattern = "compositional explanatory variable `cbind(Age_1839", fixed = TRUE)
+
+# a scalar regressor named Y no longer overwrites the predicted response
+vs_fit3 <- lmCoDa(
+  ilr(cbind(left, right, extreme_right)) ~ ilr(cbind(Age_1839, Age_4064)) + Y,
+  data = transform(election, Y = unemp_rate)
+)
+vs_out <- VariationScenario(vs_fit3, "Y", n_steps = 2)
+expect_equal(names(vs_out), c("Y", "X"))
+expect_true(is.matrix(vs_out$Y))
+expect_equal(vs_out$X, election$unemp_rate[1] + (-2:2) * .1)
