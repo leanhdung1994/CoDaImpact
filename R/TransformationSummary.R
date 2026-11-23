@@ -147,7 +147,7 @@ name_invTrans <- function(name, trans, data_pos = 1) {
 
 #' @keywords internal
 whichTrans <- function(x) {
-  stopifnot(is.data.frame(x) & length(x) == 1)
+  stopifnot(is.data.frame(x), length(x) == 1)
   resTrans <- function(n = "", bF = matrix(0, 0, 0), bK = matrix(0, 0, 0)) {
     list(name = n, base_F = bF, base_K = bK)
   }
