@@ -11,8 +11,8 @@
 check_Xdir <- function(Xdir, Xopts, normalize = FALSE) {
   stopifnot(
     is.numeric(Xdir) || is.character(Xdir),
-    is.character(Xopts),
-    is.logical(normalize)
+    is.character(Xopts) && length(Xopts) >= 2,
+    isTRUE(normalize) || isFALSE(normalize)
   )
   Dx <- length(Xopts)
 
