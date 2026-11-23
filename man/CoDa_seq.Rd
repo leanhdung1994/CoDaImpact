@@ -18,7 +18,8 @@ comp_from to comp_to}
 is added}
 }
 \value{
-A data.frame frame where each row corresponds to one compositional vector
+A data.frame where each row corresponds to one compositional vector, closed
+to 1
 }
 \description{
 A sequence connecting two points in a simplex

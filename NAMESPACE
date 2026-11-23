@@ -20,12 +20,14 @@ export(ilr)
 export(ilrInv)
 export(lmCoDa)
 importFrom(compositions,
+  acomp,
   alr,
   alrInv,
   clr,
   clrInv,
   ilr,
-  ilrInv
+  ilrInv,
+  norm
 )
 importFrom(methods,
   as,

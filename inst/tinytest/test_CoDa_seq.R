@@ -102,3 +102,39 @@ expect_error(CoDa_path(cs_z, c(B = .2, A = .3, C = .5)))
 cs_res <- CoDa_seq(c(A = .2, B = .3, C = .5), n_steps = 2)
 cs_end <- cs_res[nrow(cs_res), ]
 expect_equal(cs_end$B / cs_end$C, 1, tolerance = 1e-6)
+
+# ---- CoDa_seq() and CoDa_path(): paths in the simplex ------------------------
+
+# evenly spaced straight line of proportions
+cs_x <- c(A = 2, B = 3, C = 5)
+cs_y <- c(A = .5, B = .3, C = .2)
+cs_res <- CoDa_seq(cs_x, cs_y, n_steps = 4, add_opposite = TRUE)
+
+expect_equal(rownames(cs_res), as.character(-4:4))
+expect_equal(unname(rowSums(cs_res)), rep(1, 9))
+expect_equal(unlist(cs_res["0", ]), cs_x / sum(cs_x))
+expect_equal(unlist(cs_res["4", ]), cs_y / sum(cs_y))
+
+# equal steps in clr coordinates = straight, evenly spaced line
+cs_clr <- unclass(compositions::clr(as.matrix(cs_res)))
+cs_steps <- diff(cs_clr)
+expect_equal(
+  cs_steps,
+  matrix(cs_steps[1, ], nrow(cs_steps), ncol(cs_steps), byrow = TRUE),
+  check.attributes = FALSE
+)
+expect_equal(attr(cs_res, "step_size"), sqrt(sum(cs_steps[1, ]^2)))
+expect_equal(as.numeric(compositions::norm(attr(cs_res, "direction"))), 1)
+
+# two equal compositions, zeros
+expect_error(CoDa_seq(c(.2, .3, .5), c(2, 3, 5)), pattern = "different compositions")
+expect_warning(
+  CoDa_seq(c(A = .4, B = .35, C = .25), c(A = 0, B = .8, C = .2)),
+  pattern = "after closing to 1"
+)
+
+# CoDa_path(): steps of the given Aitchison length
+cs_path <- CoDa_path(c(A = .4, B = .35, C = .25), step_size = .1, n_steps = 5)
+expect_equal(attr(cs_path, "step_size"), .1)
+expect_equal(unname(rowSums(cs_path)), rep(1, 6))
+expect_error(CoDa_path(c(A = 1 / 3, B = 1 / 3, C = 1 / 3)), pattern = "invalid")

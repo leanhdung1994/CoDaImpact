@@ -31,7 +31,8 @@ also computed}
 the difference between \code{comp_from} and \code{comp_direc}}
 }
 \value{
-A data.frame frame where each row corresponds to one compositional vector
+A data.frame where each row corresponds to one compositional vector, closed
+to 1
 }
 \description{
 Create a linear path in the simplex by defining a direction and a step size
