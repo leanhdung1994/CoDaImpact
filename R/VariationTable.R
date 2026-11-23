@@ -34,6 +34,7 @@
 #'   - Rodrigue Nasr
 #' @references
 #'   - Dargel, Lukas and Christine Thomas-Agnan, “Pairwise share ratio interpretations of compositional regression models”, Computational Statistics & Data Analysis 195 (2024), p. 107945
+#' @importFrom compositions acomp
 #' @export
 #' @examples
 #' # XY-compositional model
@@ -81,19 +82,18 @@ VariationTable <- function(
   )
 
   trSry <- object$trSry
-  if (all(trSry$LR_TRAN[c(1, Xvar)] == "")) {
+  Xvar <- check_Xvar(Xvar, trSry, "NAME_COORD")
+  scalar_x <- trSry$D[[Xvar]] == 0
+  scalar_y <- trSry$D[[1]] == 0
+  if (scalar_x && scalar_y) {
     stop("Variation tables are only meaningful if X or Y are compositional!")
   }
 
-  # get X0
-  Xvar <- check_Xvar(Xvar, trSry, "NAME_COORD")
-  Dx <- trSry$D[[Xvar]]
-  scalar_x <- Dx == 0
+  # get X0, closed to sum 1 in the compositional case
   X0 <- object$model[[Xvar]]
-  X0 <- if (scalar_x) X0[obs] else attr(X0, "orig")[obs, ]
+  X0 <- if (scalar_x) X0[obs] else unclass(acomp(attr(X0, "orig")[obs, ]))
 
   # get Y0
-  scalar_y <- trSry$D[[1]] == 0
   Y0 <- if (scalar_y) {
     structure(fitted(object)[obs], names = names(object$model)[1])
   } else {
@@ -119,7 +119,7 @@ VariationTable <- function(
     elasti <- log(Xdir) %*% elasti
 
     # relative change of each part of X
-    inc_rates <- log(Xdir) - sum(as(X0, "vector") * log(Xdir))
+    inc_rates <- log(Xdir) - sum(X0 * log(Xdir))
 
     # step size h that changes the part Xdir relatively by inc_rate
     if (vertex_dir && !is.null(inc_rate)) {
@@ -158,7 +158,7 @@ VariationTable <- function(
   attr(result, 'X(h)') <- if (scalar_x) {
     X0 + inc_size
   } else {
-    as(X0, "vector") * (1 + inc_rates)
+    X0 * (1 + inc_rates)
   }
   attr(result, 'Xdir') <- Xdir
   attr(result, 'inc_size') <- inc_size

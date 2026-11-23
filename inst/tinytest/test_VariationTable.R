@@ -69,3 +69,13 @@ expect_warning(
   VariationTable(vt_fit, vt_X, Xdir = c(2, 1), inc_rate = .05),
   pattern = "inc_rate is ignored when Xdir is numeric"
 )
+
+# ---- scalar X and scalar Y: no variation table --------------------------------
+vt_fit_s <- lmCoDa(
+  YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
+  data = head(rice_yields, 20)
+)
+expect_error(
+  VariationTable(vt_fit_s, Xvar = "PRECIPITATION"),
+  pattern = "Variation tables are only meaningful"
+)
