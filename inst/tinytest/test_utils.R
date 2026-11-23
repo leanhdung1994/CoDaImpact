@@ -21,3 +21,14 @@ expect_equal(as.numeric(compositions::norm(compositions::acomp(ut_n))), 1)
 # same result as the previous code: ilr, divide by its norm, back
 ut_ilr <- compositions::ilr(ut_u)
 expect_equal(ut_n, as.numeric(unclass(compositions::ilrInv(ut_ilr / sqrt(sum(ut_ilr^2))))))
+
+# ---- check_Xdir(): direction towards a summit --------------------------------
+expect_error(CoDaImpact:::check_Xdir(c("A", "B"), ut_opts))
+ut_s <- as.numeric(CoDaImpact:::check_Xdir("B", ut_opts))
+expect_equal(ut_s, exp(c(0, 1, 0)) / sum(exp(c(0, 1, 0))))
+
+ut_sn <- as.numeric(CoDaImpact:::check_Xdir("B", ut_opts, normalize = TRUE))
+expect_equal(as.numeric(compositions::norm(compositions::acomp(ut_sn))), 1)
+# same result as the previous code: e replaced by e^sqrt(l / (l - 1))
+ut_e <- exp(c(0, 1, 0) * sqrt(3 / 2))
+expect_equal(ut_sn, ut_e / sum(ut_e))

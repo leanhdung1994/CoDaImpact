@@ -36,17 +36,18 @@ check_Xdir <- function(Xdir, Xopts, normalize = FALSE) {
   }
 
   if (is.character(Xdir)) {
-    check <- "When Xdir is character it musst be one of %s!"
+    check <- "When Xdir is character it must be one of %s!"
     Xbin <- Xopts %in% Xdir
-    if (sum(Xbin) != 1) {
+    if (length(Xdir) != 1 || sum(Xbin) != 1) {
       stop(sprintf(check, list(Xopts)))
     }
 
-    Xdir <- exp(Xbin)
+    # direction towards the summit Xdir
+    Xdir <- acomp(exp(Xbin))
     if (normalize) {
-      Xdir[Xbin] <- Xdir[Xbin]^sqrt(Dx / (Dx - 1))
+      Xdir <- (1 / norm(Xdir)) * Xdir
     }
-    return(Xdir / sum(Xdir))
+    return(unclass(Xdir))
   }
 }
 
