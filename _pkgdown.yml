@@ -17,6 +17,7 @@ reference:
   - VariationScenario
   - ShareRatioElasticities
   - Impacts
+  - Elasticities
 - subtitle: "Other methods"
   contents:
   - coef.lmCoDa
@@ -24,6 +25,7 @@ reference:
   - fitted.lmCoDa
   - predict.lmCoDa
   - residuals.lmCoDa
+  - print.VariationScenario
 - title: "Other functions"
   contents:
   - CoDa_seq
