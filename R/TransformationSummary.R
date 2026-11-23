@@ -63,15 +63,15 @@ transformationSummary <- function(lm_res) {
   }
   cov_Yclr <- if (length(Fy) == 0) cov_Y else Ky %*% cov_Y %*% t(Ky)
 
-  result$"NAME_COORD"[[1]] <- names(mod)[1]
-  result$"NAME_SIMPLEX"[[1]] <- name_invTrans(names(mod)[1], trans_Y[["name"]])
-  result$"IS_RESPONSE"[[1]] <- TRUE
-  result$"D"[[1]] <- max(dim(Ky))
-  result$"LR_TRAN"[[1]] <- trans_Y[["name"]]
-  result$"LR_BASE_K"[[1]] <- Ky
-  result$"LR_BASE_F"[[1]] <- Fy
-  result$"VARCOV_COORD"[[1]] <- cov_Y
-  result$"VARCOV_CLR"[[1]] <- cov_Yclr
+  result$NAME_COORD[[1]] <- names(mod)[1]
+  result$NAME_SIMPLEX[[1]] <- name_invTrans(names(mod)[1], trans_Y[["name"]])
+  result$IS_RESPONSE[[1]] <- TRUE
+  result$D[[1]] <- max(dim(Ky))
+  result$LR_TRAN[[1]] <- trans_Y[["name"]]
+  result$LR_BASE_K[[1]] <- Ky
+  result$LR_BASE_F[[1]] <- Fy
+  result$VARCOV_COORD[[1]] <- cov_Y
+  result$VARCOV_CLR[[1]] <- cov_Yclr
 
   # prepare loop over variables
   cov_X <- qr.R(lm_res[["qr"]])
