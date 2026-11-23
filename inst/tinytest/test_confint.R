@@ -67,3 +67,15 @@ expect_error({
 #   ci <- confint(res,parm = "unemp_rate", obs = 10)
 #   sum(ci$IMPACT)}, 0, info = "Y compo - X scalar")
 
+
+# ---- confint.lmCoDa(): argument checks ---------------------------------------
+ci_res <- lmCoDa(
+  ilr(cbind(left, right, extreme_right)) ~
+    ilr(cbind(Age_1839, Age_4064, Age_65plus)) + unemp_rate,
+  data = election
+)
+expect_error(confint(ci_res, "unemp_rate", level = "0.95"))
+expect_error(confint(ci_res, "unemp_rate", level = c(.9, .95)))
+expect_error(confint(ci_res, "unemp_rate", y_ref = TRUE))
+expect_true(is.data.frame(confint(ci_res, "unemp_rate", y_ref = 1)))
+expect_true(is.data.frame(confint(ci_res, "unemp_rate", y_ref = "left")))

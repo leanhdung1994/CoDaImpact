@@ -70,9 +70,11 @@ confint.lmCoDa <- function(
   ...
 ) {
   stopifnot(
+    is.numeric(level) && length(level) == 1,
     level > 0 && level < 1,
     is.character(parm) && length(parm) == 1,
-    is.null(y_ref) || length(y_ref) == 1
+    is.null(y_ref) || length(y_ref) == 1,
+    is.null(y_ref) || is.numeric(y_ref) || is.character(y_ref)
   )
 
   trSry <- object$trSry
