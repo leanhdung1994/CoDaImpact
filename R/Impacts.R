@@ -78,8 +78,8 @@ Elasticities <- function(object, Xvar = NULL, obs = 1) {
 #'
 #' @param object an object of class "lmCoDa"
 #' @param Xvar a character indicating the name of one explanatory variable
-#' @param Xdir a numeric vector, a single character, or `NULL`, only used when
-#'   X is compositional:
+#' @param Xdir a numeric vector, a single character, or `NULL`, only used when X
+#'   is compositional:
 #'   - if numeric, `Xdir` is the direction u in the simplex
 #'   - if character, `Xdir` is one part of X and u is the direction towards it
 #'   - if `NULL`, u is the direction that multiplies Xj by e and divides Xl by e,
