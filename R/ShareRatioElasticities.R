@@ -23,6 +23,7 @@
 #' @author Lukas Dargel
 #' @references
 #'   - Dargel, Lukas and Christine Thomas-Agnan, “Pairwise share ratio interpretations of compositional regression models”, Computational Statistics & Data Analysis 195 (2024), p. 107945
+#' @importFrom compositions acomp
 #' @export
 #' @examples
 #' ### XY-compositional model
@@ -97,27 +98,32 @@ ShareRatioElasticities <- function(object, Xvar, Xdir = NULL) {
     Xdir <- Xdir[x_names]
   }
 
-  if (is.null(Xdir)) {
-    # no direction specified:
-    # use relative compensation of different components of X by default
-    B <- t(trSry$COEF_CLR[[Xpos]])
-    resXY$SRE <- unlist(Map(
-      function(Xnum, Xden, Ynum, Yden) {
-        B[Ynum, Xnum] - B[Yden, Xnum] - B[Ynum, Xden] + B[Yden, Xden]
-      },
-      Xnum = resXY$Xj,
-      Xden = resXY$Xl,
-      Ynum = resXY$Yj,
-      Yden = resXY$Yl
-    )) /
-      2
-  }
-
   if (!is.null(Xdir)) {
     Xdir <- check_Xdir(Xdir = Xdir, Xopts = x_names, normalize = FALSE)
-    u <- log(Xdir)
-    uB <- u %*% trSry$COEF_CLR[[Xpos]]
-    resXY$SRE <- (uB[resXY$Yj] - uB[resXY$Yl]) / (u[resXY$Xj] - u[resXY$Xl])
+  }
+
+  # direction u in the simplex for the pair (Xj, Xl) of parts of X
+  get_u <- function(Xj, Xl) {
+    if (!is.null(Xdir)) {
+      return(Xdir)
+    }
+    # u^(Xj) minus u^(Xl): multiplies Xj by e and divides Xl by e
+    u <- acomp(exp(seq_len(Dx) == Xj)) - acomp(exp(seq_len(Dx) == Xl))
+    return(unclass(u))
+  }
+
+  B <- t(trSry$COEF_CLR[[Xpos]])
+  for (r in seq_len(nrow(resXY))) {
+    Yj <- resXY$Yj[r]
+    Yl <- resXY$Yl[r]
+    Xj <- resXY$Xj[r]
+    Xl <- resXY$Xl[r]
+    u <- get_u(Xj, Xl)
+
+    # share ratio elasticity (35) for the direction u
+    numerator <- sum((B[Yj, ] - B[Yl, ]) * log(u))
+    denominator <- log(u[Xj] / u[Xl])
+    resXY$SRE[r] <- numerator / denominator
   }
 
   resXY$Yj <- y_names[resXY$Yj]
