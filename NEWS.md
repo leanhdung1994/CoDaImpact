@@ -1,5 +1,13 @@
 # CoDaImpact (development version)
 
+## Minor improvements and fixes
+
+* `confint.lmCoDa()` rejects a non-numeric `level` and a `y_ref` that is not a
+  single number or name, and warns when `y_ref` or `obs` is ignored because
+  the response is scalar.
+* Typos fixed in messages of `confint.lmCoDa()`; the attribute `type` of its
+  result now reads "CI for clr coefficients".
+
 ## Documentation
 
 * The help pages of `rice_yields`, `election`, `car_market` and

@@ -89,3 +89,8 @@ ci_parm <- "cbind(Age_1839, Age_4064, Age_65plus)"
 expect_warning(confint(ci_scalar, ci_parm, y_ref = 1), pattern = "ignored")
 expect_warning(confint(ci_scalar, ci_parm, obs = 1), pattern = "ignored")
 expect_silent(confint(ci_scalar, ci_parm))
+
+# ---- confint.lmCoDa(): messages ----------------------------------------------
+expect_equal(attr(confint(ci_res, "unemp_rate"), "type"), "CI for clr coefficients")
+expect_error(confint(ci_res, "unemp_rate", y_ref = "nonexistent"), pattern = "identifiable")
+expect_error(confint(ci_res, "unemp_rate", obs = 1), pattern = "elasticities")

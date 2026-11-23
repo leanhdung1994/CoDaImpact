@@ -23,7 +23,7 @@ parameters.}
 argument is supplied the function return the observation dependent
 elasticity}
 
-\item{...}{passed on to confit()}
+\item{...}{passed on to confint()}
 }
 \value{
 data.frame
