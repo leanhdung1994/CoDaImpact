@@ -1,5 +1,12 @@
 # CoDaImpact (development version)
 
+## Bug fixes
+
+* The clr covariances `VARCOV_CLR` computed by `transformationSummary()`, and
+  therefore the standard errors and intervals of `confint.lmCoDa()`, were
+  wrong for variables in alr coordinates. Results for ilr coordinates do not
+  change.
+
 ## Minor improvements and fixes
 
 * `ShareRatioElasticities()` matches a named numeric `Xdir` to the parts of

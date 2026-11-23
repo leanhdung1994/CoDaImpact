@@ -104,7 +104,7 @@ transformationSummary <- function(lm_res) {
       result$"COEF_CLR"[[i]] <- t(Fx) %*% result$"COEF_COORD"[[i]] %*% t(Ky)
       result$"COEF_SIMPLEX"[[i]] <- result$"COEF_CLR"[[i]]
       result$"VARCOV_COORD"[[i]] <- cov_Xi
-      result$"VARCOV_CLR"[[i]] <- t(Fx) %*% cov_Xi %*% t(Kx)
+      result$"VARCOV_CLR"[[i]] <- t(Fx) %*% cov_Xi %*% Fx
     } # 1. (Y & X)
 
     if (y_is_compo & !x_is_compo) {
@@ -120,7 +120,7 @@ transformationSummary <- function(lm_res) {
       result$"COEF_CLR"[[i]] <- t(Fx) %*% result$"COEF_COORD"[[i]]
       result$"COEF_SIMPLEX"[[i]] <- t(clrInv(t(result$"COEF_CLR"[[i]])))
       result$"VARCOV_COORD"[[i]] <- cov_Xi
-      result$"VARCOV_CLR"[[i]] <- t(Fx) %*% cov_Xi %*% t(Kx)
+      result$"VARCOV_CLR"[[i]] <- t(Fx) %*% cov_Xi %*% Fx
     } # 3. (X only)
 
     if (!y_is_compo & !x_is_compo) {

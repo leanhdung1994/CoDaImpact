@@ -268,3 +268,25 @@ expect_equal(
 )
 expect_equal(confint(ts_alr_y, ts_parm), confint(ts_ilr, ts_parm))
 expect_equal(confint(ts_alr_y, ts_parm, y_ref = 1), confint(ts_ilr, ts_parm, y_ref = 1))
+
+# ---- VARCOV_CLR does not depend on the coordinates of X ----------------------
+# case 1: compositional Y and X
+ts_alr_x <- lmCoDa(
+  ilr(cbind(left, right, extreme_right)) ~
+    alr(cbind(Age_1839, Age_4064, Age_65plus)) + asset_owner_rate,
+  data = election
+)
+expect_equal(
+  ts_alr_x$trSry$VARCOV_CLR[[3]], ts_ilr$trSry$VARCOV_CLR[[3]],
+  check.attributes = FALSE
+)
+expect_equal(confint(ts_alr_x, ts_parm), confint(ts_ilr, ts_parm))
+
+# case 3: scalar Y, compositional X
+ts_s_ilr <- lmCoDa(asset_owner_rate ~ ilr(cbind(Age_1839, Age_4064, Age_65plus)), data = election)
+ts_s_alr <- lmCoDa(asset_owner_rate ~ alr(cbind(Age_1839, Age_4064, Age_65plus)), data = election)
+expect_equal(
+  ts_s_alr$trSry$VARCOV_CLR[[3]], ts_s_ilr$trSry$VARCOV_CLR[[3]],
+  check.attributes = FALSE
+)
+expect_equal(confint(ts_s_alr, ts_parm), confint(ts_s_ilr, ts_parm))
