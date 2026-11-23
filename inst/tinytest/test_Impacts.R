@@ -28,3 +28,6 @@ expect_equal(
     res0 <- matrix(0,3,1,dimnames = list(c("LOW", "MEDIUM", "HIGH"), c("YIELD")))
     res0})
 
+# a vector of names is rejected
+expect_error(Impacts(res, Xvar = c("TEMPERATURES", "PRECIPITATION")))
+

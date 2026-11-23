@@ -36,7 +36,7 @@
 Impacts <- function(object, Xvar = NULL, obs = 1) {
   stopifnot(
     is(object, "lmCoDa"),
-    is.character(Xvar) || length(Xvar) == 1,
+    is.character(Xvar) && length(Xvar) == 1,
     is.numeric(obs) && isTRUE(obs >= 1) && obs <= nobs(object)
   )
 
