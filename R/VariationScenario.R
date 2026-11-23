@@ -43,6 +43,7 @@
 #' @author Lukas Dargel
 #' @references
 #'   - Dargel, Lukas and Christine Thomas-Agnan, “Pairwise share ratio interpretations of compositional regression models”, Computational Statistics & Data Analysis 195 (2024), p. 107945
+#' @importFrom compositions acomp
 #' @export
 #' @examples
 #' # ---- model with scalar response ----
@@ -135,17 +136,17 @@ VariationScenario <- function(
     Xdir <- check_Xdir(Xdir, colnames(X0), normalize_Xdir)
     Xcoef <- trSry$COEF_CLR[[Xvar]]
 
-    Xscenario <- CoDa_path(
-      rep(1 / Dx, Dx),
-      comp_direc = Xdir,
-      step_size = inc_size,
-      n_steps = n_steps,
-      add_opposite = add_opposite
-    )
-    Xscenario <- log(as.matrix(Xscenario)) %*% clrBase(Dx)
-    Yscenario <- if (scalar_y) Y0 else Y0[rep(1, nrow(Xscenario)), ]
-    Yscenario <- Xscenario %*% Xcoef + Yscenario
-    Xscenario <- clo2(exp(X0[rep(1, nrow(Xscenario)), ] + Xscenario))
+    # scenario of X in the simplex: x0 + h * u, with h = k * inc_size
+    x0 <- clrInv(X0[1, ])
+    u <- acomp(Xdir)
+    h <- inc_seq * inc_size
+    Xscenario <- lapply(h, function(s) unclass(x0 + s * u))
+    Xscenario <- do.call("rbind", Xscenario)
+    colnames(Xscenario) <- colnames(X0)
+
+    # response in clr (or scalar response): Y0 + h * clr(u) B
+    Yscenario <- if (scalar_y) Y0 else Y0[rep(1, length(h)), ]
+    Yscenario <- h %*% (unclass(clr(u)) %*% Xcoef) + Yscenario
   }
 
   if (!scalar_x) {
