@@ -99,9 +99,10 @@ confint.lmCoDa <- function(
   qlevel <- qt(a, df_eq)
 
   # 3 cases
-  if (ncol(vcov_y) < 2) {
+  if (ncol(vcov_y) < 2 && !(is.null(y_ref) && is.null(obs))) {
+    warning("y_ref and obs are ignored because the response is scalar.")
     y_ref <- obs <- NULL
-  } # when scalar y we only need clr
+  }
   clr_intervals <- is.null(y_ref) & is.null(obs)
   diff_intervals <- !is.null(y_ref)
   elast_intervals <- !is.null(obs)

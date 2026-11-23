@@ -79,3 +79,13 @@ expect_error(confint(ci_res, "unemp_rate", level = c(.9, .95)))
 expect_error(confint(ci_res, "unemp_rate", y_ref = TRUE))
 expect_true(is.data.frame(confint(ci_res, "unemp_rate", y_ref = 1)))
 expect_true(is.data.frame(confint(ci_res, "unemp_rate", y_ref = "left")))
+
+# ---- confint.lmCoDa(): scalar response ---------------------------------------
+ci_scalar <- lmCoDa(
+  asset_owner_rate ~ ilr(cbind(Age_1839, Age_4064, Age_65plus)),
+  data = election
+)
+ci_parm <- "cbind(Age_1839, Age_4064, Age_65plus)"
+expect_warning(confint(ci_scalar, ci_parm, y_ref = 1), pattern = "ignored")
+expect_warning(confint(ci_scalar, ci_parm, obs = 1), pattern = "ignored")
+expect_silent(confint(ci_scalar, ci_parm))
