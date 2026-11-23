@@ -32,23 +32,32 @@
 #' compositions::plot.acomp(CoDa_seq(start_comp, end_comp))
 #' compositions::plot.acomp(CoDa_seq(start_comp, end_comp, add_opposite = TRUE))
 CoDa_seq <- function(comp_from, comp_to, n_steps = 100, add_opposite = FALSE) {
+  epsilon <- 1e-10
   if (missing(comp_to)) {
-    comp_to <- comp_from * 1e-10
+    comp_to <- rep(epsilon, length(comp_from))
+    names(comp_to) <- names(comp_from)
     comp_to[1] <- 1
   }
 
-  n_steps <- round(n_steps)
   stopifnot(
+    is.numeric(comp_from),
+    is.numeric(comp_to),
     length(comp_from) >= 2,
     length(comp_from) == length(comp_to),
+    all(comp_from >= 0),
+    all(comp_to >= 0),
+    sum(comp_from) > 0,
+    sum(comp_to) > 0,
     is.null(names(comp_to)) || identical(names(comp_to), names(comp_from)),
-    n_steps >= 1,
-    is.logical(add_opposite),
-    is.numeric(comp_from),
-    is.numeric(comp_to)
+    is.numeric(n_steps),
+    length(n_steps) == 1,
+    round(n_steps) >= 1,
+    isTRUE(add_opposite) || isFALSE(add_opposite)
   )
 
-  check <- " must be a single compostional vector!"
+  n_steps <- round(n_steps)
+
+  check <- " must be a single compositional vector!"
   if (isTRUE(nrow(comp_from) > 1)) {
     stop("comp_from", check)
   }
@@ -174,23 +183,37 @@ CoDa_path <- function(
 ) {
   D <- length(comp_direc)
   if (missing(comp_from)) {
-    comp_from <- comp_direc * 0 + 1 / D
+    comp_from <- rep(1 / D, D)
+    names(comp_from) <- names(comp_direc)
   }
 
-  n_steps <- round(n_steps)
   stopifnot(
-    all(comp_direc >= 0, comp_from >= 0),
+    is.numeric(comp_direc),
+    is.numeric(comp_from),
     length(comp_direc) >= 2,
     length(comp_from) == length(comp_direc),
-    is.numeric(step_size) & length(step_size) == 1,
-    isTRUE(n_steps >= 1)
+    all(comp_direc >= 0),
+    all(comp_from >= 0),
+    sum(comp_direc) > 0,
+    sum(comp_from) > 0,
+    is.numeric(step_size),
+    length(step_size) == 1,
+    is.finite(step_size),
+    step_size > 0,
+    is.numeric(n_steps),
+    length(n_steps) == 1,
+    round(n_steps) >= 1,
+    isTRUE(add_opposite) || isFALSE(add_opposite),
+    isTRUE(dir_from_start) || isFALSE(dir_from_start)
   )
 
+  n_steps <- round(n_steps)
+
   if (isTRUE(nrow(comp_from) > 1)) {
-    stop("comp_from must be a single compostional vector!")
+    stop("comp_from must be a single compositional vector!")
   }
   if (isTRUE(nrow(comp_direc) > 1)) {
-    stop("comp_direc must be a single compostional vector!")
+    stop("comp_direc must be a single compositional vector!")
   }
   if (is.matrix(comp_from)) {
     comp_from <- comp_from[1, ]
@@ -202,6 +225,9 @@ CoDa_path <- function(
   if (is.null(names(comp_from))) {
     names(comp_from) <- names(comp_direc)
   }
+  stopifnot(
+    is.null(names(comp_direc)) || identical(names(comp_from), names(comp_direc))
+  )
 
   zero_values_present <- any(comp_from == 0, comp_direc == 0)
   if (zero_values_present) {
