@@ -1,5 +1,12 @@
 # CoDaImpact (development version)
 
+## Breaking changes
+
+* `Impacts()` is renamed `Elasticities()`. The new `Impacts()` computes
+  pairwise share ratio impacts (equations (29), (32) and (35) of Dargel and
+  Thomas-Agnan, 2024) and has the arguments `object`, `Xvar` and `Xdir`.
+  Code that calls `Impacts(object, Xvar, obs)` must use `Elasticities()`.
+
 ## Minor improvements and fixes
 
 * `confint.lmCoDa()` rejects a non-numeric `level` and a `y_ref` that is not a
