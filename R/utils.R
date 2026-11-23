@@ -6,6 +6,7 @@
 #'   norm of 1
 #' @return a numeric vector
 #'
+#' @importFrom compositions acomp norm
 #' @author Lukas Dargel
 #' @keywords internal
 check_Xdir <- function(Xdir, Xopts, normalize = FALSE) {
@@ -17,17 +18,21 @@ check_Xdir <- function(Xdir, Xopts, normalize = FALSE) {
   Dx <- length(Xopts)
 
   if (is.numeric(Xdir)) {
-    check <- "When Xdir is numeric it musst be a non-negative vector of dimension %s!"
-    if (length(Xdir) != Dx || any(Xdir < 0)) {
+    check <- "When Xdir is numeric it must be a positive vector of dimension %s with at least two different parts!"
+    if (
+      length(Xdir) != Dx ||
+        anyNA(Xdir) ||
+        any(Xdir <= 0) ||
+        all(Xdir == Xdir[1])
+    ) {
       stop(sprintf(check, Dx))
     }
+
+    Xdir <- acomp(Xdir)
     if (normalize) {
-      Xdir <- ilr(Xdir)
-      Xdir <- as(ilrInv(Xdir / sqrt(sum(Xdir^2))), "vector")
-    } else {
-      Xdir <- Xdir / sum(Xdir)
+      Xdir <- (1 / norm(Xdir)) * Xdir
     }
-    return(Xdir)
+    return(unclass(Xdir))
   }
 
   if (is.character(Xdir)) {

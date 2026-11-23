@@ -1,5 +1,12 @@
 # CoDaImpact (development version)
 
+## Minor improvements and fixes
+
+* A numeric direction `Xdir` (in `ShareRatioElasticities()`,
+  `VariationScenario()` and `VariationTable()`) must have positive parts that
+  are not all equal; zeros, `NA` and the neutral element are rejected with a
+  clear error.
+
 ## Bug fixes
 
 * The clr covariances `VARCOV_CLR` computed by `transformationSummary()`, and
