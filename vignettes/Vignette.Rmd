@@ -257,11 +257,11 @@ plot(acomp(VS2["0", "X"]), add = TRUE, pch = 16)
 #### Semi-elasticities
 
 The use of semi-elasticities for the interpretation of compositional covariates is described in Morais and Thomas-Agnan (2021).
-For a scalar on composition model the `Impacts()` method computes the semi-elasticities for all compositional covariates.
+For a scalar on composition model the `Elasticities()` function computes the semi-elasticities for all compositional covariates.
 
 ```{r}
-RY_Impacts <- Impacts(fit_X_compo, Xvar = "TEMPERATURES")
-RY_Impacts # here, the semi-elasticity is computed for the variable TEMPERATURES 
+RY_Elasticities <- Elasticities(fit_X_compo, Xvar = "TEMPERATURES")
+RY_Elasticities # here, the semi-elasticity is computed for the variable TEMPERATURES 
 ```
 
 #### Increments approach
@@ -449,12 +449,12 @@ legend("topleft",
 
 The use of semi-elasticities for the interpretation of compositional covariates is described in Morais and Thomas-Agnan (2021).
 The only difference with the previous section is that it involves derivatives of the logarithm of the $Y$ components with respect to $X$, in contrast with derivatives of $Y$ with respect to the logarithm of the components of $X$.
-The `Impacts()` function computes these elasticities.
+The `Elasticities()` function computes these elasticities.
 
 ```{r}
-Impacts(fit_Y_compo,
-        Xvar = "HOUSEHOLD_EXPENDITURE",
-        obs=4)
+Elasticities(fit_Y_compo,
+             Xvar = "HOUSEHOLD_EXPENDITURE",
+             obs=4)
 ```
 The semi-elasticities are then used for evaluating the impact on $Y$ of an infinitesimal additive change of any of the scalar explanatory variables.
 
@@ -641,12 +641,12 @@ On the top graph, we see that an increase in the share of voters aged between $1
 #### Elasticities
 
 
-The function `Impacts()` computes elasticities (or semi-elasticities, depending on the nature of the considered covariate) of covariates for a given observation.
+The function `Elasticities()` computes elasticities (or semi-elasticities, depending on the nature of the considered covariate) of covariates for a given observation.
 This function takes a "lmCoDa" object as input, along with the covariate's name and the index of the observation.
 
 
 ```{r}
-Impacts(fit_YX_compo, Xvar = 'AGE', obs = 3)
+Elasticities(fit_YX_compo, Xvar = 'AGE', obs = 3)
 ```
 The semi-elasticities are then used for evaluating the impact on $Y$ of an infinitesimal additive change of any of the scalar explanatory variables.
 

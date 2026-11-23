@@ -22,7 +22,6 @@
 #'   - Lukas Dargel
 #'   - Rodrigue Nasr
 #' @export
-#' @rdname Impacts
 #' @references
 #'   - Dargel, Lukas and Christine Thomas-Agnan, “Pairwise share ratio interpretations of compositional regression models”, Computational Statistics & Data Analysis 195 (2024), p. 107945
 #'   - Morais, Joanna and Christine Thomas-Agnan. "Impact of covariates in compositional models and simplicial derivatives." Austrian Journal of Statistics 50.2 (2021): 1-15.
@@ -31,9 +30,9 @@
 #'   YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
 #'   data = head(rice_yields, 20)
 #' )
-#' Impacts(res, Xvar = "TEMPERATURES")
+#' Elasticities(res, Xvar = "TEMPERATURES")
 #'
-Impacts <- function(object, Xvar = NULL, obs = 1) {
+Elasticities <- function(object, Xvar = NULL, obs = 1) {
   stopifnot(
     is(object, "lmCoDa"),
     is.character(Xvar) && length(Xvar) == 1,
@@ -44,7 +43,7 @@ Impacts <- function(object, Xvar = NULL, obs = 1) {
   Xvar <- check_Xvar(Xvar, trSry, return_type = "pos")
   Xcoef <- trSry$COEF_CLR[[Xvar]]
 
-  check <- "Impacts are only meaningful if X or Y are compositional!"
+  check <- "Elasticities are only meaningful if X or Y are compositional!"
   YX_is_compo <- c("" != trSry$LR_TRAN[c(1, Xvar)], use.names = FALSE)
   if (identical(YX_is_compo, c(FALSE, FALSE))) {
     stop(check)

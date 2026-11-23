@@ -7,13 +7,13 @@ res <- lmCoDa(
   data = election[1:20,])
 
 expect_equal(
-  Impacts(res, Xvar = "cbind(Age_1839, Age_4064)",obs =  10)*0, {
+  Elasticities(res, Xvar = "cbind(Age_1839, Age_4064)",obs =  10)*0, {
   res0 <- matrix(0,2,3,dimnames = list(c("Age_1839", "Age_4064"), c("left", "right", "extreme_right")))
   attr(res0, "obs") <- 10
   res0})
 
 expect_equal(
-  Impacts(res, Xvar =  "unemp_rate",obs =  10)*0, {
+  Elasticities(res, Xvar =  "unemp_rate",obs =  10)*0, {
   res0 <- matrix(0,1,3,dimnames = list(c("unemp_rate"), c("left", "right", "extreme_right")))
   attr(res0, "obs") <- 10
   res0})
@@ -21,13 +21,13 @@ expect_equal(
 # ---- Y - scalar -------------------------------------------------------------
 res <- lmCoDa(YIELD ~ PRECIPITATION + ilr(TEMPERATURES), data = rice_yields[1:20,])
 
-expect_error(Impacts(res, Xvar = "PRECIPITATION"), pattern = "Impacts")
+expect_error(Elasticities(res, Xvar = "PRECIPITATION"), pattern = "Elasticities")
 
 expect_equal(
-  Impacts(res, Xvar = "TEMPERATURES",obs =  10)*0, {
+  Elasticities(res, Xvar = "TEMPERATURES",obs =  10)*0, {
     res0 <- matrix(0,3,1,dimnames = list(c("LOW", "MEDIUM", "HIGH"), c("YIELD")))
     res0})
 
 # a vector of names is rejected
-expect_error(Impacts(res, Xvar = c("TEMPERATURES", "PRECIPITATION")))
+expect_error(Elasticities(res, Xvar = c("TEMPERATURES", "PRECIPITATION")))
 
