@@ -30,7 +30,7 @@ elasticities:
 \itemize{
 \item When the share ratio of X increases by 1\% the share ratio of Y increases by SRE\%
 \item The main difference to usual elasticities that, since X is compositional
-the change of X musts be specified in terms of a direction in the simplex.
+the change of X must be specified in terms of a direction in the simplex.
 }
 }
 \details{
@@ -75,7 +75,7 @@ SRE3 <- ShareRatioElasticities(res, Xvar = educ_comp, Xdir = NULL)
 SRE3[1, ]
 # Result: SRE=-2.8
 # when the ratio of X (Highschool / BeforeHighschool) increases by 1\%
-# the ratio of Y (right / left) decreases by about -2.8\%
+# the ratio of Y (right / left) decreases by about 2.8\%
 }
 \references{
 \itemize{
