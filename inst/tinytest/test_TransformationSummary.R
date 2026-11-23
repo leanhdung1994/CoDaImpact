@@ -247,3 +247,24 @@ expect_equivalent({
   res <- transformationSummary(lm(YIELD ~ PRECIPITATION + ilr(TEMPERATURES), data = tt))
   res["YIELD","VARCOV_CLR"]
 }, info = "Weighted and non-weighted regression.", tolerance = 10e10)
+
+# ---- VARCOV_CLR does not depend on the coordinates of the response -----------
+# The same model in ilr or alr coordinates must give the same clr covariances
+# and the same confidence intervals.
+ts_parm <- "cbind(Age_1839, Age_4064, Age_65plus)"
+ts_ilr <- lmCoDa(
+  ilr(cbind(left, right, extreme_right)) ~
+    ilr(cbind(Age_1839, Age_4064, Age_65plus)) + asset_owner_rate,
+  data = election
+)
+ts_alr_y <- lmCoDa(
+  alr(cbind(left, right, extreme_right)) ~
+    ilr(cbind(Age_1839, Age_4064, Age_65plus)) + asset_owner_rate,
+  data = election
+)
+expect_equal(
+  ts_alr_y$trSry$VARCOV_CLR[[1]], ts_ilr$trSry$VARCOV_CLR[[1]],
+  check.attributes = FALSE
+)
+expect_equal(confint(ts_alr_y, ts_parm), confint(ts_ilr, ts_parm))
+expect_equal(confint(ts_alr_y, ts_parm, y_ref = 1), confint(ts_ilr, ts_parm, y_ref = 1))

@@ -51,16 +51,17 @@ transformationSummary <- function(lm_res) {
 
   # First treat the elements related to the response variable
   trans_Y <- whichTrans(mod[1])
-  Ky <- trans_Y[["base_K"]] # K and F are both V in the case of ilr
+  Ky <- trans_Y[["base_K"]]
   Fy <- trans_Y[["base_F"]]
 
+  # covariance of the errors in coordinates, then in clr
   cov_Y <- crossprod(resid(lm_res)) / (nobs(lm_res) - nrow(coef_mat))
   colnames(cov_Y) <- rownames(cov_Y) <- if (length(Ky) == 0) {
     names(mod)[1]
   } else {
     colnames(Ky)
   }
-  cov_Yclr <- if (length(Fy) == 0) cov_Y else t(Fy) %*% cov_Y %*% t(Ky)
+  cov_Yclr <- if (length(Fy) == 0) cov_Y else Ky %*% cov_Y %*% t(Ky)
 
   result$"NAME_COORD"[[1]] <- names(mod)[1]
   result$"NAME_SIMPLEX"[[1]] <- name_invTrans(names(mod)[1], trans_Y[["name"]])
