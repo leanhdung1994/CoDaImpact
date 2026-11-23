@@ -24,22 +24,25 @@ changes}
 \item{Xdir}{either character or numeric, to indicate the direction in which
 Xvar should change
 \itemize{
-\item when character this should be one of the components of X, in which case the direction is the corresponding vertex of the simplex
-\item when numeric this argument is coerced to a unit vector in the simplex
+\item when character this should be one of the components of X, in which case
+the direction points towards the corresponding vertex of the simplex
+\item when numeric this should be a positive vector, which is used as a
+direction in the simplex
 \item (when Xvar refers to a scalar variable this argument is ignored)
 }}
 
-\item{obs}{a numeric indicating the observation used for the scenario}
+\item{obs}{a positive integer indicating the row of the observation used for
+the scenario}
 
-\item{inc_size}{a numeric indicating the distance between each point in the
-scenario of X}
+\item{inc_size}{a positive numeric indicating the step size of the scenario
+of X}
 
 \item{inc_rate}{a numeric that can be used as a parameterization of the step
 size}
 
 \item{Ytotal}{a numeric indicating the total of Y}
 
-\item{normalize_Xdir}{a logical, if \code{TRUE} the direction \code{Xdir} scaled to
+\item{normalize_Xdir}{a logical, if \code{TRUE} the direction \code{Xdir} is scaled to
 have an Aitchison norm of 1, allowing to interpret \code{inc_size} as the
 Aitchison distance}
 }

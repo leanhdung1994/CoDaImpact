@@ -8,10 +8,12 @@
 #' term "linear" is understood with respect to the geometry of the simplex.
 #'
 #' @details
-#' The linear scenario for X is computed with [seq()] in the scalar case and
-#' with [CoDa_seq()] in the compositional case. The corresponding changes in Y
-#' are computed with the prediction formula, where we exploit the fact that only
-#' in one variable is changing.
+#' The scenario of X consists of the points X(h) for the steps h = k * inc_size,
+#' with k from -n_steps (or 0) to n_steps. For a scalar X, X(h) = X0 + h. For a
+#' compositional X, X(h) is the straight line in the simplex that starts at X0
+#' and goes in the direction Xdir. The corresponding values of Y are computed
+#' with the prediction formula, where we exploit the fact that only one variable
+#' changes.
 #'
 #'
 #' @param object an object of class "lmCoDa"
@@ -19,16 +21,20 @@
 #'   changes
 #' @param Xdir either character or numeric, to indicate the direction in which
 #'   Xvar should change
-#'   - when character this should be one of the components of X, in which case the direction is the corresponding vertex of the simplex
-#'   - when numeric this argument is coerced to a unit vector in the simplex
+#'   - when character this should be one of the components of X, in which case
+#'     the direction points towards the corresponding vertex of the simplex
+#'   - when numeric this should be a positive vector, which is used as a
+#'     direction in the simplex
 #'   - (when Xvar refers to a scalar variable this argument is ignored)
-#' @param obs a numeric indicating the observation used for the scenario
-#' @param inc_size a numeric indicating the distance between each point in the
-#'   scenario of X
-#' @param n_steps a numeric indicating the number of points in the scenario
+#' @param obs a positive integer indicating the row of the observation used for
+#'   the scenario
+#' @param inc_size a positive numeric indicating the step size of the scenario
+#'   of X
+#' @param n_steps a positive integer indicating the number of steps in the
+#'   scenario, in each direction
 #' @param add_opposite a logical, if `TRUE` the scenario also includes changes
 #'   in the opposite direction
-#' @param normalize_Xdir a logical, if `TRUE` the direction `Xdir` scaled to
+#' @param normalize_Xdir a logical, if `TRUE` the direction `Xdir` is scaled to
 #'   have an Aitchison norm of 1, allowing to interpret `inc_size` as the
 #'   Aitchison distance
 #' @return
