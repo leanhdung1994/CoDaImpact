@@ -70,9 +70,14 @@ VariationTable <- function(
     is.character(Xvar) && length(Xvar) == 1,
     missing(Xdir) || is.character(Xdir) || is.numeric(Xdir),
     is.numeric(obs) && isTRUE(obs >= 1) && obs <= nobs(object),
+    obs == round(obs),
     is.numeric(inc_size) && length(inc_size) == 1,
-    is.null(inc_rate) || (0 < inc_rate && inc_rate < 1),
-    is.numeric(Ytotal) && length(Ytotal) == 1
+    is.finite(inc_size) && inc_size > 0,
+    is.null(inc_rate) || (is.numeric(inc_rate) && length(inc_rate) == 1),
+    is.null(inc_rate) || isTRUE(0 < inc_rate && inc_rate < 1),
+    is.numeric(Ytotal) && length(Ytotal) == 1,
+    is.finite(Ytotal) && Ytotal > 0,
+    isTRUE(normalize_Xdir) || isFALSE(normalize_Xdir)
   )
 
   trSry <- object$trSry
@@ -98,17 +103,25 @@ VariationTable <- function(
   # define elasticities
   elasti <- Elasticities(object, trSry$NAME_SIMPLEX[[Xvar]], obs)
 
-  if (scalar_x & !is.null(inc_rate)) {
+  if (scalar_x && !is.null(inc_rate)) {
     warning("The argument inc_rate is ignored when X is a classical variable!")
   }
   if (!scalar_x) {
+    if (missing(Xdir)) {
+      stop("Xdir must be supplied when Xvar is compositional!")
+    }
     # for compositional X we need to account for the direction in which X changes
     vertex_dir <- is.character(Xdir)
+    if (!vertex_dir && !is.null(inc_rate)) {
+      warning("The argument inc_rate is ignored when Xdir is numeric!")
+    }
     Xdir <- check_Xdir(Xdir, names(X0), normalize_Xdir)
     elasti <- log(Xdir) %*% elasti
 
-    # link between alpha (ink_rate) and h (ink_size)
+    # relative change of each part of X
     inc_rates <- log(Xdir) - sum(as(X0, "vector") * log(Xdir))
+
+    # step size h that changes the part Xdir relatively by inc_rate
     if (vertex_dir && !is.null(inc_rate)) {
       inc_size <- inc_rate / inc_rates[which.max(Xdir)]
     }

@@ -48,3 +48,24 @@ rm(resX)
 
 # scalar X
 expect_error(VariationTable(res, Xvar = "PRECIPITATION"),pattern =  "meaningful")
+
+# ---- argument checks ---------------------------------------------------------
+vt_fit <- lmCoDa(
+  ilr(cbind(left, right, extreme_right)) ~
+    ilr(cbind(Age_1839, Age_4064)) + log(unemp_rate),
+  data = head(election, 20)
+)
+vt_X <- "cbind(Age_1839, Age_4064)"
+expect_error(VariationTable(vt_fit, vt_X, "Age_1839", obs = 1.5))
+expect_error(VariationTable(vt_fit, vt_X, "Age_1839", inc_size = 0))
+expect_error(VariationTable(vt_fit, vt_X, "Age_1839", inc_size = NA_real_))
+expect_error(VariationTable(vt_fit, vt_X, "Age_1839", inc_size = Inf))
+expect_error(VariationTable(vt_fit, vt_X, "Age_1839", inc_rate = c(.1, .2)))
+expect_error(VariationTable(vt_fit, vt_X, "Age_1839", Ytotal = NA_real_))
+expect_error(VariationTable(vt_fit, vt_X, "Age_1839", Ytotal = -1))
+expect_error(VariationTable(vt_fit, vt_X, "Age_1839", normalize_Xdir = NA))
+expect_error(VariationTable(vt_fit, vt_X), pattern = "Xdir must be supplied")
+expect_warning(
+  VariationTable(vt_fit, vt_X, Xdir = c(2, 1), inc_rate = .05),
+  pattern = "inc_rate is ignored when Xdir is numeric"
+)
