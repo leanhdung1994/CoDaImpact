@@ -11,9 +11,14 @@ check_Xvar(
 )
 }
 \arguments{
-\item{Xvar}{a character or numeric indicating the direction}
+\item{Xvar}{a character, the name of one explanatory variable before the
+log-ratio transformation, as in \code{NAME_SIMPLEX}}
 
-\item{trSry}{a character indicating the names of the vertices}
+\item{trSry}{a data.frame, as returned by \code{\link[=transformationSummary]{transformationSummary()}}}
+
+\item{return_type}{a character, \code{"NAME_SIMPLEX"} or \code{"NAME_COORD"} to return
+the name of \code{Xvar} before or after the log-ratio transformation, or \code{"pos"}
+to return its row in \code{trSry}}
 }
 \value{
 a single integer or character

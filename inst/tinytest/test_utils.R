@@ -32,3 +32,10 @@ expect_equal(as.numeric(compositions::norm(compositions::acomp(ut_sn))), 1)
 # same result as the previous code: e replaced by e^sqrt(l / (l - 1))
 ut_e <- exp(c(0, 1, 0) * sqrt(3 / 2))
 expect_equal(ut_sn, ut_e / sum(ut_e))
+
+# ---- check_Xvar() ------------------------------------------------------------
+ut_res <- lmCoDa(YIELD ~ PRECIPITATION + ilr(TEMPERATURES), data = rice_yields[1:20, ])
+expect_error(CoDaImpact:::check_Xvar(NA_character_, ut_res$trSry))
+expect_error(CoDaImpact:::check_Xvar("nonexistent", ut_res$trSry), pattern = "must be one of")
+expect_equal(CoDaImpact:::check_Xvar("TEMPERATURES", ut_res$trSry, "NAME_COORD"), "ilr(TEMPERATURES)")
+expect_equal(CoDaImpact:::check_Xvar(" TEMPERATURES ", ut_res$trSry, "pos"), 4L)

@@ -56,8 +56,12 @@ check_Xdir <- function(Xdir, Xopts, normalize = FALSE) {
 #' Users should always specify Xvar as "NAME_SIMPLEX", which means before
 #' log-ratio transformations.
 #'
-#' @param Xvar a character or numeric indicating the direction
-#' @param trSry a character indicating the names of the vertices
+#' @param Xvar a character, the name of one explanatory variable before the
+#'   log-ratio transformation, as in `NAME_SIMPLEX`
+#' @param trSry a data.frame, as returned by [transformationSummary()]
+#' @param return_type a character, `"NAME_SIMPLEX"` or `"NAME_COORD"` to return
+#'   the name of `Xvar` before or after the log-ratio transformation, or `"pos"`
+#'   to return its row in `trSry`
 #' @return a single integer or character
 #'
 #' @author Lukas Dargel
@@ -68,7 +72,7 @@ check_Xvar <- function(
   return_type = c("NAME_SIMPLEX", "NAME_COORD", "pos")[1]
 ) {
   stopifnot(
-    is.character(Xvar) && length(Xvar) == 1,
+    is.character(Xvar) && length(Xvar) == 1 && !is.na(Xvar),
     is.data.frame(trSry),
     isTRUE(return_type %in% c("NAME_COORD", "NAME_SIMPLEX", "pos"))
   )
@@ -77,7 +81,7 @@ check_Xvar <- function(
   Xnames <- setdiff(Anames[-1], "(Intercept)")
   is_Xvar <- gsub(" ", "", Xvar) == gsub(" ", "", Xnames) # tolerate blanks
   if (sum(is_Xvar) != 1) {
-    stop("Xvar musst be one of ", list(Xnames), "!")
+    stop("Xvar must be one of ", list(Xnames), "!")
   }
 
   Xvar <- Xnames[is_Xvar]
