@@ -1,5 +1,11 @@
 # CoDaImpact (development version)
 
+## Minor improvements and fixes
+
+* `ShareRatioElasticities()` matches a named numeric `Xdir` to the parts of
+  `Xvar` by name, and stops when the names are not the parts of `Xvar`
+  (they were matched by position).
+
 ## Breaking changes
 
 * `Impacts()` is renamed `Elasticities()`. The new `Impacts()` computes

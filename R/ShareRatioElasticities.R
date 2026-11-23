@@ -89,6 +89,14 @@ ShareRatioElasticities <- function(object, Xvar, Xdir = NULL) {
   y_names <- colnames(trSry$COEF_CLR[[Xpos]])
   x_names <- rownames(trSry$COEF_CLR[[Xpos]])
 
+  if (is.numeric(Xdir) && !is.null(names(Xdir))) {
+    if (length(Xdir) != length(x_names) || !setequal(names(Xdir), x_names)) {
+      stop("The names of Xdir must be the parts of Xvar!")
+    }
+    # put the parts of Xdir in the order of the parts of Xvar
+    Xdir <- Xdir[x_names]
+  }
+
   if (is.null(Xdir)) {
     # no direction specified:
     # use relative compensation of different components of X by default
