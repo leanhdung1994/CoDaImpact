@@ -1,19 +1,33 @@
 #' @title Effects of infinitesimal changes in CoDa models
 #'
 #' @description
-#' This function allows to evaluate how a change in an explanatory variables
+#' This function allows to evaluate how a change in an explanatory variable
 #' impacts the response variable in a CoDa regression model. The changes are
-#' calculated based from the approximate formal presented in Dargel and
-#' Thomas-Agnan (2024). Changes in the response variables are provided as
+#' calculated with the first-order approximation presented in Dargel and
+#' Thomas-Agnan (2024). Changes in the response variable are provided as a
 #' data.frame and the underlying changes in the explanatory variable are given
 #' as attributes.
 #'
 #'
 #' @inheritParams VariationScenario
-#' @param inc_rate a numeric that can be used as a parameterization of the step
-#'   size
-#' @param Ytotal a numeric indicating the total of Y
-#' @return data.frame
+#' @param inc_rate a numeric between 0 and 1, only used when `Xdir` is the name
+#'   of a part of X. It is the relative change of this part, and replaces
+#'   `inc_size` by the step size that gives this change.
+#' @param Ytotal a positive numeric indicating the total of Y, used to convert
+#'   the variation of the parts into units (only used when Y is compositional)
+#' @return
+#' a data.frame with one column per part of Y (one column for a scalar Y) and
+#' the rows
+#' - the initial value of Y at the observation `obs`
+#' - the new value of Y after the step, to first order
+#' - the elasticity (or semi-elasticity) of Y with respect to X along `Xdir`
+#' - the variation of Y in %, in % points (compositional Y) and in units
+#' (scalar Y, or compositional Y with `Ytotal` different from 1)
+#'
+#' The attributes `X(0)` and `X(h)` give the value of X before and after the
+#' step, `Xdir` the direction, `inc_size` the step size, and `inc_rates` the
+#' relative change of each part of X. `Xdir` and `inc_rates` are `NULL` for a
+#' scalar X.
 #'
 #' @author
 #'   - Lukas Dargel
@@ -32,7 +46,7 @@
 #' # Focus on changes in the education composition
 #' educ_comp <- "cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)"
 #'
-#' # ... changes towards a summit towards a summit (higher share of people with lower education)
+#' # ... changes towards a summit (higher share of people with lower education)
 #' VariationTable(res, educ_comp, Xdir = "Educ_BeforeHighschool")
 #'
 #' # ... same changes using a compositional vector as direction
