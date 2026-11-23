@@ -110,25 +110,31 @@ NULL
 #' This data set provides an example for the use of CoDa models in geomarketing
 #' applications. The data is simulated, but realistic in the sense that the
 #' parameters used for the simulation were estimated on a real, but confidential
-#' data set (Dargel and Thomas-Agnan 2024).
+#' data set (Dargel and Thomas-Agnan 2024). It is an `sf` object with one row
+#' per IRIS district around Toulouse; the package `sf` is needed to use the
+#' column `geometry`.
 #'
 #' @details
 #'   + `ID_IRIS`: Identifies the geographic region.
 #'   + `POP`: Population number within the region
 #'   + `MEDIAN_INCOME`: The median income in the region
-#'   + `dist_km`: Distances from the region to all nine shopping malls.
-#'   + `visits`: The share of visitors that coming from the region and going to each of the malls.
+#'   + `dist_km`: The distances in km from the region to each of the nine
+#'     shopping malls, with one column per mall.
+#'   + `visits`: The shares of the visitors coming from the region and going to
+#'     each of the nine malls, with one column per mall.
 #'   + `geometry`: The geometry (polygon) of the region
-#'   + The "mall_locations" and the "simulation_parameters" are given as additional attributes.
+#'   + The "mall_locations" and the "simu_parameters" are given as additional attributes.
 #'
 #' @source
-#'   + The figures for `POP` and `MEDIAN_INCOME` come from the [French census data prided by INSEE](https://www.insee.fr/fr/information/4467366).
+#'   + The figures for `POP` and `MEDIAN_INCOME` come from the [French census data provided by INSEE](https://www.insee.fr/fr/information/4467366).
 #'   + The polygon `geometry` is [provided by the IGN](https://geoservices.ign.fr/contoursiris).
 #'   + The locations of the nine shopping malls around the city center are derived from online mapping services (Google Maps and OpenStreetMap).
 #'   + The distances (`dist_km`) are derived from location information.
-#'   + The number of shopping trips (`visits`) are simulated by the authors.
+#'   + The values of `visits` are simulated by the authors.
 #' @references
-#'     Lukas Dargel & Christine Thomas-Agnan (2024) “The link between multiplicative competitive interaction models and compositional data regression with a total”, Journal of Applied Statistics, DOI: 10.1080/02664763.2024.2329923
+#' Lukas Dargel & Christine Thomas-Agnan (2024) “The link between multiplicative
+#' competitive interaction models and compositional data regression with a
+#' total”, Journal of Applied Statistics, DOI: 10.1080/02664763.2024.2329923
 #' @author Lukas Dargel, Christine Thomas-Agnan
 #' @docType data
 #' @keywords data

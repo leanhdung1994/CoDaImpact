@@ -1,5 +1,11 @@
 # CoDaImpact (development version)
 
+## Documentation
+
+* The help pages of `rice_yields`, `election`, `car_market` and
+  `toulouse_retail` say what one row is and describe all columns; `election`
+  now documents `unemp_rate`.
+
 ## Breaking changes
 
 * `CoDa_seq()` and `CoDa_path()` return compositions closed to 1; rows are no
