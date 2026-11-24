@@ -9,7 +9,8 @@ ShareRatioElasticities(object, Xvar, Xdir = NULL)
 \arguments{
 \item{object}{an object of class "lmCoDa"}
 
-\item{Xvar}{a character indicating the name of the explanatory variable that changes}
+\item{Xvar}{a character indicating the name of the explanatory variable that
+changes}
 
 \item{Xdir}{a numeric vector, a single character, or \code{NULL}:
 \itemize{
@@ -22,25 +23,27 @@ ShareRatioElasticities(object, Xvar, Xdir = NULL)
 a data.frame
 }
 \description{
-In CoDa models with compositional dependent variable (Y) share ratio elasticities (SRE)
-allow to interpret the influence of compositional explanatory variables (X).
-The interpretation is analogous to usual elasticities:
+In CoDa models with compositional dependent variable (Y) share ratio
+elasticities (SRE) allow to interpret the influence of compositional
+explanatory variables (X). The interpretation is analogous to usual
+elasticities:
 \itemize{
 \item When the share ratio of X increases by 1\% the share ratio of Y increases by SRE\%
 \item The main difference to usual elasticities that, since X is compositional
-the change of X musts be specified in terms of a direction in the simplex.
+the change of X must be specified in terms of a direction in the simplex.
 }
 }
 \details{
-More details on this interpretation can be found in Dargel and Thomas-Agnan (2024) and in the accompanying vignette.
+More details on this interpretation can be found in Dargel and Thomas-Agnan
+(2024) and in the accompanying vignette.
 }
 \examples{
-
 ### XY-compositional model
 res <- lmCoDa(
   ilr(cbind(left, right, extreme_right)) ~
-  ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
-  data =  head(election, 20))
+    ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
+  data = head(election, 20)
+)
 
 ## Focus on changes in the education composition
 educ_comp <- "cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)"
@@ -49,19 +52,19 @@ educ_comp <- "cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)"
 ## changes towards the summit "Educ_Higher" as (fixed) direction
 SRE1 <- ShareRatioElasticities(res, Xvar = educ_comp, Xdir = "Educ_Higher")
 
-SRE1[1,]
+SRE1[1, ]
 # Result: SRE=Inf
 # cannot be interpreted because, for this direction,
 # the relative change in the share ratio of X (Highschool / BeforeHighschool) is zero
-SRE1[7,]
+SRE1[7, ]
 # Result: SRE=0.9
 # when the ratio of X (Higher / BeforeHighschool) increases by 1\%
 # the ratio of Y (right / left) increases by about 0.9\%
 
 ## case 2
 ## numeric vector as (fixed) direction
-SRE2 <- ShareRatioElasticities(res, Xvar = educ_comp, Xdir = exp(c(0,0,1)))
-identical(SRE1,SRE2) # exp(c(0,0,1)) is the direction that points to the third summit
+SRE2 <- ShareRatioElasticities(res, Xvar = educ_comp, Xdir = exp(c(0, 0, 1)))
+identical(SRE1, SRE2) # exp(c(0,0,1)) is the direction that points to the third summit
 
 ## case 3
 ## variable directions with Xdir = NULL
@@ -69,10 +72,10 @@ identical(SRE1,SRE2) # exp(c(0,0,1)) is the direction that points to the third s
 ## In particular the component of X in the numerator grows
 ## by the same rate as the denominator decreases
 SRE3 <- ShareRatioElasticities(res, Xvar = educ_comp, Xdir = NULL)
-SRE3[1,]
+SRE3[1, ]
 # Result: SRE=-2.8
 # when the ratio of X (Highschool / BeforeHighschool) increases by 1\%
-# the ratio of Y (right / left) decreases by about -2.8\%
+# the ratio of Y (right / left) decreases by about 2.8\%
 }
 \references{
 \itemize{

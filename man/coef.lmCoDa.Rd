@@ -9,11 +9,12 @@
 \arguments{
 \item{object}{class "lmCoDa"}
 
-\item{space}{a character indicating in which space the prediction should
-be returned. Supported are the options \code{c("clr", "simplex")}.}
+\item{space}{a character indicating in which space the prediction should be
+returned. Supported are the options \code{c("clr", "simplex")}.}
 
-\item{split}{logical, if \code{TRUE} the coefficients are reported as a list instead
-of a matrix, where list structure reflects the explanatory variables of the model}
+\item{split}{logical, if \code{TRUE} the coefficients are reported as a list
+instead of a matrix, where list structure reflects the explanatory
+variables of the model}
 
 \item{...}{not used}
 }
@@ -21,9 +22,9 @@ of a matrix, where list structure reflects the explanatory variables of the mode
 a matrix
 }
 \description{
-These functions work as in the usual lm object.
-They additionally offer the possibility use the \code{space} argument
-which transforms them into directly into clr space or in the simplex.
+These functions work as in the usual lm object. They additionally offer the
+possibility use the \code{space} argument which transforms them into directly into
+clr space or in the simplex.
 }
 \author{
 Lukas Dargel

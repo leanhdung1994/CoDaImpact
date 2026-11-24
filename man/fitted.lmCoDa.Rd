@@ -9,8 +9,8 @@
 \arguments{
 \item{object}{class "lmCoDa"}
 
-\item{space}{a character indicating in which space the prediction should
-be returned. Supported are the options \code{c("clr", "simplex")}.}
+\item{space}{a character indicating in which space the prediction should be
+returned. Supported are the options \code{c("clr", "simplex")}.}
 
 \item{...}{passed on to \code{\link[=predict.lm]{predict.lm()}}}
 }
@@ -18,9 +18,9 @@ be returned. Supported are the options \code{c("clr", "simplex")}.}
 matrix or vector
 }
 \description{
-These functions work as in the usual lm object.
-They additionally offer the possibility use the \code{space} argument
-which transforms them into directly into clr space or in the simplex.
+These functions work as in the usual lm object. They additionally offer the
+possibility use the \code{space} argument which transforms them into directly into
+clr space or in the simplex.
 }
 \author{
 Lukas Dargel

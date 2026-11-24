@@ -11,32 +11,35 @@ CoDa_seq(comp_from, comp_to, n_steps = 100, add_opposite = FALSE)
 
 \item{comp_to}{A numeric vector, representing the final compositions.}
 
-\item{n_steps}{An integer, indicating the number of steps used to go from comp_from to comp_to}
+\item{n_steps}{An integer, indicating the number of steps used to go from
+comp_from to comp_to}
 
-\item{add_opposite}{A logical, if \code{TRUE} the path in the opposite direction is added}
+\item{add_opposite}{A logical, if \code{TRUE} the path in the opposite direction
+is added}
 }
 \value{
-A data.frame frame where each row corresponds to one compositional vector
+A data.frame where each row corresponds to one compositional vector, closed
+to 1
 }
 \description{
 A sequence connecting two points in a simplex
 }
 \details{
-The sequence is evenly spaced and corresponds to a straight line in the simplex geometry.
-If no end point is provided the line will connect the initial point with the first summit of the simplex.
-Since exact zeros are not handled by the ilr they are replaced by a small constant.
+The sequence is evenly spaced and corresponds to a straight line in the
+simplex geometry. If no end point is provided the line will connect the
+initial point with the first summit of the simplex. Since exact zeros are not
+handled by the ilr they are replaced by a small constant.
 }
 \examples{
-
 # path to the first summit of the simplex
-start_comp <- c(A =.4,B = .35, C= .25)
+start_comp <- c(A = .4, B = .35, C = .25)
 compositions::plot.acomp(CoDa_seq(start_comp))
 compositions::plot.acomp(CoDa_seq(start_comp, add_opposite = TRUE))
 
 # path to an edge of the simplex
-end_comp <- c(0,.8,.2)
+end_comp <- c(0, .8, .2)
 compositions::plot.acomp(CoDa_seq(start_comp, end_comp))
-compositions::plot.acomp(CoDa_seq(start_comp, end_comp,add_opposite = TRUE))
+compositions::plot.acomp(CoDa_seq(start_comp, end_comp, add_opposite = TRUE))
 }
 \seealso{
 simplex_increment

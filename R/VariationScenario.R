@@ -8,10 +8,12 @@
 #' term "linear" is understood with respect to the geometry of the simplex.
 #'
 #' @details
-#' The linear scenario for X is computed with [seq()] in the scalar case and
-#' with [CoDa_seq()] in the compositional case. The corresponding changes in Y
-#' are computed with the prediction formula, where we exploit the fact that only
-#' in one variable is changing.
+#' The scenario of X consists of the points X(h) for the steps h = k * inc_size,
+#' with k from -n_steps (or 0) to n_steps. For a scalar X, X(h) = X0 + h. For a
+#' compositional X, X(h) is the straight line in the simplex that starts at X0
+#' and goes in the direction Xdir. The corresponding values of Y are computed
+#' with the prediction formula, where we exploit the fact that only one variable
+#' changes.
 #'
 #'
 #' @param object an object of class "lmCoDa"
@@ -19,24 +21,31 @@
 #'   changes
 #' @param Xdir either character or numeric, to indicate the direction in which
 #'   Xvar should change
-#'   - when character this should be one of the components of X, in which case the direction is the corresponding vertex of the simplex
-#'   - when numeric this argument is coerced to a unit vector in the simplex
+#'   - when character this should be one of the components of X, in which case
+#'     the direction points towards the corresponding vertex of the simplex
+#'   - when numeric this should be a positive vector, which is used as a
+#'     direction in the simplex
 #'   - (when Xvar refers to a scalar variable this argument is ignored)
-#' @param obs a numeric indicating the observation used for the scenario
-#' @param inc_size a numeric indicating the distance between each point in the
-#'   scenario of X
-#' @param n_steps a numeric indicating the number of points in the scenario
+#' @param obs a positive integer indicating the row of the observation used for
+#'   the scenario
+#' @param inc_size a positive numeric indicating the step size of the scenario
+#'   of X
+#' @param n_steps a positive integer indicating the number of steps in the
+#'   scenario, in each direction
 #' @param add_opposite a logical, if `TRUE` the scenario also includes changes
 #'   in the opposite direction
-#' @param normalize_Xdir a logical, if `TRUE` the direction `Xdir` scaled to
+#' @param normalize_Xdir a logical, if `TRUE` the direction `Xdir` is scaled to
 #'   have an Aitchison norm of 1, allowing to interpret `inc_size` as the
 #'   Aitchison distance
 #' @return
-#' a data.frame containing the scenario of X and the corresponding predicted
-#' values of Y
+#' a data.frame of class "VariationScenario" with one row per step k. The column
+#' `Y` holds the predicted values of the response and the column `X` the
+#' scenario of `Xvar`; each is a matrix when the variable is compositional. The
+#' attributes `Yvar` and `Xvar` give the names of the two variables.
 #' @author Lukas Dargel
 #' @references
 #'   - Dargel, Lukas and Christine Thomas-Agnan, “Pairwise share ratio interpretations of compositional regression models”, Computational Statistics & Data Analysis 195 (2024), p. 107945
+#' @importFrom compositions acomp
 #' @export
 #' @examples
 #' # ---- model with scalar response ----
@@ -79,14 +88,16 @@ VariationScenario <- function(
     is.character(Xvar) && length(Xvar) == 1,
     missing(Xdir) || is.character(Xdir) || is.numeric(Xdir),
     is.numeric(obs) && isTRUE(obs >= 1) && obs <= nobs(object),
+    obs == round(obs),
     is.numeric(inc_size) && length(inc_size) == 1,
+    is.finite(inc_size) && inc_size > 0,
     is.numeric(n_steps) && length(n_steps) == 1,
-    isTRUE(add_opposite) || isFALSE(add_opposite)
+    is.finite(n_steps) && n_steps >= 1,
+    n_steps == round(n_steps),
+    isTRUE(add_opposite) || isFALSE(add_opposite),
+    isTRUE(normalize_Xdir) || isFALSE(normalize_Xdir)
   )
 
-  clo2 <- function(x) {
-    x / rowSums(x)
-  }
   trSry <- object$trSry
 
   # get X0
@@ -118,37 +129,65 @@ VariationScenario <- function(
   }
 
   if (!scalar_x) {
+    if (missing(Xdir)) {
+      stop("Xdir must be supplied when Xvar is compositional!")
+    }
     Xdir <- check_Xdir(Xdir, colnames(X0), normalize_Xdir)
     Xcoef <- trSry$COEF_CLR[[Xvar]]
 
-    Xscenario <- CoDa_path(
-      rep(1 / Dx, Dx),
-      comp_direc = Xdir,
-      step_size = inc_size,
-      n_steps = n_steps,
-      add_opposite = add_opposite
-    )
-    Xscenario <- log(as.matrix(Xscenario)) %*% clrBase(Dx)
-    Yscenario <- if (scalar_y) Y0 else Y0[rep(1, nrow(Xscenario)), ]
-    Yscenario <- Xscenario %*% Xcoef + Yscenario
-    Xscenario <- clo2(exp(X0[rep(1, nrow(Xscenario)), ] + Xscenario))
+    # scenario of X in the simplex: x0 + h * u, with h = k * inc_size
+    x0 <- clrInv(X0[1, ])
+    u <- acomp(Xdir)
+    h <- inc_seq * inc_size
+    Xscenario <- lapply(h, function(s) unclass(x0 + s * u))
+    Xscenario <- do.call("rbind", Xscenario)
+    colnames(Xscenario) <- colnames(X0)
+
+    # response in clr (or scalar response): Y0 + h * clr(u) B
+    Yscenario <- if (scalar_y) Y0 else Y0[rep(1, length(h)), ]
+    Yscenario <- h %*% (unclass(clr(u)) %*% Xcoef) + Yscenario
   }
 
-  if (!scalar_x) {
-    Xvar <- "X"
-  }
-  if (!scalar_y) {
-    Yvar <- "Y"
+  if (scalar_y) {
+    Yscenario <- Yscenario[, 1]
   } else {
-    Yvar <- rownames(trSry)[1]
+    Yscenario <- unclass(clrInv(Yscenario))
   }
-  if (!scalar_y) {
-    Yscenario <- clo2(exp(Yscenario))
-  }
+
   result <- data.frame(row.names = as.character(inc_seq))
-  result[[Yvar]] <- Yscenario
-  result[[Xvar]] <- Xscenario
+  result$Y <- Yscenario
+  result$X <- Xscenario
   attr(result, "inc_size") <- inc_size
   attr(result, "obs") <- obs
+  attr(result, "Yvar") <- trSry$NAME_SIMPLEX[[1]]
+  attr(result, "Xvar") <- trSry$NAME_SIMPLEX[[Xvar]]
+  class(result) <- c("VariationScenario", class(result))
   return(result)
+}
+
+#' Print a scenario computed by VariationScenario()
+#'
+#' Prints the names and types (scalar or compositional) of the response and of
+#' the explanatory variable that changes, followed by the scenario.
+#'
+#' @param x an object of class "VariationScenario"
+#' @param ... passed on to [print.data.frame()]
+#' @return `x`, invisibly
+#' @exportS3Method
+print.VariationScenario <- function(x, ...) {
+  if (!is.null(attr(x, "Yvar"))) {
+    # a compositional variable is stored as a matrix column
+    Ytype <- if (is.matrix(x$Y)) "compositional" else "scalar"
+    Xtype <- if (is.matrix(x$X)) "compositional" else "scalar"
+    cat("Y: ", Ytype, " response `", attr(x, "Yvar"), "`\n", sep = "")
+    cat(
+      "X: ",
+      Xtype,
+      " explanatory variable `",
+      attr(x, "Xvar"),
+      "`\n\n",
+      sep = ""
+    )
+  }
+  NextMethod()
 }

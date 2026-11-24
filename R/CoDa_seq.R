@@ -13,10 +13,11 @@
 #' @param add_opposite A logical, if `TRUE` the path in the opposite direction
 #'   is added
 #'
-#' @importFrom compositions ilr ilrInv
+#' @importFrom compositions acomp norm
 #' @importFrom methods is as
 #' @return
-#' A data.frame frame where each row corresponds to one compositional vector
+#' A data.frame where each row corresponds to one compositional vector, closed
+#' to 1
 #' @seealso simplex_increment
 #' @export
 #'
@@ -32,23 +33,32 @@
 #' compositions::plot.acomp(CoDa_seq(start_comp, end_comp))
 #' compositions::plot.acomp(CoDa_seq(start_comp, end_comp, add_opposite = TRUE))
 CoDa_seq <- function(comp_from, comp_to, n_steps = 100, add_opposite = FALSE) {
+  epsilon <- 1e-10
   if (missing(comp_to)) {
-    comp_to <- comp_from * 1e-10
+    comp_to <- rep(epsilon, length(comp_from))
+    names(comp_to) <- names(comp_from)
     comp_to[1] <- 1
   }
 
-  n_steps <- round(n_steps)
   stopifnot(
+    is.numeric(comp_from),
+    is.numeric(comp_to),
     length(comp_from) >= 2,
     length(comp_from) == length(comp_to),
+    all(comp_from >= 0),
+    all(comp_to >= 0),
+    sum(comp_from) > 0,
+    sum(comp_to) > 0,
     is.null(names(comp_to)) || identical(names(comp_to), names(comp_from)),
-    n_steps >= 1,
-    is.logical(add_opposite),
-    is.numeric(comp_from),
-    is.numeric(comp_to)
+    is.numeric(n_steps),
+    length(n_steps) == 1,
+    round(n_steps) >= 1,
+    isTRUE(add_opposite) || isFALSE(add_opposite)
   )
 
-  check <- " must be a single compostional vector!"
+  n_steps <- round(n_steps)
+
+  check <- " must be a single compositional vector!"
   if (isTRUE(nrow(comp_from) > 1)) {
     stop("comp_from", check)
   }
@@ -58,60 +68,55 @@ CoDa_seq <- function(comp_from, comp_to, n_steps = 100, add_opposite = FALSE) {
   comp_from <- as(comp_from, "vector")
   comp_to <- as(comp_to, "vector")
 
-  # save total and replace zeros
-  Tstart <- sum(comp_from)
+  # close both compositions, and replace zeros
+  comp_from <- comp_from / sum(comp_from)
+  comp_to <- comp_to / sum(comp_to)
+
   zero_values_present <- any(comp_from == 0, comp_to == 0)
   if (zero_values_present) {
-    epsilon <- 1e-10
-    warn <- "Zero values in `comp_from` or `comp_to` are not permitted and were replaced by %s!'"
+    warn <- "Zero values in `comp_from` or `comp_to` are not permitted and were replaced by %s (after closing to 1)!"
     warning(sprintf(warn, epsilon))
     comp_from[comp_from == 0] <- epsilon
     comp_from <- comp_from / sum(comp_from)
-
-    comp_to[comp_to == 0] <- comp_from[comp_to == 0] * epsilon
-    comp_to[comp_to == 0] <- min(comp_to) * epsilon
+    comp_to[comp_to == 0] <- epsilon
     comp_to <- comp_to / sum(comp_to)
   }
 
-  ilr_start <- ilr(comp_from)
-  ilr_end <- ilr(comp_to)
-  ilr_dir <- ilr_end - ilr_start
-
-  steps <- c(seq(0, 1, length.out = n_steps + 1))
-  ilr_path <- lapply(steps, function(s) ilr_start + s * ilr_dir)
-  ilr_path <- do.call("rbind", ilr_path)
-  result <- rbind(ilrInv(ilr_path))
-  if (add_opposite) {
-    steps <- rev(steps[-1])
-    ilr_path <- lapply(steps, function(s) ilr_start - s * ilr_dir)
-    ilr_path <- do.call("rbind", ilr_path)
-    result <- rbind(ilrInv(ilr_path), result)
-  }
-  row.names(result) <- seq(-n_steps * add_opposite, n_steps)
+  x <- acomp(comp_from)
+  y <- acomp(comp_to)
+  comp_dir <- y - x
+  k <- seq(-n_steps * add_opposite, n_steps)
+  result <- lapply(k / n_steps, function(s) unclass(x + s * comp_dir))
+  result <- do.call("rbind", result)
+  row.names(result) <- k
 
   if (!is.null(names(comp_from))) {
     colnames(result) <- names(comp_from)
   }
 
-  result <- as.data.frame(result * Tstart)
-  Anorm_dir <- sqrt(sum(ilr_dir^2))
+  Anorm_dir <- norm(comp_dir)
+  if (Anorm_dir < epsilon) {
+    stop("`comp_from` and `comp_to` must be different compositions!")
+  }
+
+  result <- as.data.frame(result)
   attr(result, "step_size") <- Anorm_dir / n_steps
-  attr(result, "direction") <- ilrInv(ilr_dir / Anorm_dir)
+  attr(result, "direction") <- (1 / Anorm_dir) * comp_dir
   return(result)
 }
 
 #' Create a linear path in the simplex by defining a direction and a step size
 #'
 #' @details
-#' The function is very similar to [CoDa_seq()]. However, of drawing a line
-#' between a starting and end point it uses only a starting point and a
+#' The function is very similar to [CoDa_seq()]. However, instead of drawing a
+#' line between a starting and end point it uses only a starting point and a
 #' direction.
 #'
 #' @param comp_direc A numeric vector, defining a direction in the simplex
 #' @param comp_from A numeric vector, an initial point in the simplex - defaults
 #'   to a balanced composition, which represents the origin in the simplex
-#' @param step_size A numeric, indicting the step size
-#' @param n_steps A numeric, indicating the number of steps to be taking from
+#' @param step_size A numeric, indicating the step size
+#' @param n_steps A numeric, indicating the number of steps to be taken from
 #'   `comp_from`
 #' @param add_opposite A logical, if `TRUE` steps in the opposite direction are
 #'   also computed
@@ -119,8 +124,9 @@ CoDa_seq <- function(comp_from, comp_to, n_steps = 100, add_opposite = FALSE) {
 #'   the difference between `comp_from` and `comp_direc`
 #'
 #' @return
-#' A data.frame frame where each row corresponds to one compositional vector
-#' @importFrom compositions ilr
+#' A data.frame where each row corresponds to one compositional vector, closed
+#' to 1
+#' @importFrom compositions acomp norm
 #' @seealso CoDa_seq
 #' @export
 #'
@@ -174,23 +180,37 @@ CoDa_path <- function(
 ) {
   D <- length(comp_direc)
   if (missing(comp_from)) {
-    comp_from <- comp_direc * 0 + 1 / D
+    comp_from <- rep(1 / D, D)
+    names(comp_from) <- names(comp_direc)
   }
 
-  n_steps <- round(n_steps)
   stopifnot(
-    all(comp_direc >= 0, comp_from >= 0),
+    is.numeric(comp_direc),
+    is.numeric(comp_from),
     length(comp_direc) >= 2,
     length(comp_from) == length(comp_direc),
-    is.numeric(step_size) & length(step_size) == 1,
-    isTRUE(n_steps >= 1)
+    all(comp_direc >= 0),
+    all(comp_from >= 0),
+    sum(comp_direc) > 0,
+    sum(comp_from) > 0,
+    is.numeric(step_size),
+    length(step_size) == 1,
+    is.finite(step_size),
+    step_size > 0,
+    is.numeric(n_steps),
+    length(n_steps) == 1,
+    round(n_steps) >= 1,
+    isTRUE(add_opposite) || isFALSE(add_opposite),
+    isTRUE(dir_from_start) || isFALSE(dir_from_start)
   )
 
+  n_steps <- round(n_steps)
+
   if (isTRUE(nrow(comp_from) > 1)) {
-    stop("comp_from must be a single compostional vector!")
+    stop("comp_from must be a single compositional vector!")
   }
   if (isTRUE(nrow(comp_direc) > 1)) {
-    stop("comp_direc must be a single compostional vector!")
+    stop("comp_direc must be a single compositional vector!")
   }
   if (is.matrix(comp_from)) {
     comp_from <- comp_from[1, ]
@@ -202,30 +222,39 @@ CoDa_path <- function(
   if (is.null(names(comp_from))) {
     names(comp_from) <- names(comp_direc)
   }
+  stopifnot(
+    is.null(names(comp_direc)) || identical(names(comp_from), names(comp_direc))
+  )
+
+  # close both compositions, and replace zeros
+  epsilon <- 1e-10
+  comp_from <- comp_from / sum(comp_from)
+  comp_direc <- comp_direc / sum(comp_direc)
 
   zero_values_present <- any(comp_from == 0, comp_direc == 0)
   if (zero_values_present) {
-    epsilon <- 1e-10
-    warn <- "Zero values in `comp_from` or `comp_direc` are not permitted and were replaced by %s!'"
+    warn <- "Zero values in `comp_from` or `comp_direc` are not permitted and were replaced by %s (after closing to 1)!"
     warning(sprintf(warn, epsilon))
     comp_from[comp_from == 0] <- epsilon
     comp_from <- comp_from / sum(comp_from)
-
-    comp_direc[comp_direc == 0] <- comp_from[comp_direc == 0] * epsilon
-    comp_direc[comp_direc == 0] <- min(comp_direc) * epsilon
+    comp_direc[comp_direc == 0] <- epsilon
     comp_direc <- comp_direc / sum(comp_direc)
   }
 
-  ilr_start <- ilr(comp_from)
-  ilr_direc <- ilr(comp_direc) - if (dir_from_start) ilr_start else 0
-  ilr_direc <- ilr_direc / sqrt(sum(ilr_direc^2))
-  if (any(!is.finite(ilr_direc))) {
-    stop("The simplex direction is invalid!")
+  x <- acomp(comp_from)
+  comp_dir <- acomp(comp_direc)
+  if (dir_from_start) {
+    comp_dir <- comp_dir - x
   }
 
+  Anorm_dir <- norm(comp_dir)
+  if (Anorm_dir < epsilon) {
+    stop("The simplex direction is invalid!")
+  }
+  comp_dir <- (1 / Anorm_dir) * comp_dir
+
   # calculate the end point and use CoDa_seq
-  ilr_end <- ilr_start + ilr_direc * n_steps * step_size
-  comp_to <- ilrInv(ilr_end)
-  result <- CoDa_seq(comp_from, comp_to, n_steps, add_opposite)
+  comp_to <- x + (n_steps * step_size) * comp_dir
+  result <- CoDa_seq(comp_from, unclass(comp_to), n_steps, add_opposite)
   return(result)
 }

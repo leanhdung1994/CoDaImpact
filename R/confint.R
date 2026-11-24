@@ -29,7 +29,7 @@
 #' @param obs an optional integer that indicates one observation when this
 #'   argument is supplied the function return the observation dependent
 #'   elasticity
-#' @param ... passed on to confit()
+#' @param ... passed on to confint()
 #' @return data.frame
 #'
 #' @exportS3Method
@@ -70,9 +70,11 @@ confint.lmCoDa <- function(
   ...
 ) {
   stopifnot(
+    is.numeric(level) && length(level) == 1,
     level > 0 && level < 1,
     is.character(parm) && length(parm) == 1,
-    is.null(y_ref) || length(y_ref) == 1
+    is.null(y_ref) || length(y_ref) == 1,
+    is.null(y_ref) || is.numeric(y_ref) || is.character(y_ref)
   )
 
   trSry <- object$trSry
@@ -97,9 +99,10 @@ confint.lmCoDa <- function(
   qlevel <- qt(a, df_eq)
 
   # 3 cases
-  if (ncol(vcov_y) < 2) {
+  if (ncol(vcov_y) < 2 && !(is.null(y_ref) && is.null(obs))) {
+    warning("y_ref and obs are ignored because the response is scalar.")
     y_ref <- obs <- NULL
-  } # when scalar y we only need clr
+  }
   clr_intervals <- is.null(y_ref) & is.null(obs)
   diff_intervals <- !is.null(y_ref)
   elast_intervals <- !is.null(obs)
@@ -122,7 +125,7 @@ confint.lmCoDa <- function(
     }
     result <- Reduce("rbind", result)
     colnames(result) <- c("Y", "X", "EST", "SD", pct(a))
-    attr(result, "type") <- "CI for clr coeffiecients"
+    attr(result, "type") <- "CI for clr coefficients"
     return(result)
   }
 
@@ -131,7 +134,7 @@ confint.lmCoDa <- function(
       y_ref <- which(y_ref == y_vars)
     }
     if (!any(y_ref %in% seq_len(ncol(vcov_y)))) {
-      stop("y_ref is not identifyable!")
+      stop("y_ref is not identifiable!")
     }
     diff_coef <- est_coef - est_coef[rep(y_ref, length(y_vars)), ]
     sd_dy <- sqrt(diag(vcov_y) + vcov_y[y_ref, y_ref] - 2 * vcov_y[y_ref, ])
@@ -158,7 +161,7 @@ confint.lmCoDa <- function(
   }
 
   if (elast_intervals) {
-    stop("CI for observation dependent elastities is not yet implemented!") #...
+    stop("CI for observation dependent elasticities is not yet implemented!") #...
     # ....it would require a Monte Carlo approach
     # ....or an approximation by Delta method might work too
   }

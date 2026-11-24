@@ -2,13 +2,13 @@
 % Please edit documentation in R/utils.R
 \name{pct}
 \alias{pct}
-\title{Format numbers to percentages
-This code copied from stats:::format.perc(), to avoid notes about the ::: operator.}
+\title{Format numbers to percentages This code copied from stats:::format.perc(), to
+avoid notes about the ::: operator.}
 \usage{
 pct(probs, digits = 10)
 }
 \description{
-Format numbers to percentages
-This code copied from stats:::format.perc(), to avoid notes about the ::: operator.
+Format numbers to percentages This code copied from stats:::format.perc(), to
+avoid notes about the ::: operator.
 }
 \keyword{internal}

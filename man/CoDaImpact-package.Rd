@@ -22,6 +22,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Lukas Dargel \email{lukas.dargel@mailbox.org} (\href{https://orcid.org/0000-0002-4839-506X}{ORCID})
   \item Christine Thomas-Agnan \email{christine.thomas@tse-fr.eu} (\href{https://orcid.org/0000-0002-6430-3110}{ORCID})
 }
 

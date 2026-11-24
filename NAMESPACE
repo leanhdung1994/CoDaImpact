@@ -4,9 +4,11 @@ S3method(coef,lmCoDa)
 S3method(confint,lmCoDa)
 S3method(fitted,lmCoDa)
 S3method(predict,lmCoDa)
+S3method(print,VariationScenario)
 S3method(residuals,lmCoDa)
 export(CoDa_path)
 export(CoDa_seq)
+export(Elasticities)
 export(Impacts)
 export(ShareRatioElasticities)
 export(ToSimplex)
@@ -19,16 +21,24 @@ export(clrInv)
 export(ilr)
 export(ilrInv)
 export(lmCoDa)
-importFrom(compositions,alr)
-importFrom(compositions,alrInv)
-importFrom(compositions,clr)
-importFrom(compositions,clrInv)
-importFrom(compositions,ilr)
-importFrom(compositions,ilrInv)
-importFrom(methods,as)
-importFrom(methods,is)
-importFrom(stats,coef)
-importFrom(stats,fitted)
-importFrom(stats,nobs)
-importFrom(stats,qt)
-importFrom(stats,resid)
+importFrom(compositions,
+  acomp,
+  alr,
+  alrInv,
+  clr,
+  clrInv,
+  ilr,
+  ilrInv,
+  norm
+)
+importFrom(methods,
+  as,
+  is
+)
+importFrom(stats,
+  coef,
+  fitted,
+  nobs,
+  qt,
+  resid
+)

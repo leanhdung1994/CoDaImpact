@@ -11,26 +11,28 @@ An object of class \code{data.frame} with 1890 rows and 6 columns.
 rice_yields
 }
 \description{
-The data is presented in  Trinh et al. (2023) for studying the impact
-of climate change on  rice production in Vietnam. \cr
-It contains the following information:
+The data is presented in Trinh et al. (2023) for studying the impact of
+climate change on rice production in Vietnam. One row is one province in one
+year, for the 63 provinces and the years 1987 to 2016. \cr It contains the
+following information:
 \itemize{
 \item \code{PROVINCE}: a factor for the 63 provinces of Vietnam
 \item \code{REGION}: a factor with the 6 main regions
 \item \code{YEAR}: a numeric corresponding to the year
-\item \code{YIELD}: a numeric for the rice production in tons per hectare
+\item \code{YIELD}: a numeric for the rice yield in tons per hectare
 \item \code{PRECIPITATION}: a numeric for the annual precipitation in liters
 \item \code{TEMPERATURES}: a compositional variable represented as a matrix \cr
-whose columns correspond to the proportion of days in a year where the maximal
-temperature (in Celsius degrees) falls into one of the three categories:
-"LOW" (from -6, to 25.1), "MEDIUM" (from 25.1 to 35.4)  and "HIGH" (from 35.4 to 45).
+whose columns correspond to the proportion of days in a year where the
+maximal temperature (in Celsius degrees) falls into one of the three
+categories: "LOW" (from -6 to 25.1), "MEDIUM" (from 25.1 to 35.4) and "HIGH"
+(from 35.4 to 45).
 }
 }
 \references{
-Thi-Huong Trinh, Michel Simioni, and Christine Thomas-Agnan,
-“Discrete and Smooth Scalar-on-Density Compositional Regression
-for Assessing the Impact of Climate Change on Rice Yield in Vietnam”,
-TSE Working Paper, n. 23-1410, February 2023.
+Thi-Huong Trinh, Michel Simioni, and Christine Thomas-Agnan, “Discrete and
+Smooth Scalar-on-Density Compositional Regression for Assessing the Impact of
+Climate Change on Rice Yield in Vietnam”, TSE Working Paper, n. 23-1410,
+February 2023.
 }
 \author{
 Lukas Dargel, Christine Thomas-Agnan

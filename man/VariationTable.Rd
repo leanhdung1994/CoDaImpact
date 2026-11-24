@@ -18,55 +18,79 @@ VariationTable(
 \arguments{
 \item{object}{an object of class "lmCoDa"}
 
-\item{Xvar}{a character indicating the name of the explanatory variable that changes}
+\item{Xvar}{a character indicating the name of the explanatory variable that
+changes}
 
-\item{Xdir}{either character or numeric, to indicate the direction in which Xvar should change
+\item{Xdir}{either character or numeric, to indicate the direction in which
+Xvar should change
 \itemize{
-\item when character this should be one of the components of X, in which case the direction is the corresponding vertex of the simplex
-\item when numeric this argument is coerced to a unit vector in the simplex
+\item when character this should be one of the components of X, in which case
+the direction points towards the corresponding vertex of the simplex
+\item when numeric this should be a positive vector, which is used as a
+direction in the simplex
 \item (when Xvar refers to a scalar variable this argument is ignored)
 }}
 
-\item{obs}{a numeric indicating the observation used for the scenario}
+\item{obs}{a positive integer indicating the row of the observation used for
+the scenario}
 
-\item{inc_size}{a numeric indicating the distance between each point in the scenario of X}
+\item{inc_size}{a positive numeric indicating the step size of the scenario
+of X}
 
-\item{inc_rate}{a numeric that can be used as a parameterization of the step size}
+\item{inc_rate}{a numeric between 0 and 1, only used when \code{Xdir} is the name
+of a part of X. It is the relative change of this part, and replaces
+\code{inc_size} by the step size that gives this change.}
 
-\item{Ytotal}{a numeric indicating the total of Y}
+\item{Ytotal}{a positive numeric indicating the total of Y, used to convert
+the variation of the parts into units (only used when Y is compositional)}
 
-\item{normalize_Xdir}{a logical, if \code{TRUE} the direction \code{Xdir} scaled to have an Aitchison norm of 1, allowing to interpret \code{inc_size} as the Aitchison distance}
+\item{normalize_Xdir}{a logical, if \code{TRUE} the direction \code{Xdir} is scaled to
+have an Aitchison norm of 1, allowing to interpret \code{inc_size} as the
+Aitchison distance}
 }
 \value{
-data.frame
+a data.frame with one column per part of Y (one column for a scalar Y) and
+the rows
+\itemize{
+\item the initial value of Y at the observation \code{obs}
+\item the new value of Y after the step, to first order
+\item the elasticity (or semi-elasticity) of Y with respect to X along \code{Xdir}
+\item the variation of Y in \%, in \% points (compositional Y) and in units
+(scalar Y, or compositional Y with \code{Ytotal} different from 1)
+}
+
+The attributes \code{X(0)} and \code{X(h)} give the value of X before and after the
+step, \code{Xdir} the direction, \code{inc_size} the step size, and \code{inc_rates} the
+relative change of each part of X. \code{Xdir} and \code{inc_rates} are \code{NULL} for a
+scalar X.
 }
 \description{
-This function allows to evaluate how a change in an explanatory variables
-impacts the response variable in a CoDa regression model.
-The changes are calculated based from the approximate formal presented
-in Dargel and Thomas-Agnan (2024).
-Changes in the response variables are provided as data.frame and the
-underlying changes in the explanatory variable are given as attributes.
+This function allows to evaluate how a change in an explanatory variable
+impacts the response variable in a CoDa regression model. The changes are
+calculated with the first-order approximation presented in Dargel and
+Thomas-Agnan (2024). Changes in the response variable are provided as a
+data.frame and the underlying changes in the explanatory variable are given
+as attributes.
 }
 \examples{
-
 # XY-compositional model
 res <- lmCoDa(
   ilr(cbind(left, right, extreme_right)) ~
-  ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
-  data =  head(election, 20))
+    ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
+  data = head(election, 20)
+)
 
 # Focus on changes in the education composition
 educ_comp <- "cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)"
 
-# ... changes towards a summit towards a summit (higher share of people with lower education)
+# ... changes towards a summit (higher share of people with lower education)
 VariationTable(res, educ_comp, Xdir = "Educ_BeforeHighschool")
 
 # ... same changes using a compositional vector as direction
-VariationTable(res, educ_comp, Xdir = c(.5,.25,.25))
+VariationTable(res, educ_comp, Xdir = c(.5, .25, .25))
 
 # ... changes in a more general direction and for a different observation
-VariationTable(res, educ_comp, Xdir = c(.35,.45,.10), obs = 2)
+VariationTable(res, educ_comp, Xdir = c(.35, .45, .10), obs = 2)
 
 }
 \references{

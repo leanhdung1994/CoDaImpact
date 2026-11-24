@@ -51,26 +51,27 @@ transformationSummary <- function(lm_res) {
 
   # First treat the elements related to the response variable
   trans_Y <- whichTrans(mod[1])
-  Ky <- trans_Y[["base_K"]] # K and F are both V in the case of ilr
+  Ky <- trans_Y[["base_K"]]
   Fy <- trans_Y[["base_F"]]
 
+  # covariance of the errors in coordinates, then in clr
   cov_Y <- crossprod(resid(lm_res)) / (nobs(lm_res) - nrow(coef_mat))
   colnames(cov_Y) <- rownames(cov_Y) <- if (length(Ky) == 0) {
     names(mod)[1]
   } else {
     colnames(Ky)
   }
-  cov_Yclr <- if (length(Fy) == 0) cov_Y else t(Fy) %*% cov_Y %*% t(Ky)
+  cov_Yclr <- if (length(Fy) == 0) cov_Y else Ky %*% cov_Y %*% t(Ky)
 
-  result$"NAME_COORD"[[1]] <- names(mod)[1]
-  result$"NAME_SIMPLEX"[[1]] <- name_invTrans(names(mod)[1], trans_Y[["name"]])
-  result$"IS_RESPONSE"[[1]] <- TRUE
-  result$"D"[[1]] <- max(dim(Ky))
-  result$"LR_TRAN"[[1]] <- trans_Y[["name"]]
-  result$"LR_BASE_K"[[1]] <- Ky
-  result$"LR_BASE_F"[[1]] <- Fy
-  result$"VARCOV_COORD"[[1]] <- cov_Y
-  result$"VARCOV_CLR"[[1]] <- cov_Yclr
+  result$NAME_COORD[[1]] <- names(mod)[1]
+  result$NAME_SIMPLEX[[1]] <- name_invTrans(names(mod)[1], trans_Y[["name"]])
+  result$IS_RESPONSE[[1]] <- TRUE
+  result$D[[1]] <- max(dim(Ky))
+  result$LR_TRAN[[1]] <- trans_Y[["name"]]
+  result$LR_BASE_K[[1]] <- Ky
+  result$LR_BASE_F[[1]] <- Fy
+  result$VARCOV_COORD[[1]] <- cov_Y
+  result$VARCOV_CLR[[1]] <- cov_Yclr
 
   # prepare loop over variables
   cov_X <- qr.R(lm_res[["qr"]])
@@ -103,7 +104,7 @@ transformationSummary <- function(lm_res) {
       result$"COEF_CLR"[[i]] <- t(Fx) %*% result$"COEF_COORD"[[i]] %*% t(Ky)
       result$"COEF_SIMPLEX"[[i]] <- result$"COEF_CLR"[[i]]
       result$"VARCOV_COORD"[[i]] <- cov_Xi
-      result$"VARCOV_CLR"[[i]] <- t(Fx) %*% cov_Xi %*% t(Kx)
+      result$"VARCOV_CLR"[[i]] <- t(Fx) %*% cov_Xi %*% Fx
     } # 1. (Y & X)
 
     if (y_is_compo & !x_is_compo) {
@@ -119,7 +120,7 @@ transformationSummary <- function(lm_res) {
       result$"COEF_CLR"[[i]] <- t(Fx) %*% result$"COEF_COORD"[[i]]
       result$"COEF_SIMPLEX"[[i]] <- t(clrInv(t(result$"COEF_CLR"[[i]])))
       result$"VARCOV_COORD"[[i]] <- cov_Xi
-      result$"VARCOV_CLR"[[i]] <- t(Fx) %*% cov_Xi %*% t(Kx)
+      result$"VARCOV_CLR"[[i]] <- t(Fx) %*% cov_Xi %*% Fx
     } # 3. (X only)
 
     if (!y_is_compo & !x_is_compo) {
@@ -146,7 +147,7 @@ name_invTrans <- function(name, trans, data_pos = 1) {
 
 #' @keywords internal
 whichTrans <- function(x) {
-  stopifnot(is.data.frame(x) & length(x) == 1)
+  stopifnot(is.data.frame(x), length(x) == 1)
   resTrans <- function(n = "", bF = matrix(0, 0, 0), bK = matrix(0, 0, 0)) {
     list(name = n, base_F = bF, base_K = bK)
   }

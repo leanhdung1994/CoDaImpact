@@ -49,13 +49,13 @@ VS <- VariationScenario(
   add_opposite = TRUE)
 
 
-plot(x = VS$HOUSEHOLD_EXPENDITURE, y = VS$Y[,1],type = "l", col = "red",
+plot(x = VS$X, y = VS$Y[,1],type = "l", col = "red",
      main = "Variation scenario of household expenditure",
      xlab = "Household expenditure", ylab = "Market share by segment")
-lines(x = VS$HOUSEHOLD_EXPENDITURE, y = VS$Y[,2],type = "l", col = "blue" )
-lines(x = VS$HOUSEHOLD_EXPENDITURE, y = VS$Y[,3],type = "l", col = "green")
-lines(x = VS$HOUSEHOLD_EXPENDITURE, y = VS$Y[,4],type = "l", col = "orange")
-lines(x = VS$HOUSEHOLD_EXPENDITURE, y = VS$Y[,5],type = "l", col = "black")
+lines(x = VS$X, y = VS$Y[,2],type = "l", col = "blue" )
+lines(x = VS$X, y = VS$Y[,3],type = "l", col = "green")
+lines(x = VS$X, y = VS$Y[,4],type = "l", col = "orange")
+lines(x = VS$X, y = VS$Y[,5],type = "l", col = "black")
 legend("topleft",
        legend = paste0("Segment ", LETTERS[1:5]),
        col = c("red", "blue", "green", "orange", "black"),

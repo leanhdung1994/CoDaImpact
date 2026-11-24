@@ -9,35 +9,41 @@ An object of class \code{sf} (inherits from \code{data.table}, \code{data.frame}
 }
 \source{
 \itemize{
-\item The figures for \code{POP} and \code{MEDIAN_INCOME} come from the \href{https://www.insee.fr/fr/information/4467366}{French census data prided by INSEE}.
+\item The figures for \code{POP} and \code{MEDIAN_INCOME} come from the \href{https://www.insee.fr/fr/information/4467366}{French census data provided by INSEE}.
 \item The polygon \code{geometry} is \href{https://geoservices.ign.fr/contoursiris}{provided by the IGN}.
 \item The locations of the nine shopping malls around the city center are derived from online mapping services (Google Maps and OpenStreetMap).
 \item The distances (\code{dist_km}) are derived from location information.
-\item The number of shopping trips (\code{visits}) are simulated by the authors.
+\item The values of \code{visits} are simulated by the authors.
 }
 }
 \usage{
 toulouse_retail
 }
 \description{
-This data set provides an example for the use of CoDa models in geomarketing applications.
-The data is simulated, but realistic in the sense that the parameters used for the simulation
-were estimated on a real, but confidential data set (Dargel and Thomas-Agnan 2024).
+This data set provides an example for the use of CoDa models in geomarketing
+applications. The data is simulated, but realistic in the sense that the
+parameters used for the simulation were estimated on a real, but confidential
+data set (Dargel and Thomas-Agnan 2024). It is an \code{sf} object with one row
+per IRIS district around Toulouse; the package \code{sf} is needed to use the
+column \code{geometry}.
 }
 \details{
 \itemize{
 \item \code{ID_IRIS}: Identifies the geographic region.
 \item \code{POP}: Population number within the region
 \item \code{MEDIAN_INCOME}: The median income in the region
-\item \code{dist_km}: Distances from the region to all nine shopping malls.
-\item \code{visits}: The share of visitors that coming from the region and going to each of the malls.
+\item \code{dist_km}: The distances in km from the region to each of the nine
+shopping malls, with one column per mall.
+\item \code{visits}: The shares of the visitors coming from the region and going to
+each of the nine malls, with one column per mall.
 \item \code{geometry}: The geometry (polygon) of the region
-\item The "mall_locations" and the "simulation_parameters" are given as additional attributes.
+\item The "mall_locations" and the "simu_parameters" are given as additional attributes.
 }
 }
 \references{
-\if{html}{\out{<div class="sourceCode">}}\preformatted{Lukas Dargel & Christine Thomas-Agnan (2024) “The link between multiplicative competitive interaction models and compositional data regression with a total”, Journal of Applied Statistics, DOI: 10.1080/02664763.2024.2329923
-}\if{html}{\out{</div>}}
+Lukas Dargel & Christine Thomas-Agnan (2024) “The link between multiplicative
+competitive interaction models and compositional data regression with a
+total”, Journal of Applied Statistics, DOI: 10.1080/02664763.2024.2329923
 }
 \author{
 Lukas Dargel, Christine Thomas-Agnan

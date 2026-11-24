@@ -16,6 +16,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{compositions}{\code{\link[compositions]{alr}}, \code{\link[compositions:alr]{alrInv}}, \code{\link[compositions]{clr}}, \code{\link[compositions:clr]{clrInv}}, \code{\link[compositions]{ilr}}, \code{\link[compositions:ilr]{ilrInv}}}
+  \item{compositions}{\code{\link[compositions:alr]{alr()}}, \code{\link[compositions:alrInv]{alrInv()}}, \code{\link[compositions:clr]{clr()}}, \code{\link[compositions:clrInv]{clrInv()}}, \code{\link[compositions:ilr]{ilr()}}, \code{\link[compositions:ilrInv]{ilrInv()}}}
 }}
 

@@ -14,16 +14,16 @@
 \item{level}{a numeric, indicating the confidence level required}
 
 \item{y_ref}{an optional argument that indicates the reference component of
-the response variable using its name or its position. \cr
-This argument is only used in the Y-compositional model.
-If it is supplied confidence intervals of difference are used instead of
-the direct intervals of the parameters.}
+the response variable using its name or its position. \cr This argument is
+only used in the Y-compositional model. If it is supplied confidence
+intervals of difference are used instead of the direct intervals of the
+parameters.}
 
-\item{obs}{an optional integer that indicates one observation
-when this argument is supplied the function return the observation
-dependent elasticity}
+\item{obs}{an optional integer that indicates one observation when this
+argument is supplied the function return the observation dependent
+elasticity}
 
-\item{...}{passed on to confit()}
+\item{...}{passed on to confint()}
 }
 \value{
 data.frame
@@ -39,22 +39,21 @@ Another option is interpret the difference in clr parameters as these
 coincide with the difference in elasticities.
 }
 \details{
-Since CoDa models are often multivariate this function only allows to
-specify one explanatory variable at a time.
-The output is also more complex than the usual one for "lm" classes, because
-we have to indicate the component of Y and X.
-With \code{\link[=confint.lm]{confint.lm()}} it is still possible to compute the usual the confidence
-intervals.
+Since CoDa models are often multivariate this function only allows to specify
+one explanatory variable at a time. The output is also more complex than the
+usual one for "lm" classes, because we have to indicate the component of Y
+and X. With \code{\link[=confint.lm]{confint.lm()}} it is still possible to compute the usual the
+confidence intervals.
 }
 \examples{
-
 ## ==== Y-compositional model ====
 res <- lmCoDa(
   ilr(cbind(left, right, extreme_right)) ~
-  ilr(cbind(Age_1839, Age_4064)) +
-  ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)) +
-  unemp_rate,
-  data = head(election, 20))
+    ilr(cbind(Age_1839, Age_4064)) +
+      ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)) +
+      unemp_rate,
+  data = head(election, 20)
+)
 
 ## ---- CI for scalar X
 # CI for clr parameters
