@@ -32,6 +32,7 @@ Other contributors:
   \item Sijia Pan [contributor]
   \item Iban Rendo Barreiro [contributor]
   \item Shuyao Li [contributor]
+  \item Anh-Dung Le [contributor]
 }
 
 }

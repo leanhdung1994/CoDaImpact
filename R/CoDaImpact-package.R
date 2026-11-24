@@ -127,7 +127,7 @@ NULL
 #'
 #' @source
 #'   + The figures for `POP` and `MEDIAN_INCOME` come from the [French census data provided by INSEE](https://www.insee.fr/fr/information/4467366).
-#'   + The polygon `geometry` is [provided by the IGN](https://geoservices.ign.fr/contoursiris).
+#'   + The polygon `geometry` is [provided by the IGN](https://cartes.gouv.fr/rechercher-une-donnee/dataset/IGNF_CONTOURS-IRIS).
 #'   + The locations of the nine shopping malls around the city center are derived from online mapping services (Google Maps and OpenStreetMap).
 #'   + The distances (`dist_km`) are derived from location information.
 #'   + The values of `visits` are simulated by the authors.

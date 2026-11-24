@@ -10,7 +10,7 @@ An object of class \code{sf} (inherits from \code{data.table}, \code{data.frame}
 \source{
 \itemize{
 \item The figures for \code{POP} and \code{MEDIAN_INCOME} come from the \href{https://www.insee.fr/fr/information/4467366}{French census data provided by INSEE}.
-\item The polygon \code{geometry} is \href{https://geoservices.ign.fr/contoursiris}{provided by the IGN}.
+\item The polygon \code{geometry} is \href{https://cartes.gouv.fr/rechercher-une-donnee/dataset/IGNF_CONTOURS-IRIS}{provided by the IGN}.
 \item The locations of the nine shopping malls around the city center are derived from online mapping services (Google Maps and OpenStreetMap).
 \item The distances (\code{dist_km}) are derived from location information.
 \item The values of \code{visits} are simulated by the authors.
