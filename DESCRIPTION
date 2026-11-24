@@ -1,34 +1,52 @@
 Package: CoDaImpact
 Title: Interpreting CoDa Regression Models
 Version: 0.1.0
-Authors@R: c(
-    person("Lukas", "Dargel", role = c("aut", "cre"),  email = "lukas.dargel@mailbox.org", comment = c(ORCID = "0000-0002-4839-506X")),
-    person("Christine", "Thomas-Agnan", role = c("aut"), email = "christine.thomas@tse-fr.eu", comment = c(ORCID = "0000-0002-6430-3110")),
-    person("Rodrigue", "Nasr", role = "ctb"),
-    person("Sijia", "Pan", role = "ctb"),
-    person("Iban", "Rendo Barreiro", role = "ctb"),
-    person("Shuyao", "Li", role = "ctb"))
-Description: 
-    Provides methods for interpreting CoDa (Compositional Data) regression models along the lines of "Pairwise share ratio interpretations of compositional regression models" (Dargel and Thomas-Agnan 2024) <doi:10.1016/j.csda.2024.107945>.
-    The new methods include variation scenarios, elasticities, elasticity differences and share ratio elasticities.
-    These tools are independent of log-ratio transformations and allow an interpretation in the original space of shares.
-    'CoDaImpact' is designed to be used with the 'compositions' package and its ecosystem.
+Authors@R:
+    c(
+      person(
+        "Lukas",
+        "Dargel",
+        role = c("aut", "cre"),
+        email = "lukas.dargel@mailbox.org",
+        comment = c(ORCID = "0000-0002-4839-506X")
+      ),
+      person(
+        "Christine",
+        "Thomas-Agnan",
+        role = c("aut"),
+        email = "christine.thomas@tse-fr.eu",
+        comment = c(ORCID = "0000-0002-6430-3110")
+      ),
+      person("Rodrigue", "Nasr", role = "ctb"),
+      person("Sijia", "Pan", role = "ctb"),
+      person("Iban", "Rendo Barreiro", role = "ctb"),
+      person("Shuyao", "Li", role = "ctb"),
+      person("Anh-Dung", "Le", role = "ctb")
+    )
+Description: Provides methods for interpreting CoDa (Compositional Data)
+    regression models along the lines of "Pairwise share ratio interpretations
+    of compositional regression models" (Dargel and Thomas-Agnan 2024)
+    <doi:10.1016/j.csda.2024.107945>. The new methods include variation
+    scenarios, elasticities, elasticity differences and share ratio
+    elasticities. These tools are independent of log-ratio transformations and
+    allow an interpretation in the original space of shares. 'CoDaImpact' is
+    designed to be used with the 'compositions' package and its ecosystem.
 License: GPL (>= 3)
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-URL: https://github.com/LukeCe/CoDaImpact,
-    https://lukece.github.io/CoDaImpact/
+URL: https://github.com/LukeCe/CoDaImpact, https://lukece.github.io/CoDaImpact/
 BugReports: https://github.com/LukeCe/CoDaImpact/issues
-Imports: 
-    methods,
-    compositions
-Depends: 
+Depends:
     R (>= 2.10)
-LazyData: true
-Suggests: 
-    rmarkdown,
+Imports:
+    compositions,
+    methods
+Suggests:
     knitr,
+    rmarkdown,
     sf,
     tinytest
-VignetteBuilder: knitr
+VignetteBuilder:
+    knitr
 Config/roxygen2/version: 8.1.1
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
