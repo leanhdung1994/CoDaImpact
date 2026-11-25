@@ -88,12 +88,23 @@ ToSimplex <- function(object) {
 }
 
 # ---- methods ----------------------------------------------------------------
-#' @inherit predict.lmCoDa title description details params
+#' Coefficients of CoDa regression models
+#'
+#' Works as [coef()] for lm objects. The `space` argument returns the
+#' coefficients in clr space or in the simplex instead of the log-ratio
+#' coordinates used in the model.
+#'
+#' @param object an object of class "lmCoDa"
+#' @param space `NULL` (default) for the coefficients in the log-ratio
+#'   coordinates used in the model, or one of `"clr"` and `"simplex"`
 #' @param split logical, if `TRUE` the coefficients are reported as a list
 #'   instead of a matrix, where list structure reflects the explanatory
 #'   variables of the model
 #' @param ... not used
-#' @return a matrix
+#' @return
+#' the coefficients of the explanatory variables. Each scalar variable has one
+#' row; a compositional variable with l parts has l - 1 rows with `space = NULL`
+#' and l rows with `space = "clr"` or `"simplex"`.
 #'
 #' @author Lukas Dargel
 #' @exportS3Method
@@ -109,8 +120,15 @@ coef.lmCoDa <- function(object, space = NULL, split = FALSE, ...) {
   return(cfs)
 }
 
-#' @inherit predict.lmCoDa title description details params
-#' @return matrix or vector
+#' Fitted values of CoDa regression models
+#'
+#' Works as [fitted()] for lm objects. When the response Y is compositional, the
+#' `space` argument returns the fitted values in clr space or in the simplex
+#' instead of the log-ratio coordinates used in the model.
+#'
+#' @inheritParams predict.lmCoDa
+#' @param ... not used
+#' @return the fitted values, in the same form as for [predict.lmCoDa()]
 #' @importFrom stats fitted
 #' @author Lukas Dargel
 #' @exportS3Method
@@ -133,17 +151,24 @@ fitted.lmCoDa <- function(object, space = NULL, ...) {
   if (space == "clr") return(fity %*% t(Ky))
 }
 
-#' Predictions, fitted values, residuals, and coefficients in CoDa models
+#' Predictions from CoDa regression models
 #'
-#' These functions work as the usual lm object. They additionally offer the
-#' possibility to use the `space` argument, which indicates the space (clr space
-#' or simplex) in which the result is returned.
+#' Works as [predict.lm()]. When the response Y is compositional, the `space`
+#' argument returns the predictions in clr space or in the simplex instead of
+#' the log-ratio coordinates used in the model.
 #'
-#' @param object class "lmCoDa"
-#' @param space a character indicating in which space the result should be
-#'   returned. Supported are the options `c("clr", "simplex")`.
-#' @param ... passed on to [predict.lm()]
-#' @return matrix or vector
+#' @param object an object of class "lmCoDa"
+#' @param space `NULL` (default) for the log-ratio coordinates used in the
+#'   model, or one of `"clr"` and `"simplex"`. Only available when Y is
+#'   compositional.
+#' @param ... passed on to [predict.lm()], for example `newdata`
+#' @return
+#' - with `space = NULL`, the same as [predict.lm()]: a vector for a scalar Y,
+#'   a matrix of log-ratio coordinates for a compositional Y
+#' - with `space = "clr"`, a matrix of clr coordinates with one row per
+#'   observation and one column per part of Y
+#' - with `space = "simplex"`, a matrix of compositions with one row per
+#'   observation, closed to 1
 #' @author Lukas Dargel
 #' @exportS3Method
 predict.lmCoDa <- function(object, space = NULL, ...) {
@@ -165,8 +190,18 @@ predict.lmCoDa <- function(object, space = NULL, ...) {
   if (space == "clr") return(pred %*% t(Ky))
 }
 
-#' @inherit predict.lmCoDa title description details params
-#' @return matrix or vector
+#' Residuals of CoDa regression models
+#'
+#' Works as [residuals()] for lm objects. When the response Y is compositional,
+#' the `space` argument returns the residuals in clr space or in the simplex
+#' instead of the log-ratio coordinates used in the model.
+#'
+#' @inheritParams predict.lmCoDa
+#' @param ... not used
+#' @return
+#' the residuals, in the same form as for [predict.lmCoDa()]. In the simplex,
+#' the residual of an observation is the composition Y minus the fitted
+#' composition (the perturbation difference).
 #' @author Lukas Dargel
 #' @exportS3Method
 residuals.lmCoDa <- function(object, space = NULL, ...) {

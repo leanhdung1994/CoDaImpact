@@ -2,15 +2,15 @@
 % Please edit documentation in R/class-lmCoDa.R
 \name{coef.lmCoDa}
 \alias{coef.lmCoDa}
-\title{Predictions, fitted values, residuals, and coefficients in CoDa models}
+\title{Coefficients of CoDa regression models}
 \usage{
 \method{coef}{lmCoDa}(object, space = NULL, split = FALSE, ...)
 }
 \arguments{
-\item{object}{class "lmCoDa"}
+\item{object}{an object of class "lmCoDa"}
 
-\item{space}{a character indicating in which space the prediction should be
-returned. Supported are the options \code{c("clr", "simplex")}.}
+\item{space}{\code{NULL} (default) for the coefficients in the log-ratio
+coordinates used in the model, or one of \code{"clr"} and \code{"simplex"}}
 
 \item{split}{logical, if \code{TRUE} the coefficients are reported as a list
 instead of a matrix, where list structure reflects the explanatory
@@ -19,12 +19,14 @@ variables of the model}
 \item{...}{not used}
 }
 \value{
-a matrix
+the coefficients of the explanatory variables. Each scalar variable has one
+row; a compositional variable with l parts has l - 1 rows with \code{space = NULL}
+and l rows with \code{space = "clr"} or \code{"simplex"}.
 }
 \description{
-These functions work as in the usual lm object. They additionally offer the
-possibility use the \code{space} argument which transforms them into directly into
-clr space or in the simplex.
+Works as \code{\link[=coef]{coef()}} for lm objects. The \code{space} argument returns the
+coefficients in clr space or in the simplex instead of the log-ratio
+coordinates used in the model.
 }
 \author{
 Lukas Dargel

@@ -43,7 +43,7 @@ each of the nine malls, with one column per mall.
 \references{
 Lukas Dargel & Christine Thomas-Agnan (2024) “The link between multiplicative
 competitive interaction models and compositional data regression with a
-total”, Journal of Applied Statistics, DOI: 10.1080/02664763.2024.2329923
+total”, Journal of Applied Statistics, \doi{10.1080/02664763.2024.2329923}
 }
 \author{
 Lukas Dargel, Christine Thomas-Agnan

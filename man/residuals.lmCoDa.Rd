@@ -2,25 +2,28 @@
 % Please edit documentation in R/class-lmCoDa.R
 \name{residuals.lmCoDa}
 \alias{residuals.lmCoDa}
-\title{Predictions, fitted values, residuals, and coefficients in CoDa models}
+\title{Residuals of CoDa regression models}
 \usage{
 \method{residuals}{lmCoDa}(object, space = NULL, ...)
 }
 \arguments{
-\item{object}{class "lmCoDa"}
+\item{object}{an object of class "lmCoDa"}
 
-\item{space}{a character indicating in which space the prediction should be
-returned. Supported are the options \code{c("clr", "simplex")}.}
+\item{space}{\code{NULL} (default) for the log-ratio coordinates used in the
+model, or one of \code{"clr"} and \code{"simplex"}. Only available when Y is
+compositional.}
 
-\item{...}{passed on to \code{\link[=predict.lm]{predict.lm()}}}
+\item{...}{not used}
 }
 \value{
-matrix or vector
+the residuals, in the same form as for \code{\link[=predict.lmCoDa]{predict.lmCoDa()}}. In the simplex,
+the residual of an observation is the composition Y minus the fitted
+composition (the perturbation difference).
 }
 \description{
-These functions work as in the usual lm object. They additionally offer the
-possibility use the \code{space} argument which transforms them into directly into
-clr space or in the simplex.
+Works as \code{\link[=residuals]{residuals()}} for lm objects. When the response Y is compositional,
+the \code{space} argument returns the residuals in clr space or in the simplex
+instead of the log-ratio coordinates used in the model.
 }
 \author{
 Lukas Dargel

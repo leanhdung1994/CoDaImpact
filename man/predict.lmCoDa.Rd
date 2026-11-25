@@ -2,25 +2,33 @@
 % Please edit documentation in R/class-lmCoDa.R
 \name{predict.lmCoDa}
 \alias{predict.lmCoDa}
-\title{Predictions, fitted values, residuals, and coefficients in CoDa models}
+\title{Predictions from CoDa regression models}
 \usage{
 \method{predict}{lmCoDa}(object, space = NULL, ...)
 }
 \arguments{
-\item{object}{class "lmCoDa"}
+\item{object}{an object of class "lmCoDa"}
 
-\item{space}{a character indicating in which space the prediction should be
-returned. Supported are the options \code{c("clr", "simplex")}.}
+\item{space}{\code{NULL} (default) for the log-ratio coordinates used in the
+model, or one of \code{"clr"} and \code{"simplex"}. Only available when Y is
+compositional.}
 
-\item{...}{passed on to \code{\link[=predict.lm]{predict.lm()}}}
+\item{...}{passed on to \code{\link[=predict.lm]{predict.lm()}}, for example \code{newdata}}
 }
 \value{
-matrix or vector
+\itemize{
+\item with \code{space = NULL}, the same as \code{\link[=predict.lm]{predict.lm()}}: a vector for a scalar Y,
+a matrix of log-ratio coordinates for a compositional Y
+\item with \code{space = "clr"}, a matrix of clr coordinates with one row per
+observation and one column per part of Y
+\item with \code{space = "simplex"}, a matrix of compositions with one row per
+observation, closed to 1
+}
 }
 \description{
-These functions work as in the usual lm object. They additionally offer the
-possibility use the \code{space} argument which transforms them into directly into
-clr space or in the simplex.
+Works as \code{\link[=predict.lm]{predict.lm()}}. When the response Y is compositional, the \code{space}
+argument returns the predictions in clr space or in the simplex instead of
+the log-ratio coordinates used in the model.
 }
 \author{
 Lukas Dargel

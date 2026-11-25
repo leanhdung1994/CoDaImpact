@@ -11,17 +11,17 @@ An object of class \code{data.frame} with 152 rows and 10 columns.
 \itemize{
 \item The figures for GDP and household expenditure are originally provided by the National Institute of Statistics and Economic Studies (INSEE).
 \item The diesel prices are from the OECD.
-\item The market shares of the segments come from a simulation by Renault.
+\item The market shares of the segments are synthetic data from a model based on Renault data.
 }
 }
 \usage{
 car_market
 }
 \description{
-This data set shows monthly data of the French car market between 2003 and
+This data set consists of monthly data of the French car market between 2003 and
 2015. The market is divided into 5 main segments (A to E), according to the
 size of the vehicle chassis. Morais et al. (2018) first used this data to
-compare compositional and Dirichlet models for market shares.
+compare compositional and Dirichlet models for market-share analysis.
 }
 \details{
 \itemize{
@@ -39,7 +39,7 @@ E the largest. The segmentation is explained in
 \references{
 Joanna Morais, Christine Thomas-Agnan & Michel Simioni (2018) Using
 compositional and Dirichlet models for market share regression, Journal of
-Applied Statistics, 45:9, 1670-1689, DOI: 10.1080/02664763.2017.1389864
+Applied Statistics, 45:9, 1670-1689, \doi{10.1080/02664763.2017.1389864}
 }
 \author{
 Lukas Dargel, Christine Thomas-Agnan

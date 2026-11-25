@@ -3,7 +3,7 @@
 \docType{data}
 \name{election}
 \alias{election}
-\title{Results of french departmental elections in 2015}
+\title{Results of French departmental elections in 2015}
 \format{
 An object of class \code{data.frame} with 95 rows and 13 columns.
 }
@@ -19,7 +19,7 @@ election
 \description{
 The data is used by Nguyen et al. (2020) and originally disseminated by the
 French ministry (Ministère de l'Intérieur et des Outre-Mer). Information
-about the population characteristics (in 2014) comes from the french national
+about the population characteristics (in 2014) comes from the French national
 statistics institute (INSEE). One row is one of 95 French departments.
 }
 \details{
@@ -36,7 +36,7 @@ statistics institute (INSEE). One row is one of 95 French departments.
 \references{
 Nguyen THA, Laurent T, Thomas-Agnan C, Ruiz-Gazen A. Analyzing the impacts of
 socio-economic factors on French departmental elections with CoDa methods. J
-Appl Stat. 2020 Dec 9;49(5):1235-1251. doi: 10.1080/02664763.2020.1858274.
+Appl Stat. 2020 Dec 9;49(5):1235-1251. \doi{10.1080/02664763.2020.1858274}.
 PMID: 35707505; PMCID: PMC9041641.
 }
 \author{

@@ -2,25 +2,26 @@
 % Please edit documentation in R/class-lmCoDa.R
 \name{fitted.lmCoDa}
 \alias{fitted.lmCoDa}
-\title{Predictions, fitted values, residuals, and coefficients in CoDa models}
+\title{Fitted values of CoDa regression models}
 \usage{
 \method{fitted}{lmCoDa}(object, space = NULL, ...)
 }
 \arguments{
-\item{object}{class "lmCoDa"}
+\item{object}{an object of class "lmCoDa"}
 
-\item{space}{a character indicating in which space the prediction should be
-returned. Supported are the options \code{c("clr", "simplex")}.}
+\item{space}{\code{NULL} (default) for the log-ratio coordinates used in the
+model, or one of \code{"clr"} and \code{"simplex"}. Only available when Y is
+compositional.}
 
-\item{...}{passed on to \code{\link[=predict.lm]{predict.lm()}}}
+\item{...}{not used}
 }
 \value{
-matrix or vector
+the fitted values, in the same form as for \code{\link[=predict.lmCoDa]{predict.lmCoDa()}}
 }
 \description{
-These functions work as in the usual lm object. They additionally offer the
-possibility use the \code{space} argument which transforms them into directly into
-clr space or in the simplex.
+Works as \code{\link[=fitted]{fitted()}} for lm objects. When the response Y is compositional, the
+\code{space} argument returns the fitted values in clr space or in the simplex
+instead of the log-ratio coordinates used in the model.
 }
 \author{
 Lukas Dargel

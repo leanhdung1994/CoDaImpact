@@ -17,7 +17,7 @@ CoDa_path(
 \item{comp_direc}{A numeric vector, defining a direction in the simplex}
 
 \item{comp_from}{A numeric vector, an initial point in the simplex - defaults
-to a balanced composition, which represents the origin in the simplex}
+to the origin of the simplex (the closure of the vector of ones)}
 
 \item{step_size}{A numeric, indicating the step size}
 
@@ -39,22 +39,21 @@ Create a linear path in the simplex by defining a direction and a step size
 }
 \details{
 The function is very similar to \code{\link[=CoDa_seq]{CoDa_seq()}}. However, instead of drawing a
-line between a starting and end point it uses only a starting point and a
-direction.
+line between a starting point and an end point, it uses only a starting point
+and a direction.
 }
 \examples{
-# three steps that go from the origin towards the defined direction
+# three steps of size 0.01 from the origin along direction comp_direc
 comp_direc <- c(A = .4, B = .35, C = .25)
 CoDa_path(comp_direc, n_steps = 3)
 
-# we can draw the path that is defined by this direction
-comp_direc <- c(A = .4, B = .35, C = .25)
+# the path from the origin in a ternary diagram: 10 steps, 100 steps, and
+# 100 steps in both directions
 compositions::plot.acomp(CoDa_path(comp_direc, n_steps = 10))
 compositions::plot.acomp(CoDa_path(comp_direc, n_steps = 100))
-compositions::plot.acomp(CoDa_path(comp_direc, add_opposite = TRUE))
+compositions::plot.acomp(CoDa_path(comp_direc, n_steps = 100, add_opposite = TRUE))
 
-# using the same direction we can draw a new path that does not go through the origin
-comp_direc <- c(A = .4, B = .35, C = .25)
+# the same direction from another starting point
 comp_from <- c(.7, .2, .1)
 compositions::plot.acomp(CoDa_path(comp_direc, comp_from, n_steps = 10))
 compositions::plot.acomp(CoDa_path(comp_direc, comp_from, n_steps = 100))

@@ -71,8 +71,7 @@ released on CRAN later on.
 #| warning: false
 
 # remotes::install_github("LukeCe/CoDaImpact")
-# library(CoDaImpact)
-devtools::load_all("p:/CoDaImpact")
+library(CoDaImpact)
 library(compositions)
 ```
 

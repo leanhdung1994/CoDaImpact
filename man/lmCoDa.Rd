@@ -14,7 +14,7 @@ lmCoDa(formula, data, ...)
 \item{...}{arguments passed on to \code{\link[=lm]{lm()}}}
 }
 \value{
-an object of class "lm" and "lmCoDa" if the formula include at least one
+an object of class "lm" and "lmCoDa" if the formula includes at least one
 log-transformation
 }
 \description{
@@ -22,7 +22,7 @@ This is a thin wrapper around \code{\link[=lm]{lm()}} followed by \code{\link[=T
 to create a lmCoDa object in one step.
 }
 \examples{
-# XY-compositional model
+# regression model with a compositional dependent and at least one compositional covariate
 res <- lmCoDa(
   ilr(cbind(left, right, extreme_right)) ~
     ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),

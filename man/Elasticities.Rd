@@ -17,17 +17,18 @@ Elasticities(object, Xvar = NULL, obs = 1)
 a matrix
 }
 \description{
-This function computes elasticities and semi-elasticities for CoDa regression
-model. where we have to distinguish four cases:
+This function computes elasticities and semi-elasticities for assessing the
+impact of a given covariate X on the dependent Y in a regression model. We
+have to distinguish four cases:
 \itemize{
 \item Y and X are both compositional: this leads to an elasticity
 \item Y is compositional and X is scalar: this leads to a semi-elasticity
 \item Y is scalar and X is compositional: this leads to a semi-elasticity
-\item Y and X are both scalar: this case is not implemented as it leads to constant marginal effects
+\item Y and X are both scalar: this case is not implemented, as it is the same as in ordinary linear regression, yielding a constant marginal effect
 }
 }
 \details{
-The mathematical foundation for elasticity computations in CoDa model come
+The mathematical foundation for elasticity computations in CoDa models comes
 from Morais and Thomas-Agnan (2021). Dargel and Thomas-Agnan (2024) present
 further results and illustrations.
 }

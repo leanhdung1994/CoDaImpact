@@ -63,7 +63,7 @@ NULL
 #' @references
 #' Nguyen THA, Laurent T, Thomas-Agnan C, Ruiz-Gazen A. Analyzing the impacts of
 #' socio-economic factors on French departmental elections with CoDa methods. J
-#' Appl Stat. 2020 Dec 9;49(5):1235-1251. doi: 10.1080/02664763.2020.1858274.
+#' Appl Stat. 2020 Dec 9;49(5):1235-1251. \doi{10.1080/02664763.2020.1858274}.
 #' PMID: 35707505; PMCID: PMC9041641.
 #' @author Lukas Dargel, Christine Thomas-Agnan
 #' @docType data
@@ -97,7 +97,7 @@ NULL
 #' @references
 #' Joanna Morais, Christine Thomas-Agnan & Michel Simioni (2018) Using
 #' compositional and Dirichlet models for market share regression, Journal of
-#' Applied Statistics, 45:9, 1670-1689, DOI: 10.1080/02664763.2017.1389864
+#' Applied Statistics, 45:9, 1670-1689, \doi{10.1080/02664763.2017.1389864}
 #' @author Lukas Dargel, Christine Thomas-Agnan
 #' @docType data
 #' @keywords data
@@ -134,7 +134,7 @@ NULL
 #' @references
 #' Lukas Dargel & Christine Thomas-Agnan (2024) “The link between multiplicative
 #' competitive interaction models and compositional data regression with a
-#' total”, Journal of Applied Statistics, DOI: 10.1080/02664763.2024.2329923
+#' total”, Journal of Applied Statistics, \doi{10.1080/02664763.2024.2329923}
 #' @author Lukas Dargel, Christine Thomas-Agnan
 #' @docType data
 #' @keywords data

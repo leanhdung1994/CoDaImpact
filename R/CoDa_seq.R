@@ -132,18 +132,17 @@ CoDa_seq <- function(comp_from, comp_to, n_steps = 100, add_opposite = FALSE) {
 #'
 #' @author Lukas Dargel
 #' @examples
-#' # three steps that go from the origin towards the defined direction
+#' # three steps of size 0.01 from the origin along direction comp_direc
 #' comp_direc <- c(A = .4, B = .35, C = .25)
 #' CoDa_path(comp_direc, n_steps = 3)
 #'
-#' # we can draw the path that is defined by this direction
-#' comp_direc <- c(A = .4, B = .35, C = .25)
+#' # the path from the origin in a ternary diagram: 10 steps, 100 steps, and
+#' # 100 steps in both directions
 #' compositions::plot.acomp(CoDa_path(comp_direc, n_steps = 10))
 #' compositions::plot.acomp(CoDa_path(comp_direc, n_steps = 100))
-#' compositions::plot.acomp(CoDa_path(comp_direc, add_opposite = TRUE))
+#' compositions::plot.acomp(CoDa_path(comp_direc, n_steps = 100, add_opposite = TRUE))
 #'
-#' # using the same direction we can draw a new path that does not go through the origin
-#' comp_direc <- c(A = .4, B = .35, C = .25)
+#' # the same direction from another starting point
 #' comp_from <- c(.7, .2, .1)
 #' compositions::plot.acomp(CoDa_path(comp_direc, comp_from, n_steps = 10))
 #' compositions::plot.acomp(CoDa_path(comp_direc, comp_from, n_steps = 100))

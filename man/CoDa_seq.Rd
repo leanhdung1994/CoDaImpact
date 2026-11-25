@@ -2,14 +2,14 @@
 % Please edit documentation in R/CoDa_seq.R
 \name{CoDa_seq}
 \alias{CoDa_seq}
-\title{A sequence connecting two points in a simplex}
+\title{A sequence connecting two points in the simplex by a simplex line}
 \usage{
 CoDa_seq(comp_from, comp_to, n_steps = 100, add_opposite = FALSE)
 }
 \arguments{
-\item{comp_from}{A numeric vector, representing the initial compositions}
+\item{comp_from}{A numeric vector, representing the initial composition}
 
-\item{comp_to}{A numeric vector, representing the final compositions.}
+\item{comp_to}{A numeric vector, representing the final composition}
 
 \item{n_steps}{An integer, indicating the number of steps used to go from
 comp_from to comp_to}
@@ -22,7 +22,7 @@ A data.frame where each row corresponds to one compositional vector, closed
 to 1
 }
 \description{
-A sequence connecting two points in a simplex
+A sequence connecting two points in the simplex by a simplex line
 }
 \details{
 The sequence is evenly spaced and corresponds to a straight line in the

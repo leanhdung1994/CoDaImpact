@@ -10,17 +10,17 @@ ToSimplex(object)
 \item{object}{an object of class "lmCoDa"}
 }
 \value{
-an object of class "lm" and "lmCoDa" if the formula include at least one
+an object of class "lm" and "lmCoDa" if the formula includes at least one
 log-transformation
 }
 \description{
 The function converts the output of a "lm" to the "lmCoDa" class, which
-offers additional tools for the interpretation of a CoDa regression models.
+offers additional tools for the interpretation of a CoDa regression model.
 Most of the work is done by the \code{\link[=transformationSummary]{transformationSummary()}} function, which has
 its own documentation page, but should be reserved for internal use.
 }
 \examples{
-# XY-compositional model
+# regression model with a compositional dependent and at least one compositional covariate
 res <- lm(
   ilr(cbind(left, right, extreme_right)) ~
     ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),

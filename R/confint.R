@@ -21,14 +21,11 @@
 #' @param object class "lmCoDa"
 #' @param parm a character, indicating the name of one explanatory variable
 #' @param level a numeric, indicating the confidence level required
-#' @param y_ref an optional argument that indicates the reference component of
-#'   the response variable using its name or its position. \cr This argument is
-#'   only used when Y is compositional. If it is supplied confidence
-#'   intervals of difference are used instead of the direct intervals of the
-#'   parameters.
-#' @param obs an optional integer that indicates one observation: when this
-#'   argument is supplied, the function returns the elasticity of that
-#'   observation
+#' @param y_ref an optional name or position of one part of Y, only used when Y
+#'   is compositional. If it is supplied, the function returns intervals for the
+#'   differences between the clr coefficients and those of the part `y_ref`.
+#' @param obs meant for the elasticities at one observation, which are not
+#'   implemented yet
 #' @param ... passed on to confint()
 #' @return data.frame
 #'
