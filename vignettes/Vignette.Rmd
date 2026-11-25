@@ -23,7 +23,7 @@ vignette: >
 #| include: false
 
 knitr::opts_chunk$set(echo = TRUE, error = TRUE)
-oopt <- options(scipen = 999)
+oopt <- options(scipen = 999, digits = 4)
 ```
 
 # Introduction

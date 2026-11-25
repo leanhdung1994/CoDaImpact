@@ -1,4 +1,4 @@
-#' A sequence connecting two points in a simplex
+#' A sequence connecting two points in the simplex by a simplex line
 #'
 #' @details
 #' The sequence is evenly spaced and corresponds to a straight line in the
@@ -6,8 +6,8 @@
 #' initial point with the first summit of the simplex. Since exact zeros are not
 #' handled by the ilr they are replaced by a small constant.
 #'
-#' @param comp_from A numeric vector, representing the initial compositions
-#' @param comp_to A numeric vector, representing the final compositions.
+#' @param comp_from A numeric vector, representing the initial composition
+#' @param comp_to A numeric vector, representing the final composition
 #' @param n_steps An integer, indicating the number of steps used to go from
 #'   comp_from to comp_to
 #' @param add_opposite A logical, if `TRUE` the path in the opposite direction
@@ -109,12 +109,12 @@ CoDa_seq <- function(comp_from, comp_to, n_steps = 100, add_opposite = FALSE) {
 #'
 #' @details
 #' The function is very similar to [CoDa_seq()]. However, instead of drawing a
-#' line between a starting and end point it uses only a starting point and a
-#' direction.
+#' line between a starting point and an end point, it uses only a starting point
+#' and a direction.
 #'
 #' @param comp_direc A numeric vector, defining a direction in the simplex
 #' @param comp_from A numeric vector, an initial point in the simplex - defaults
-#'   to a balanced composition, which represents the origin in the simplex
+#'   to the origin of the simplex (the closure of the vector of ones)
 #' @param step_size A numeric, indicating the step size
 #' @param n_steps A numeric, indicating the number of steps to be taken from
 #'   `comp_from`

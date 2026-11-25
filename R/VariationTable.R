@@ -37,7 +37,7 @@
 #' @importFrom compositions acomp
 #' @export
 #' @examples
-#' # XY-compositional model
+#' # regression model with a compositional dependent and at least one compositional covariate
 #' res <- lmCoDa(
 #'   ilr(cbind(left, right, extreme_right)) ~
 #'     ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),

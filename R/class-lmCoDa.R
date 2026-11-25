@@ -9,14 +9,14 @@
 #' @param data as in [lm()]
 #' @param ... arguments passed on to [lm()]
 #' @return
-#' an object of class "lm" and "lmCoDa" if the formula include at least one
+#' an object of class "lm" and "lmCoDa" if the formula includes at least one
 #' log-transformation
 #'
 #' @author Lukas Dargel
 #' @seealso [lm()], [ToSimplex()], [compositions::ilr()], [compositions::alr()]
 #' @export
 #' @examples
-#' # XY-compositional model
+#' # regression model with a compositional dependent and at least one compositional covariate
 #' res <- lmCoDa(
 #'   ilr(cbind(left, right, extreme_right)) ~
 #'     ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
@@ -42,7 +42,7 @@ lmCoDa <- function(formula, data, ...) {
 #'
 #' @description
 #' The function converts the output of a "lm" to the "lmCoDa" class, which
-#' offers additional tools for the interpretation of a CoDa regression models.
+#' offers additional tools for the interpretation of a CoDa regression model.
 #' Most of the work is done by the [transformationSummary()] function, which has
 #' its own documentation page, but should be reserved for internal use.
 #'
@@ -55,7 +55,7 @@ lmCoDa <- function(formula, data, ...) {
 #'   - Rodrigue Nasr
 #' @export
 #' @examples
-#' # XY-compositional model
+#' # regression model with a compositional dependent and at least one compositional covariate
 #' res <- lm(
 #'   ilr(cbind(left, right, extreme_right)) ~
 #'     ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
@@ -135,12 +135,12 @@ fitted.lmCoDa <- function(object, space = NULL, ...) {
 
 #' Predictions, fitted values, residuals, and coefficients in CoDa models
 #'
-#' These functions work as in the usual lm object. They additionally offer the
-#' possibility use the `space` argument which transforms them into directly into
-#' clr space or in the simplex.
+#' These functions work as the usual lm object. They additionally offer the
+#' possibility to use the `space` argument, which indicates the space (clr space
+#' or simplex) in which the result is returned.
 #'
 #' @param object class "lmCoDa"
-#' @param space a character indicating in which space the prediction should be
+#' @param space a character indicating in which space the result should be
 #'   returned. Supported are the options `c("clr", "simplex")`.
 #' @param ... passed on to [predict.lm()]
 #' @return matrix or vector

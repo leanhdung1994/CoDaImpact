@@ -1,11 +1,11 @@
 #' Compute share ratio elasticities for CoDa models
 #'
-#' In CoDa models with compositional dependent variable (Y) share ratio
+#' In CoDa models with compositional dependent variable (Y), share ratio
 #' elasticities (SRE) allow to interpret the influence of compositional
 #' explanatory variables (X). The interpretation is analogous to usual
 #' elasticities:
-#'   - When the share ratio of X increases by 1% the share ratio of Y increases by SRE%
-#'   - The main difference to usual elasticities that, since X is compositional
+#'   - When the share ratio of X increases by 1% in a given direction of the simplex specified by `Xdir`, each share ratio of Y increases by its SRE%
+#'   - The main difference to usual elasticities is that, since X is compositional
 #'     the change of X must be specified in terms of a direction in the simplex.
 #'
 #'
@@ -26,7 +26,7 @@
 #' @importFrom compositions acomp
 #' @export
 #' @examples
-#' ### XY-compositional model
+#' ### regression model with a compositional dependent and at least one compositional covariate
 #' res <- lmCoDa(
 #'   ilr(cbind(left, right, extreme_right)) ~
 #'     ilr(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),

@@ -1,34 +1,34 @@
 #' @title Confidence Intervals for CoDa Models
 #'
 #' @description
-#' Dargel and Thomas-Agnan (2024) show to compute variances and confidence
+#' Dargel and Thomas-Agnan (2024) show how to compute variances and confidence
 #' intervals for parameters of CoDa models in log-ratio spaces.
 #'
 #' Of particular interest are the clr parameters since they can be directly
 #' interpreted as differences from an average elasticity.
 #'
-#' Another option is interpret the difference in clr parameters as these
+#' Another option is to interpret the difference in clr parameters as these
 #' coincide with the difference in elasticities.
 #'
 #'
 #' @details
 #' Since CoDa models are often multivariate this function only allows to specify
 #' one explanatory variable at a time. The output is also more complex than the
-#' usual one for "lm" classes, because we have to indicate the component of Y
-#' and X. With [confint.lm()] it is still possible to compute the usual the
-#' confidence intervals.
+#' usual one for "lm" classes, because we have to indicate the components of Y
+#' and X that are concerned. With [confint.lm()] it is still possible to compute
+#' the usual confidence intervals.
 #'
 #' @param object class "lmCoDa"
 #' @param parm a character, indicating the name of one explanatory variable
 #' @param level a numeric, indicating the confidence level required
 #' @param y_ref an optional argument that indicates the reference component of
 #'   the response variable using its name or its position. \cr This argument is
-#'   only used in the Y-compositional model. If it is supplied confidence
+#'   only used when Y is compositional. If it is supplied confidence
 #'   intervals of difference are used instead of the direct intervals of the
 #'   parameters.
-#' @param obs an optional integer that indicates one observation when this
-#'   argument is supplied the function return the observation dependent
-#'   elasticity
+#' @param obs an optional integer that indicates one observation: when this
+#'   argument is supplied, the function returns the elasticity of that
+#'   observation
 #' @param ... passed on to confint()
 #' @return data.frame
 #'
@@ -38,7 +38,7 @@
 #' @references
 #'   - Dargel, Lukas and Christine Thomas-Agnan, “Pairwise share ratio interpretations of compositional regression models”, Computational Statistics & Data Analysis 195 (2024), p. 107945
 #' @examples
-#' ## ==== Y-compositional model ====
+#' ## ==== model with a compositional dependent ====
 #' res <- lmCoDa(
 #'   ilr(cbind(left, right, extreme_right)) ~
 #'     ilr(cbind(Age_1839, Age_4064)) +

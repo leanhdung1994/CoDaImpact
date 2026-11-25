@@ -39,11 +39,11 @@ NULL
 "rice_yields"
 
 # ... Elections ----
-#' Results of french departmental elections in 2015
+#' Results of French departmental elections in 2015
 #'
 #' The data is used by Nguyen et al. (2020) and originally disseminated by the
 #' French ministry (Ministère de l'Intérieur et des Outre-Mer). Information
-#' about the population characteristics (in 2014) comes from the french national
+#' about the population characteristics (in 2014) comes from the French national
 #' statistics institute (INSEE). One row is one of 95 French departments.
 #'
 #' @details
@@ -74,10 +74,10 @@ NULL
 # ... Car market ----
 #' French car market data
 #'
-#' This data set shows monthly data of the French car market between 2003 and
+#' This data set consists of monthly data of the French car market between 2003 and
 #' 2015. The market is divided into 5 main segments (A to E), according to the
 #' size of the vehicle chassis. Morais et al. (2018) first used this data to
-#' compare compositional and Dirichlet models for market shares.
+#' compare compositional and Dirichlet models for market-share analysis.
 #'
 #' @details
 #'   + `DATE`: The month of the sales, as the first day of the month
@@ -93,7 +93,7 @@ NULL
 #' @source
 #'   + The figures for GDP and household expenditure are originally provided by the National Institute of Statistics and Economic Studies (INSEE).
 #'   + The diesel prices are from the OECD.
-#'   + The market shares of the segments come from a simulation by Renault.
+#'   + The market shares of the segments are synthetic data from a model based on Renault data.
 #' @references
 #' Joanna Morais, Christine Thomas-Agnan & Michel Simioni (2018) Using
 #' compositional and Dirichlet models for market share regression, Journal of
