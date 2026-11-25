@@ -98,7 +98,7 @@ NULL
 #' Joanna Morais, Christine Thomas-Agnan & Michel Simioni (2018) Using
 #' compositional and Dirichlet models for market share regression, Journal of
 #' Applied Statistics, 45:9, 1670-1689, \doi{10.1080/02664763.2017.1389864}
-#' @author Lukas Dargel, Christine Thomas-Agnan
+#' @author Lukas Dargel, Christine Thomas-Agnan, Anh-Dung Le
 #' @docType data
 #' @keywords data
 #' @name car_market

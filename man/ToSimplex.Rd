@@ -28,7 +28,7 @@ res <- lm(
 )
 res <- ToSimplex(res)
 
-# X-compositional model
+# regression model with a scalar dependent and at least one compositional covariate
 res <- lm(
   YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
   data = head(rice_yields, 20)

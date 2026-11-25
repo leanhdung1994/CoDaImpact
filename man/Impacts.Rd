@@ -11,13 +11,13 @@ Impacts(object, Xvar, Xdir = NULL)
 
 \item{Xvar}{a character indicating the name of one explanatory variable}
 
-\item{Xdir}{a numeric vector, a single character, or \code{NULL}, only used when X
-is compositional:
+\item{Xdir}{a numeric vector, the name of one part of X, or \code{NULL}, only used
+when X is compositional:
 \itemize{
 \item if numeric, \code{Xdir} is the direction u in the simplex
-\item if character, \code{Xdir} is one part of X and u is the direction towards it
-\item if \code{NULL}, u is the direction that multiplies Xj by e and divides Xl by e,
-for each pair (Xj, Xl)
+\item if the name of a part, u is the direction towards the summit of \code{Xdir}
+\item if \code{NULL}, u depends on the pair (Xj, Xl): it multiplies Xj by e and
+divides Xl by e
 }}
 }
 \value{
@@ -37,8 +37,30 @@ ratio Yj / Yl per relative change of the share ratio Xj / Xl, along the
 direction u
 }
 }
+\examples{
+# (29) scalar Y, compositional X
+res <- lmCoDa(
+  YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
+  data = head(rice_yields, 20)
+)
+Impacts(res, Xvar = "TEMPERATURES")
+
+# (32) compositional Y, scalar X
+res <- lmCoDa(
+  ilr(cbind(left, right, extreme_right)) ~
+    ilr(cbind(Age_1839, Age_4064, Age_65plus)) + asset_owner_rate,
+  data = election
+)
+Impacts(res, Xvar = "asset_owner_rate")
+
+# (35) compositional Y and X
+Impacts(res, Xvar = "cbind(Age_1839, Age_4064, Age_65plus)")
+}
 \references{
 \itemize{
 \item Dargel, Lukas and Christine Thomas-Agnan, "Pairwise share ratio interpretations of compositional regression models", Computational Statistics & Data Analysis 195 (2024), p. 107945
 }
+}
+\author{
+Lukas Dargel
 }

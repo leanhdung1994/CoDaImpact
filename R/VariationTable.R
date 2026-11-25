@@ -104,7 +104,7 @@ VariationTable <- function(
   elasti <- Elasticities(object, trSry$NAME_SIMPLEX[[Xvar]], obs)
 
   if (scalar_x && !is.null(inc_rate)) {
-    warning("The argument inc_rate is ignored when X is a classical variable!")
+    warning("The argument inc_rate is ignored when X is scalar!")
   }
   if (!scalar_x) {
     if (missing(Xdir)) {

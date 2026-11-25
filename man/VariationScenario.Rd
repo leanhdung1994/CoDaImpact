@@ -2,7 +2,7 @@
 % Please edit documentation in R/VariationScenario.R
 \name{VariationScenario}
 \alias{VariationScenario}
-\title{Scenarios for variation in CoDa regressions models}
+\title{Scenarios for variation in CoDa regression models}
 \usage{
 VariationScenario(
   object,
@@ -21,14 +21,12 @@ VariationScenario(
 \item{Xvar}{a character indicating the name of the explanatory variable that
 changes}
 
-\item{Xdir}{either character or numeric, to indicate the direction in which
-Xvar should change
+\item{Xdir}{a numeric vector or the name of one part of X, only used when X
+is compositional:
 \itemize{
-\item when character this should be one of the components of X, in which case
-the direction points towards the corresponding vertex of the simplex
-\item when numeric this should be a positive vector, which is used as a
-direction in the simplex
-\item (when Xvar refers to a scalar variable this argument is ignored)
+\item if numeric, \code{Xdir} is a positive vector used as a direction in the
+simplex
+\item if the name of a part, the direction is towards the summit of this part
 }}
 
 \item{obs}{a positive integer indicating the row of the observation used for

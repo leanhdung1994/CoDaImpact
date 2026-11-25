@@ -127,7 +127,7 @@ CoDa_seq <- function(comp_from, comp_to, n_steps = 100, add_opposite = FALSE) {
 #' A data.frame where each row corresponds to one compositional vector, closed
 #' to 1
 #' @importFrom compositions acomp norm
-#' @seealso CoDa_seq
+#' @seealso [CoDa_seq()]
 #' @export
 #'
 #' @author Lukas Dargel

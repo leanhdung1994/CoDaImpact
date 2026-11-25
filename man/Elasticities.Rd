@@ -4,14 +4,15 @@
 \alias{Elasticities}
 \title{Computation of elasticities in CoDa regression models}
 \usage{
-Elasticities(object, Xvar = NULL, obs = 1)
+Elasticities(object, Xvar, obs = 1)
 }
 \arguments{
 \item{object}{an object of class "lmCoDa"}
 
 \item{Xvar}{a character indicating the name of one explanatory variable}
 
-\item{obs}{a numeric that refers to the indicator of one observation}
+\item{obs}{a positive integer indicating the row of the observation, only
+used when Y is compositional}
 }
 \value{
 a matrix

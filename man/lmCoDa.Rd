@@ -29,7 +29,7 @@ res <- lmCoDa(
   data = head(election, 20)
 )
 
-# X-compositional model
+# regression model with a scalar dependent and at least one compositional covariate
 res <- lmCoDa(
   YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
   data = head(rice_yields, 20)

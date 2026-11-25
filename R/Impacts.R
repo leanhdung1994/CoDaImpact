@@ -16,7 +16,8 @@
 #'
 #' @param object an object of class "lmCoDa"
 #' @param Xvar a character indicating the name of one explanatory variable
-#' @param obs a numeric that refers to the indicator of one observation
+#' @param obs a positive integer indicating the row of the observation, only
+#'   used when Y is compositional
 #'
 #' @return a matrix
 #' @author

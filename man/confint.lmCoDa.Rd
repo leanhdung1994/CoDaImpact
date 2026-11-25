@@ -20,7 +20,7 @@ differences between the clr coefficients and those of the part \code{y_ref}.}
 \item{obs}{meant for the elasticities at one observation, which are not
 implemented yet}
 
-\item{...}{passed on to confint()}
+\item{...}{not used}
 }
 \value{
 data.frame

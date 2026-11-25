@@ -1,4 +1,4 @@
-#' @title Scenarios for variation in CoDa regressions models
+#' @title Scenarios for variation in CoDa regression models
 #'
 #' @description
 #' Scenarios of this type are illustrated in Dargel and Thomas-Agnan (2024).
@@ -19,13 +19,11 @@
 #' @param object an object of class "lmCoDa"
 #' @param Xvar a character indicating the name of the explanatory variable that
 #'   changes
-#' @param Xdir either character or numeric, to indicate the direction in which
-#'   Xvar should change
-#'   - when character this should be one of the components of X, in which case
-#'     the direction points towards the corresponding vertex of the simplex
-#'   - when numeric this should be a positive vector, which is used as a
-#'     direction in the simplex
-#'   - (when Xvar refers to a scalar variable this argument is ignored)
+#' @param Xdir a numeric vector or the name of one part of X, only used when X
+#'   is compositional:
+#'   - if numeric, `Xdir` is a positive vector used as a direction in the
+#'     simplex
+#'   - if the name of a part, the direction is towards the summit of this part
 #' @param obs a positive integer indicating the row of the observation used for
 #'   the scenario
 #' @param inc_size a positive numeric indicating the step size of the scenario

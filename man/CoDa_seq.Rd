@@ -42,7 +42,7 @@ compositions::plot.acomp(CoDa_seq(start_comp, end_comp))
 compositions::plot.acomp(CoDa_seq(start_comp, end_comp, add_opposite = TRUE))
 }
 \seealso{
-simplex_increment
+\code{\link[=CoDa_path]{CoDa_path()}}
 }
 \author{
 Lukas Dargel

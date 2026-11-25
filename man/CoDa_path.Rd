@@ -82,7 +82,7 @@ compositions::plot.acomp(comp_from, add = TRUE, col = "red", pch = 19)
 
 }
 \seealso{
-CoDa_seq
+\code{\link[=CoDa_seq]{CoDa_seq()}}
 }
 \author{
 Lukas Dargel

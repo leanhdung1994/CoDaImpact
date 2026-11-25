@@ -21,14 +21,12 @@ VariationTable(
 \item{Xvar}{a character indicating the name of the explanatory variable that
 changes}
 
-\item{Xdir}{either character or numeric, to indicate the direction in which
-Xvar should change
+\item{Xdir}{a numeric vector or the name of one part of X, only used when X
+is compositional:
 \itemize{
-\item when character this should be one of the components of X, in which case
-the direction points towards the corresponding vertex of the simplex
-\item when numeric this should be a positive vector, which is used as a
-direction in the simplex
-\item (when Xvar refers to a scalar variable this argument is ignored)
+\item if numeric, \code{Xdir} is a positive vector used as a direction in the
+simplex
+\item if the name of a part, the direction is towards the summit of this part
 }}
 
 \item{obs}{a positive integer indicating the row of the observation used for
@@ -53,16 +51,16 @@ a data.frame with one column per part of Y (one column for a scalar Y) and
 the rows
 \itemize{
 \item the initial value of Y at the observation \code{obs}
-\item the new value of Y after the step, to first order
+\item the new value of Y after the step (as a first-order approximation)
 \item the elasticity (or semi-elasticity) of Y with respect to X along \code{Xdir}
 \item the variation of Y in \%, in \% points (compositional Y) and in units
 (scalar Y, or compositional Y with \code{Ytotal} different from 1)
 }
 
 The attributes \code{X(0)} and \code{X(h)} give the value of X before and after the
-step, \code{Xdir} the direction, \code{inc_size} the step size, and \code{inc_rates} the
-relative change of each part of X. \code{Xdir} and \code{inc_rates} are \code{NULL} for a
-scalar X.
+step (as a first-order approximation), \code{Xdir} the direction, \code{inc_size} the
+step size, and \code{inc_rates} the relative change of each part of X. \code{Xdir} and
+\code{inc_rates} are \code{NULL} for a scalar X.
 }
 \description{
 This function allows to evaluate how a change in an explanatory variable
