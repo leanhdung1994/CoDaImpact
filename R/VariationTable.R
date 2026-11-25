@@ -19,15 +19,15 @@
 #' a data.frame with one column per part of Y (one column for a scalar Y) and
 #' the rows
 #' - the initial value of Y at the observation `obs`
-#' - the new value of Y after the step, to first order
+#' - the new value of Y after the step (as a first-order approximation)
 #' - the elasticity (or semi-elasticity) of Y with respect to X along `Xdir`
 #' - the variation of Y in %, in % points (compositional Y) and in units
 #' (scalar Y, or compositional Y with `Ytotal` different from 1)
 #'
 #' The attributes `X(0)` and `X(h)` give the value of X before and after the
-#' step, `Xdir` the direction, `inc_size` the step size, and `inc_rates` the
-#' relative change of each part of X. `Xdir` and `inc_rates` are `NULL` for a
-#' scalar X.
+#' step (as a first-order approximation), `Xdir` the direction, `inc_size` the
+#' step size, and `inc_rates` the relative change of each part of X. `Xdir` and
+#' `inc_rates` are `NULL` for a scalar X.
 #'
 #' @author
 #'   - Lukas Dargel

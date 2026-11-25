@@ -33,7 +33,7 @@
 #' )
 #' Elasticities(res, Xvar = "TEMPERATURES")
 #'
-Elasticities <- function(object, Xvar = NULL, obs = 1) {
+Elasticities <- function(object, Xvar, obs = 1) {
   stopifnot(
     is(object, "lmCoDa"),
     is.character(Xvar) && length(Xvar) == 1,
@@ -79,19 +79,38 @@ Elasticities <- function(object, Xvar = NULL, obs = 1) {
 #'
 #' @param object an object of class "lmCoDa"
 #' @param Xvar a character indicating the name of one explanatory variable
-#' @param Xdir a numeric vector, a single character, or `NULL`, only used when X
-#'   is compositional:
+#' @param Xdir a numeric vector, the name of one part of X, or `NULL`, only used
+#'   when X is compositional:
 #'   - if numeric, `Xdir` is the direction u in the simplex
-#'   - if character, `Xdir` is one part of X and u is the direction towards it
-#'   - if `NULL`, u is the direction that multiplies Xj by e and divides Xl by e,
-#'     for each pair (Xj, Xl)
+#'   - if the name of a part, u is the direction towards the summit of `Xdir`
+#'   - if `NULL`, u depends on the pair (Xj, Xl): it multiplies Xj by e and
+#'     divides Xl by e
 #'
 #' @return
 #' a data.frame with one row per pair of distinct parts and the impact in the
 #' column `FI`
+#' @author Lukas Dargel
 #' @export
 #' @references
 #' - Dargel, Lukas and Christine Thomas-Agnan, "Pairwise share ratio interpretations of compositional regression models", Computational Statistics & Data Analysis 195 (2024), p. 107945
+#' @examples
+#' # (29) scalar Y, compositional X
+#' res <- lmCoDa(
+#'   YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
+#'   data = head(rice_yields, 20)
+#' )
+#' Impacts(res, Xvar = "TEMPERATURES")
+#'
+#' # (32) compositional Y, scalar X
+#' res <- lmCoDa(
+#'   ilr(cbind(left, right, extreme_right)) ~
+#'     ilr(cbind(Age_1839, Age_4064, Age_65plus)) + asset_owner_rate,
+#'   data = election
+#' )
+#' Impacts(res, Xvar = "asset_owner_rate")
+#'
+#' # (35) compositional Y and X
+#' Impacts(res, Xvar = "cbind(Age_1839, Age_4064, Age_65plus)")
 Impacts <- function(object, Xvar, Xdir = NULL) {
   stopifnot(
     is(object, "lmCoDa"),

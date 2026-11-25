@@ -18,7 +18,7 @@
 #' @return
 #' A data.frame where each row corresponds to one compositional vector, closed
 #' to 1
-#' @seealso simplex_increment
+#' @seealso [CoDa_path()]
 #' @export
 #'
 #' @author Lukas Dargel

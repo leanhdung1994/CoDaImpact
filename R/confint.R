@@ -26,7 +26,7 @@
 #'   differences between the clr coefficients and those of the part `y_ref`.
 #' @param obs meant for the elasticities at one observation, which are not
 #'   implemented yet
-#' @param ... passed on to confint()
+#' @param ... not used
 #' @return data.frame
 #'
 #' @exportS3Method
