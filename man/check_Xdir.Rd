@@ -7,7 +7,8 @@
 check_Xdir(Xdir, Xopts, normalize = FALSE)
 }
 \arguments{
-\item{Xdir}{a character or numeric indicating the direction}
+\item{Xdir}{a character or numeric indicating the direction; a named numeric
+vector is matched to \code{Xopts} by name}
 
 \item{Xopts}{a character indicating the names of the vertices}
 

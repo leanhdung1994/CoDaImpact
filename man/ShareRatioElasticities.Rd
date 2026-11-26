@@ -37,6 +37,18 @@ the change of X must be specified in terms of a direction in the simplex.
 \details{
 For a scalar Y or a scalar X, see \code{\link[=Impacts]{Impacts()}}.
 
+The function computes the left-hand side of equation (35) of Dargel and
+Thomas-Agnan (2024) for every combination of a pair of distinct parts
+\eqn{(Y_j, Y_l)}{(Yj, Yl)} of \eqn{Y} and a pair of distinct parts
+\eqn{(X_j, X_l)}{(Xj, Xl)} of \eqn{X}, the two pairs being chosen
+independently. The result has one row per combination, given in the columns
+\code{Yj}, \code{Yl}, \code{Xj} and \code{Xl}, and the share ratio elasticity in the column
+\code{SRE}. The direction \eqn{u} is:
+\itemize{
+\item the same for all rows when \code{Xdir} is given
+\item dependent on the pair \eqn{(X_j, X_l)}{(Xj, Xl)} when \code{Xdir} is \code{NULL}
+}
+
 More details on this interpretation can be found in Dargel and Thomas-Agnan
 (2024) and in the accompanying vignette.
 }

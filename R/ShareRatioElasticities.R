@@ -12,6 +12,16 @@
 #'
 #'
 #' @details
+#' The function computes the left-hand side of equation (35) of Dargel and
+#' Thomas-Agnan (2024) for every combination of a pair of distinct parts
+#' \eqn{(Y_j, Y_l)}{(Yj, Yl)} of \eqn{Y} and a pair of distinct parts
+#' \eqn{(X_j, X_l)}{(Xj, Xl)} of \eqn{X}, the two pairs being chosen
+#' independently. The result has one row per combination, given in the columns
+#' `Yj`, `Yl`, `Xj` and `Xl`, and the share ratio elasticity in the column
+#' `SRE`. The direction \eqn{u} is:
+#' - the same for all rows when `Xdir` is given
+#' - dependent on the pair \eqn{(X_j, X_l)}{(Xj, Xl)} when `Xdir` is `NULL`
+#'
 #' More details on this interpretation can be found in Dargel and Thomas-Agnan
 #' (2024) and in the accompanying vignette.
 #'
