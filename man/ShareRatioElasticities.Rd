@@ -12,12 +12,12 @@ ShareRatioElasticities(object, Xvar, Xdir = NULL)
 \item{Xvar}{a character indicating the name of the explanatory variable that
 changes}
 
-\item{Xdir}{a numeric vector, the name of one part of X, or \code{NULL}:
+\item{Xdir}{a numeric vector, the name of one part of \eqn{X}, or \code{NULL}:
 \itemize{
 \item if numeric, \code{Xdir} is a fixed direction in the simplex
 \item if the name of a part, the direction is towards the summit of this part
-\item if \code{NULL}, the direction depends on the pair (Xj, Xl): it multiplies Xj
-by e and divides Xl by e
+\item if \code{NULL}, the direction depends on the pair \eqn{(X_j, X_l)}{(Xj, Xl)}: use
+the relative compensation direction \eqn{e_j \ominus e_l}
 }}
 }
 \value{
@@ -43,11 +43,7 @@ Thomas-Agnan (2024) for every combination of a pair of distinct parts
 \eqn{(X_j, X_l)}{(Xj, Xl)} of \eqn{X}, the two pairs being chosen
 independently. The result has one row per combination, given in the columns
 \code{Yj}, \code{Yl}, \code{Xj} and \code{Xl}, and the share ratio elasticity in the column
-\code{SRE}. The direction \eqn{u} is:
-\itemize{
-\item the same for all rows when \code{Xdir} is given
-\item dependent on the pair \eqn{(X_j, X_l)}{(Xj, Xl)} when \code{Xdir} is \code{NULL}
-}
+\code{SRE}.
 
 More details on this interpretation can be found in Dargel and Thomas-Agnan
 (2024) and in the accompanying vignette.
@@ -66,13 +62,23 @@ SRE1 <- ShareRatioElasticities(res, Xvar = educ_comp, Xdir = "Educ_Higher")
 
 # when Educ_Higher / Educ_BeforeHighschool increases by 1\% in this direction,
 # right / left increases by about SRE\%
-subset(SRE1, Yj == "right" & Yl == "left" &
-  Xj == "Educ_Higher" & Xl == "Educ_BeforeHighschool")
+subset(
+  SRE1,
+  Yj == "right" &
+    Yl == "left" &
+    Xj == "Educ_Higher" &
+    Xl == "Educ_BeforeHighschool"
+)
 
 # in this direction Educ_Highschool / Educ_BeforeHighschool does not change,
 # so the SRE is not defined
-subset(SRE1, Yj == "right" & Yl == "left" &
-  Xj == "Educ_Highschool" & Xl == "Educ_BeforeHighschool")
+subset(
+  SRE1,
+  Yj == "right" &
+    Yl == "left" &
+    Xj == "Educ_Highschool" &
+    Xl == "Educ_BeforeHighschool"
+)
 
 ## case 2: the same direction as a numeric vector
 SRE2 <- ShareRatioElasticities(res, Xvar = educ_comp, Xdir = exp(c(0, 0, 1)))
@@ -81,8 +87,13 @@ identical(SRE1, SRE2)
 ## case 3: Xdir = NULL, for each pair (Xj, Xl) the direction multiplies Xj by e
 ## and divides Xl by e
 SRE3 <- ShareRatioElasticities(res, Xvar = educ_comp, Xdir = NULL)
-subset(SRE3, Yj == "right" & Yl == "left" &
-  Xj == "Educ_Highschool" & Xl == "Educ_BeforeHighschool")
+subset(
+  SRE3,
+  Yj == "right" &
+    Yl == "left" &
+    Xj == "Educ_Highschool" &
+    Xl == "Educ_BeforeHighschool"
+)
 }
 \references{
 \itemize{
