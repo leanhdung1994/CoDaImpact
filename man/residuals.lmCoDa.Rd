@@ -25,6 +25,20 @@ Works as \code{\link[=residuals]{residuals()}} for lm objects. When the response
 the \code{space} argument returns the residuals in clr space or in the simplex
 instead of the log-ratio coordinates used in the model.
 }
+\examples{
+res <- lmCoDa(
+  ilr(cbind(left, right, extreme_right)) ~
+    ilr(cbind(Age_1839, Age_4064, Age_65plus)) + unemp_rate,
+  data = election
+)
+
+# residuals in the ilr coordinates used in the model
+head(residuals(res))
+
+# residuals in clr space and in the simplex
+head(residuals(res, space = "clr"))
+head(residuals(res, space = "simplex"))
+}
 \author{
 Lukas Dargel
 }

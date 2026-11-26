@@ -30,6 +30,21 @@ Works as \code{\link[=predict.lm]{predict.lm()}}. When the response Y is composi
 argument returns the predictions in clr space or in the simplex instead of
 the log-ratio coordinates used in the model.
 }
+\examples{
+res <- lmCoDa(
+  ilr(cbind(left, right, extreme_right)) ~
+    ilr(cbind(Age_1839, Age_4064, Age_65plus)) + unemp_rate,
+  data = election
+)
+new_data <- head(election, 3)
+
+# predictions in the ilr coordinates used in the model
+predict(res, newdata = new_data)
+
+# predictions in clr space and in the simplex
+predict(res, newdata = new_data, space = "clr")
+predict(res, newdata = new_data, space = "simplex")
+}
 \author{
 Lukas Dargel
 }
