@@ -16,6 +16,12 @@
   results for inputs with zeros change.
 - `CoDa_seq()` stops when `comp_from` and `comp_to` are the same composition.
 
+## New features
+
+- `ShareRatioElasticities()` returns a data.frame of class
+  `"ShareRatioElasticities"`, and its `plot()` method draws the elasticities as
+  in Figure 15 of Dargel and Thomas-Agnan (2024), using ggplot2 (suggested).
+
 ## Bug fixes
 
 - `VariationTable()` computed the new value of a scalar response as

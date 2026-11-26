@@ -38,8 +38,11 @@ Depends:
     R (>= 2.10)
 Imports:
     compositions,
-    methods
+    grDevices,
+    methods,
+    utils
 Suggests:
+    ggplot2,
     knitr,
     rmarkdown,
     sf,

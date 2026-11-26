@@ -21,7 +21,8 @@ the relative compensation direction \eqn{e_j \ominus e_l}
 }}
 }
 \value{
-a data.frame
+a data.frame of class \code{"ShareRatioElasticities"}, with one row per
+combination of pairs; see \code{\link[=plot.ShareRatioElasticities]{plot.ShareRatioElasticities()}} to draw it
 }
 \description{
 In CoDa models with compositional dependent variable (Y), share ratio

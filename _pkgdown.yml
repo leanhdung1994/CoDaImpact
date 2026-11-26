@@ -26,6 +26,7 @@ reference:
   - predict.lmCoDa
   - residuals.lmCoDa
   - print.VariationScenario
+  - plot.ShareRatioElasticities
 - title: "Other functions"
   contents:
   - CoDa_seq

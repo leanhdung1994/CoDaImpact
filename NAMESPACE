@@ -3,6 +3,7 @@
 S3method(coef,lmCoDa)
 S3method(confint,lmCoDa)
 S3method(fitted,lmCoDa)
+S3method(plot,ShareRatioElasticities)
 S3method(predict,lmCoDa)
 S3method(print,VariationScenario)
 S3method(residuals,lmCoDa)
@@ -31,6 +32,7 @@ importFrom(compositions,
   ilrInv,
   norm
 )
+importFrom(grDevices,hcl.colors)
 importFrom(methods,
   as,
   is
@@ -42,3 +44,4 @@ importFrom(stats,
   qt,
   resid
 )
+importFrom(utils,globalVariables)
