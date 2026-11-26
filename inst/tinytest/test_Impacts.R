@@ -95,6 +95,28 @@ ic_SRE <- ShareRatioElasticities(ic_res, Xvar = ic_parm)
 expect_equal(nrow(ic_FI35), 36)
 expect_equal(unname(ic_FI35$FI), unname(ic_SRE$SRE))
 
+# named numeric Xdir is matched to the parts of X by name, not by position
+# (29) scalar Y, compositional X
+expect_equal(
+  Impacts(im_res, Xvar = "TEMPERATURES", Xdir = rev(im_u)),
+  Impacts(im_res, Xvar = "TEMPERATURES", Xdir = im_u)
+)
+
+# (35) compositional Y and X: same result in any order, and equal to ShareRatioElasticities()
+ic_xdir <- c(Age_1839 = 1, Age_4064 = 2, Age_65plus = 3)
+ic_FI_dir <- Impacts(ic_res, Xvar = ic_parm, Xdir = ic_xdir)
+expect_equal(Impacts(ic_res, Xvar = ic_parm, Xdir = rev(ic_xdir)), ic_FI_dir)
+expect_equal(
+  unname(ic_FI_dir$FI),
+  unname(ShareRatioElasticities(ic_res, Xvar = ic_parm, Xdir = rev(ic_xdir))$SRE)
+)
+
+# names that are not the parts of X are rejected
+expect_error(
+  Impacts(ic_res, Xvar = ic_parm, Xdir = c(a = 1, b = 2, c = 3)),
+  pattern = "names of Xdir"
+)
+
 # errors
 expect_error(
   Impacts(im_res, Xvar = "PRECIPITATION"),

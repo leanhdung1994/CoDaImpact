@@ -2,12 +2,16 @@
 #'
 #' @description
 #' This function computes elasticities and semi-elasticities for assessing the
-#' impact of a given covariate X on the dependent Y in a regression model. We
-#' have to distinguish four cases:
-#'  - Y and X are both compositional: this leads to an elasticity
-#'  - Y is compositional and X is scalar: this leads to a semi-elasticity
-#'  - Y is scalar and X is compositional: this leads to a semi-elasticity
-#'  - Y and X are both scalar: this case is not implemented, as it is the same as in ordinary linear regression, yielding a constant marginal effect
+#' impact of a given covariate \eqn{X} on the dependent \eqn{Y} in a regression
+#' model. We have to distinguish four cases:
+#'  - \eqn{Y} and \eqn{X} are both compositional: this leads to an elasticity
+#'  - \eqn{Y} is compositional and \eqn{X} is scalar: this leads to a
+#'    semi-elasticity
+#'  - \eqn{Y} is scalar and \eqn{X} is compositional: this leads to a
+#'    semi-elasticity
+#'  - \eqn{Y} and \eqn{X} are both scalar: this case is not implemented, as it
+#'    is the same as in ordinary linear regression, yielding a constant marginal
+#'    effect
 #'
 #' @details
 #' The mathematical foundation for elasticity computations in CoDa models comes
@@ -17,7 +21,7 @@
 #' @param object an object of class "lmCoDa"
 #' @param Xvar a character indicating the name of one explanatory variable
 #' @param obs a positive integer indicating the row of the observation, only
-#'   used when Y is compositional
+#'   used when \eqn{Y} is compositional
 #'
 #' @return a matrix
 #' @author
@@ -70,22 +74,24 @@ Elasticities <- function(object, Xvar, obs = 1) {
 #' @description
 #' This function computes the left-hand sides of equations (29), (32) and (35)
 #' of Dargel and Thomas-Agnan (2024), with the first equality of each:
-#' - Y is scalar and X is compositional, (29): the change of Y per relative
-#' change of the share ratio Xj / Xl, along the direction u
-#' - Y is compositional and X is scalar, (32): the relative change of the share
-#' ratio Yj / Yl per unit change of X
-#' - Y and X are both compositional, (35): the relative change of the share
-#' ratio Yj / Yl per relative change of the share ratio Xj / Xl, along the
-#' direction u
+#' - \eqn{Y} is scalar and \eqn{X} is compositional, (29): the change of
+#'   \eqn{Y} per relative change of the share ratio \eqn{X_j / X_l}{Xj / Xl},
+#'   along the direction \eqn{u}
+#' - \eqn{Y} is compositional and \eqn{X} is scalar, (32): the relative change
+#'   of the share ratio \eqn{Y_j / Y_l}{Yj / Yl} per unit change of \eqn{X}
+#' - \eqn{Y} and \eqn{X} are both compositional, (35): the relative change of
+#'   the share ratio \eqn{Y_j / Y_l}{Yj / Yl} per relative change of the share
+#'   ratio \eqn{X_j / X_l}{Xj / Xl}, along the direction \eqn{u}
 #'
 #' @param object an object of class "lmCoDa"
 #' @param Xvar a character indicating the name of one explanatory variable
-#' @param Xdir a numeric vector, the name of one part of X, or `NULL`, only used
-#'   when X is compositional:
-#'   - if numeric, `Xdir` is the direction u in the simplex
-#'   - if the name of a part, u is the direction towards the summit of `Xdir`
-#'   - if `NULL`, u depends on the pair (Xj, Xl): it multiplies Xj by e and
-#'     divides Xl by e
+#' @param Xdir a numeric vector, the name of one part of \eqn{X}, or `NULL`,
+#'   only used when \eqn{X} is compositional:
+#'   - if numeric, `Xdir` is the direction \eqn{u} in the simplex
+#'   - if the name of a part, \eqn{u} is the direction towards the summit of
+#'     `Xdir`
+#'   - if `NULL`, \eqn{u} depends on the pair \eqn{(X_j, X_l)}{(Xj, Xl)}: use
+#'     the relative compensation direction \eqn{e_j \ominus e_l} (see section 4 in Dargel and Thomas-Agnan (2024))
 #'
 #' @return
 #' a data.frame with one row per pair of distinct parts and the impact in the
@@ -137,10 +143,14 @@ Impacts <- function(object, Xvar, Xdir = NULL) {
   x_names <- rownames(coef_clr)
   y_names <- colnames(coef_clr)
 
+  if (!is.null(Xdir)) {
+    Xdir <- check_Xdir(Xdir, Xopts = x_names, normalize = FALSE)
+  }
+
   # direction u for the pair (Xj, Xl) of parts of X
   get_u <- function(Xj, Xl) {
     if (!is.null(Xdir)) {
-      return(check_Xdir(Xdir, Xopts = x_names, normalize = FALSE))
+      return(Xdir)
     }
     u <- rep(1, length(x_names))
     u[Xj] <- exp(1)

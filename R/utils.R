@@ -1,6 +1,7 @@
 #' Internal: check for valid computational direction arguments
 #'
-#' @param Xdir a character or numeric indicating the direction
+#' @param Xdir a character or numeric indicating the direction; a named numeric
+#'   vector is matched to `Xopts` by name
 #' @param Xopts a character indicating the names of the vertices
 #' @param normalize a logical if true Xdir is normalized to have an Aitchison
 #'   norm of 1
@@ -18,6 +19,14 @@ check_Xdir <- function(Xdir, Xopts, normalize = FALSE) {
   Dx <- length(Xopts)
 
   if (is.numeric(Xdir)) {
+    if (!is.null(names(Xdir))) {
+      if (length(Xdir) != Dx || !setequal(names(Xdir), Xopts)) {
+        stop("The names of Xdir must be the parts of Xvar!")
+      }
+      # put the parts of Xdir in the order of the parts of Xvar
+      Xdir <- Xdir[Xopts]
+    }
+
     check <- "When Xdir is numeric it must be a positive vector of dimension %s with at least two different parts!"
     if (
       length(Xdir) != Dx ||

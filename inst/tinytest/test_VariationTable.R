@@ -23,6 +23,15 @@ resX <- VariationTable(
 expect_true("elasticity" %in% tolower(rownames(resX)))
 expect_true(sum(attr(resX, "X(0)")) == 1)
 expect_true(sum(attr(resX, "X(h)")) == 1)
+
+# a named numeric Xdir is matched to the parts of X by name, not by position
+vt_educ <- "cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)"
+vt_dir <- c(Educ_BeforeHighschool = .5, Educ_Highschool = .4, Educ_Higher = .1)
+expect_equal(
+  VariationTable(res, Xvar = vt_educ, Xdir = rev(vt_dir)),
+  VariationTable(res, Xvar = vt_educ, Xdir = vt_dir),
+  info = "named Xdir, order of the names"
+)
 expect_true(sum(attr(resX, "Xdir")) == 1)
 expect_true(sum(resX["Initial parts", ]) == 1)
 expect_equivalent(sum(resX["New parts", ]), 1)

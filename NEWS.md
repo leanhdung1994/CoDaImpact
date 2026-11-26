@@ -43,9 +43,11 @@
   `VariationScenario()` and `VariationTable()`) must have positive parts that
   are not all equal; zeros, `NA` and the neutral element are rejected with a
   clear error.
-- `ShareRatioElasticities()` matches a named numeric `Xdir` to the parts of
-  `Xvar` by name, and stops when the names are not the parts of `Xvar` (they
-  were matched by position).
+- `Impacts()`, `ShareRatioElasticities()`, `VariationScenario()` and
+  `VariationTable()` match a named numeric `Xdir` to the parts of `Xvar` by
+  name, and stop when the names are not the parts of `Xvar`. They were matched
+  by position, so results of `VariationScenario()` and `VariationTable()`
+  change for a named `Xdir` whose names are not in the order of the parts.
 - `confint.lmCoDa()` rejects a non-numeric `level` and a `y_ref` that is not a
   single number or name, and warns when `y_ref` or `obs` is ignored because the
   response is scalar.

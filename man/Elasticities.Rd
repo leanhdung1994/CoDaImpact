@@ -12,20 +12,24 @@ Elasticities(object, Xvar, obs = 1)
 \item{Xvar}{a character indicating the name of one explanatory variable}
 
 \item{obs}{a positive integer indicating the row of the observation, only
-used when Y is compositional}
+used when \eqn{Y} is compositional}
 }
 \value{
 a matrix
 }
 \description{
 This function computes elasticities and semi-elasticities for assessing the
-impact of a given covariate X on the dependent Y in a regression model. We
-have to distinguish four cases:
+impact of a given covariate \eqn{X} on the dependent \eqn{Y} in a regression
+model. We have to distinguish four cases:
 \itemize{
-\item Y and X are both compositional: this leads to an elasticity
-\item Y is compositional and X is scalar: this leads to a semi-elasticity
-\item Y is scalar and X is compositional: this leads to a semi-elasticity
-\item Y and X are both scalar: this case is not implemented, as it is the same as in ordinary linear regression, yielding a constant marginal effect
+\item \eqn{Y} and \eqn{X} are both compositional: this leads to an elasticity
+\item \eqn{Y} is compositional and \eqn{X} is scalar: this leads to a
+semi-elasticity
+\item \eqn{Y} is scalar and \eqn{X} is compositional: this leads to a
+semi-elasticity
+\item \eqn{Y} and \eqn{X} are both scalar: this case is not implemented, as it
+is the same as in ordinary linear regression, yielding a constant marginal
+effect
 }
 }
 \details{

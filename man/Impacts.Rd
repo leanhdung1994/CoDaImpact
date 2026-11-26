@@ -11,13 +11,14 @@ Impacts(object, Xvar, Xdir = NULL)
 
 \item{Xvar}{a character indicating the name of one explanatory variable}
 
-\item{Xdir}{a numeric vector, the name of one part of X, or \code{NULL}, only used
-when X is compositional:
+\item{Xdir}{a numeric vector, the name of one part of \eqn{X}, or \code{NULL},
+only used when \eqn{X} is compositional:
 \itemize{
-\item if numeric, \code{Xdir} is the direction u in the simplex
-\item if the name of a part, u is the direction towards the summit of \code{Xdir}
-\item if \code{NULL}, u depends on the pair (Xj, Xl): it multiplies Xj by e and
-divides Xl by e
+\item if numeric, \code{Xdir} is the direction \eqn{u} in the simplex
+\item if the name of a part, \eqn{u} is the direction towards the summit of
+\code{Xdir}
+\item if \code{NULL}, \eqn{u} depends on the pair \eqn{(X_j, X_l)}{(Xj, Xl)}: use
+the relative compensation direction \eqn{e_j \ominus e_l} (see section 4 in Dargel and Thomas-Agnan (2024))
 }}
 }
 \value{
@@ -28,13 +29,14 @@ column \code{FI}
 This function computes the left-hand sides of equations (29), (32) and (35)
 of Dargel and Thomas-Agnan (2024), with the first equality of each:
 \itemize{
-\item Y is scalar and X is compositional, (29): the change of Y per relative
-change of the share ratio Xj / Xl, along the direction u
-\item Y is compositional and X is scalar, (32): the relative change of the share
-ratio Yj / Yl per unit change of X
-\item Y and X are both compositional, (35): the relative change of the share
-ratio Yj / Yl per relative change of the share ratio Xj / Xl, along the
-direction u
+\item \eqn{Y} is scalar and \eqn{X} is compositional, (29): the change of
+\eqn{Y} per relative change of the share ratio \eqn{X_j / X_l}{Xj / Xl},
+along the direction \eqn{u}
+\item \eqn{Y} is compositional and \eqn{X} is scalar, (32): the relative change
+of the share ratio \eqn{Y_j / Y_l}{Yj / Yl} per unit change of \eqn{X}
+\item \eqn{Y} and \eqn{X} are both compositional, (35): the relative change of
+the share ratio \eqn{Y_j / Y_l}{Yj / Yl} per relative change of the share
+ratio \eqn{X_j / X_l}{Xj / Xl}, along the direction \eqn{u}
 }
 }
 \examples{

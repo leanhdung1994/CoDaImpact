@@ -18,6 +18,20 @@ expect_equal(
   ut_u / sum(ut_u)
 )
 
+# a named numeric direction is matched to the parts by name, not by position
+expect_equal(
+  as.numeric(CoDaImpact:::check_Xdir(c(C = .3, A = .2, B = .5), ut_opts)),
+  as.numeric(CoDaImpact:::check_Xdir(ut_u, ut_opts))
+)
+expect_error(
+  CoDaImpact:::check_Xdir(c(a = .2, b = .5, c = .3), ut_opts),
+  pattern = "names of Xdir"
+)
+expect_error(
+  CoDaImpact:::check_Xdir(c(A = .2, .5, .3), ut_opts), # partly named
+  pattern = "names of Xdir"
+)
+
 ut_n <- as.numeric(CoDaImpact:::check_Xdir(ut_u, ut_opts, normalize = TRUE))
 expect_equal(sum(ut_n), 1)
 expect_equal(as.numeric(compositions::norm(compositions::acomp(ut_n))), 1)

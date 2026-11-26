@@ -169,6 +169,25 @@ expect_equal(
   info = "Y, raw Xdir"
 )
 
+# a named numeric Xdir is matched to the parts of X by name, not by position
+vs_named <- function(xdir) {
+  VariationScenario(
+    vs_fit2,
+    vs_X,
+    Xdir = xdir,
+    obs = 3,
+    inc_size = .5,
+    n_steps = 2,
+    normalize_Xdir = FALSE
+  )
+}
+vs_u_named <- setNames(vs_u, vs_age)
+expect_equal(
+  vs_named(rev(vs_u_named)),
+  vs_named(vs_u_named),
+  info = "named Xdir, order of the names"
+)
+
 # normalize_Xdir = TRUE (default) uses u / ||u||_A: same values as before
 vs_out <- VariationScenario(
   vs_fit2,
