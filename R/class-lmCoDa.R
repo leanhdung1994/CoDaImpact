@@ -108,6 +108,19 @@ ToSimplex <- function(object) {
 #'
 #' @author Lukas Dargel
 #' @exportS3Method
+#' @examples
+#' res <- lmCoDa(
+#'   ilr(cbind(left, right, extreme_right)) ~
+#'     ilr(cbind(Age_1839, Age_4064, Age_65plus)) + unemp_rate,
+#'   data = election
+#' )
+#'
+#' # coefficients in the ilr coordinates used in the model
+#' coef(res)
+#'
+#' # coefficients in clr space and in the simplex
+#' coef(res, space = "clr")
+#' coef(res, space = "simplex")
 coef.lmCoDa <- function(object, space = NULL, split = FALSE, ...) {
   stopifnot(is.null(space) || space %in% c("clr", "simplex"))
   type <- if (is.null(space)) {
@@ -132,6 +145,19 @@ coef.lmCoDa <- function(object, space = NULL, split = FALSE, ...) {
 #' @importFrom stats fitted
 #' @author Lukas Dargel
 #' @exportS3Method
+#' @examples
+#' res <- lmCoDa(
+#'   ilr(cbind(left, right, extreme_right)) ~
+#'     ilr(cbind(Age_1839, Age_4064, Age_65plus)) + unemp_rate,
+#'   data = election
+#' )
+#'
+#' # fitted values in the ilr coordinates used in the model
+#' head(fitted(res))
+#'
+#' # fitted values in clr space and in the simplex
+#' head(fitted(res, space = "clr"))
+#' head(fitted(res, space = "simplex"))
 fitted.lmCoDa <- function(object, space = NULL, ...) {
   stopifnot(is.null(space) || space %in% c("clr", "simplex"))
   fity <- object$fitted.values
@@ -171,6 +197,20 @@ fitted.lmCoDa <- function(object, space = NULL, ...) {
 #'   observation, closed to 1
 #' @author Lukas Dargel
 #' @exportS3Method
+#' @examples
+#' res <- lmCoDa(
+#'   ilr(cbind(left, right, extreme_right)) ~
+#'     ilr(cbind(Age_1839, Age_4064, Age_65plus)) + unemp_rate,
+#'   data = election
+#' )
+#' new_data <- head(election, 3)
+#'
+#' # predictions in the ilr coordinates used in the model
+#' predict(res, newdata = new_data)
+#'
+#' # predictions in clr space and in the simplex
+#' predict(res, newdata = new_data, space = "clr")
+#' predict(res, newdata = new_data, space = "simplex")
 predict.lmCoDa <- function(object, space = NULL, ...) {
   stopifnot(is.null(space) || space %in% c("clr", "simplex"))
   pred <- NextMethod("predict")
@@ -204,6 +244,19 @@ predict.lmCoDa <- function(object, space = NULL, ...) {
 #' composition (the perturbation difference).
 #' @author Lukas Dargel
 #' @exportS3Method
+#' @examples
+#' res <- lmCoDa(
+#'   ilr(cbind(left, right, extreme_right)) ~
+#'     ilr(cbind(Age_1839, Age_4064, Age_65plus)) + unemp_rate,
+#'   data = election
+#' )
+#'
+#' # residuals in the ilr coordinates used in the model
+#' head(residuals(res))
+#'
+#' # residuals in clr space and in the simplex
+#' head(residuals(res, space = "clr"))
+#' head(residuals(res, space = "simplex"))
 residuals.lmCoDa <- function(object, space = NULL, ...) {
   stopifnot(is.null(space) || space %in% c("clr", "simplex"))
   resi <- object$residuals
