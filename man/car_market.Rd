@@ -42,6 +42,6 @@ compositional and Dirichlet models for market share regression, Journal of
 Applied Statistics, 45:9, 1670-1689, \doi{10.1080/02664763.2017.1389864}
 }
 \author{
-Lukas Dargel, Christine Thomas-Agnan, Anh-Dung Le
+Lukas Dargel, Christine Thomas-Agnan
 }
 \keyword{data}

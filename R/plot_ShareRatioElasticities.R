@@ -19,9 +19,7 @@
 #'   largest absolute value falls in an outer bin
 #' @param max_size a positive number, the size of the largest symbols in mm
 #' @param ... not used
-#' @return
-#' a ggplot object; labels, themes and scales can be changed with the usual
-#' ggplot2 functions, e.g. `+ ggplot2::labs(x = "...")`
+#' @return a ggplot object
 #' @author
 #'   - Lukas Dargel
 #'   - Anh-Dung Le

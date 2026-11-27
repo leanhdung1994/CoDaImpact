@@ -64,7 +64,5 @@ Impacts(res, Xvar = "cbind(Age_1839, Age_4064, Age_65plus)")
 }
 }
 \author{
-\itemize{
-\item Anh-Dung Le
-}
+Anh-Dung Le
 }

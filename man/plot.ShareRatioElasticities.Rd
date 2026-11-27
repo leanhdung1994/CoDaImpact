@@ -20,8 +20,7 @@ largest absolute value falls in an outer bin}
 \item{...}{not used}
 }
 \value{
-a ggplot object; labels, themes and scales can be changed with the usual
-ggplot2 functions, e.g. \code{+ ggplot2::labs(x = "...")}
+a ggplot object
 }
 \description{
 Draws the share ratio elasticities computed by \code{\link[=ShareRatioElasticities]{ShareRatioElasticities()}} as
