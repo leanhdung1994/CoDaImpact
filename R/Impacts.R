@@ -96,7 +96,7 @@ Elasticities <- function(object, Xvar, obs = 1) {
 #' @return
 #' a data.frame with one row per pair of distinct parts and the impact in the
 #' column `FI`
-#' @author Lukas Dargel
+#' @author Anh-Dung Le
 #' @export
 #' @references
 #' - Dargel, Lukas and Christine Thomas-Agnan, "Pairwise share ratio interpretations of compositional regression models", Computational Statistics & Data Analysis 195 (2024), p. 107945

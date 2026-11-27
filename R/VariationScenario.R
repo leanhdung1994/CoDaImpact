@@ -178,7 +178,12 @@ VariationScenario <- function(
 #'     ilr(cbind(Age_1839, Age_4064, Age_65plus)) + unemp_rate,
 #'   data = election
 #' )
-#' vs <- VariationScenario(res, Xvar = "unemp_rate", inc_size = 0.01, n_steps = 2)
+#' vs <- VariationScenario(
+#'   res,
+#'   Xvar = "unemp_rate",
+#'   inc_size = 0.01,
+#'   n_steps = 2
+#' )
 #'
 #' # the response and the changing explanatory variable, then the scenario
 #' print(vs)

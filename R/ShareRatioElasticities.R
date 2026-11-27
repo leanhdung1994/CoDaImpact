@@ -29,8 +29,9 @@
 #'   - if the name of a part, the direction is towards the summit of this part
 #'   - if `NULL`, the direction depends on the pair \eqn{(X_j, X_l)}{(Xj, Xl)}: use
 #'     the relative compensation direction \eqn{e_j \ominus e_l}
-#' @return a data.frame of class `"ShareRatioElasticities"`, with one row per
-#'   combination of pairs; see [plot.ShareRatioElasticities()] to draw it
+#' @return
+#' a data.frame of class `"ShareRatioElasticities"`, with one row per
+#' combination of pairs; see [plot.ShareRatioElasticities()] to draw it
 #'
 #' @author Lukas Dargel
 #' @references

@@ -108,7 +108,11 @@ ic_FI_dir <- Impacts(ic_res, Xvar = ic_parm, Xdir = ic_xdir)
 expect_equal(Impacts(ic_res, Xvar = ic_parm, Xdir = rev(ic_xdir)), ic_FI_dir)
 expect_equal(
   unname(ic_FI_dir$FI),
-  unname(ShareRatioElasticities(ic_res, Xvar = ic_parm, Xdir = rev(ic_xdir))$SRE)
+  unname(ShareRatioElasticities(
+    ic_res,
+    Xvar = ic_parm,
+    Xdir = rev(ic_xdir)
+  )$SRE)
 )
 
 # names that are not the parts of X are rejected

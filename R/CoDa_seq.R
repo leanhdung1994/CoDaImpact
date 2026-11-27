@@ -140,7 +140,11 @@ CoDa_seq <- function(comp_from, comp_to, n_steps = 100, add_opposite = FALSE) {
 #' # 100 steps in both directions
 #' compositions::plot.acomp(CoDa_path(comp_direc, n_steps = 10))
 #' compositions::plot.acomp(CoDa_path(comp_direc, n_steps = 100))
-#' compositions::plot.acomp(CoDa_path(comp_direc, n_steps = 100, add_opposite = TRUE))
+#' compositions::plot.acomp(CoDa_path(
+#'   comp_direc,
+#'   n_steps = 100,
+#'   add_opposite = TRUE
+#' ))
 #'
 #' # the same direction from another starting point
 #' comp_from <- c(.7, .2, .1)

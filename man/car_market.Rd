@@ -18,9 +18,9 @@ An object of class \code{data.frame} with 152 rows and 10 columns.
 car_market
 }
 \description{
-This data set consists of monthly data of the French car market between 2003 and
-2015. The market is divided into 5 main segments (A to E), according to the
-size of the vehicle chassis. Morais et al. (2018) first used this data to
+This data set consists of monthly data of the French car market between 2003
+and 2015. The market is divided into 5 main segments (A to E), according to
+the size of the vehicle chassis. Morais et al. (2018) first used this data to
 compare compositional and Dirichlet models for market-share analysis.
 }
 \details{

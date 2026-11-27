@@ -53,10 +53,7 @@ expect_equal(
 pl_edge <- pl_sre
 pl_edge$SRE <- rep_len(c(0.5, -0.5), nrow(pl_edge))
 pl_edge_bins <- plot(pl_edge, width = 1, n_bins = 3)$data$SREB
-expect_equal(
-  as.character(pl_edge_bins),
-  rep_len(c("0", "-1"), nrow(pl_edge))
-)
+expect_equal(as.character(pl_edge_bins), rep_len(c("0", "-1"), nrow(pl_edge)))
 
 # ---- non-finite values ----------------------------------------------------------
 # towards a summit, the ratio of the two other parts does not change
