@@ -1,14 +1,17 @@
 library("compositions")
 
 # ---- test name_invTrans -----------------------------------------------------
-expect_equal(name_invTrans("ilr(  CVAR  )", "ilr"), "CVAR")
+expect_equal(CoDaImpact:::name_invTrans("ilr(  CVAR  )", "ilr"), "CVAR")
 
-expect_equal(name_invTrans("ilr(  CVAR, V)", "ilr"), "CVAR")
-
-expect_equal(name_invTrans("ilr(V = ilrBase(D = 3),  CVAR)", "ilr"), "CVAR")
+expect_equal(CoDaImpact:::name_invTrans("ilr(  CVAR, V)", "ilr"), "CVAR")
 
 expect_equal(
-  name_invTrans("ilr(cbind(left, right, other))", "ilr"),
+  CoDaImpact:::name_invTrans("ilr(V = ilrBase(D = 3),  CVAR)", "ilr"),
+  "CVAR"
+)
+
+expect_equal(
+  CoDaImpact:::name_invTrans("ilr(cbind(left, right, other))", "ilr"),
   "cbind(left, right, other)"
 )
 
@@ -17,7 +20,7 @@ expect_equal(
   {
     tt <- rice_yields[1:10, ]
     tt$"ilr(TEMPERATURES)" <- ilr(tt$TEMPERATURES)
-    whichTrans(tt["ilr(TEMPERATURES)"])[["name"]]
+    CoDaImpact:::whichTrans(tt["ilr(TEMPERATURES)"])[["name"]]
   },
   "ilr"
 )
@@ -26,7 +29,7 @@ expect_equal(
   {
     tt <- rice_yields[1:10, ]
     tt$"ilr(TEMPERATURES)" <- ilr(tt$TEMPERATURES)
-    whichTrans(tt["ilr(TEMPERATURES)"])[["base_K"]]
+    CoDaImpact:::whichTrans(tt["ilr(TEMPERATURES)"])[["base_K"]]
   },
   {
     V <- ilrBase(D = 3)
@@ -40,7 +43,7 @@ expect_equal(
   {
     tt <- rice_yields[1:10, ]
     tt$"alr(TEMPERATURES)" <- alr(tt$TEMPERATURES)
-    whichTrans(tt["alr(TEMPERATURES)"])
+    CoDaImpact:::whichTrans(tt["alr(TEMPERATURES)"])
   },
   {
     F_alr <- cbind(diag(2), -1L)
@@ -48,27 +51,25 @@ expect_equal(
       c("alr(TEMPERATURES)1", "alr(TEMPERATURES)2"),
       c("LOW", "MEDIUM", "HIGH")
     )
-    K_alr <- clrBase(3)[, -3]
+    K_alr <- CoDaImpact:::clrBase(3)[, -3]
     dimnames(K_alr) <- dimnames(t(F_alr))
     list("name" = "alr", "base_F" = F_alr, "base_K" = K_alr)
   }
 )
 
 expect_error({
-  whichTrans(rice_yields[1:10, ]$TEMPERATURES)
+  CoDaImpact:::whichTrans(rice_yields[1:10, ]$TEMPERATURES)
 })
 
 # ---- alr_K2F ----------------------------------------------------------------
 expect_equal(
-  clrBase(3)[, -3] |>
-    alr_K2F(),
+  CoDaImpact:::alr_K2F(CoDaImpact:::clrBase(3)[, -3]),
   cbind(diag(2), -1),
   info = "F from K with ref = 3"
 )
 
 expect_equal(
-  clrBase(3)[, -2] |>
-    alr_K2F(),
+  CoDaImpact:::alr_K2F(CoDaImpact:::clrBase(3)[, -2]),
   cbind(c(1, 0), -1, c(0, 1)),
   info = "F from K with ref = 2"
 )
@@ -86,7 +87,7 @@ expect_equal(
       ilr(x, ilrBase(D = 3)[3:1, ])
     }
     tt <- election[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~
         lr2(cbind(Age_1839, Age_4064)) +
           lr3(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)) +
@@ -107,7 +108,7 @@ expect_equal(
       ilr(x, ilrBase(D = 3)[c(2, 1, 3), ])
     }
     tt <- election[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~
         lr2(cbind(Age_1839, Age_4064)) +
           lr3(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)) +
@@ -131,7 +132,7 @@ expect_equal(
       alr(x, ivar = 3)
     }
     tt <- election[1:20, ]
-    res1 <- transformationSummary(lm(
+    res1 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~
         lr2(cbind(Age_1839, Age_4064)) +
           lr3(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
@@ -150,7 +151,7 @@ expect_equal(
       alr(x, ivar = 2)
     }
     tt <- election[1:20, ]
-    res2 <- transformationSummary(lm(
+    res2 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~
         lr2(cbind(Age_1839, Age_4064)) +
           lr3(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)),
@@ -173,7 +174,7 @@ expect_equal(
       alr(x, ivar = 3)
     }
     tt <- election[1:20, ]
-    res1 <- transformationSummary(lm(
+    res1 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~
         lr2(cbind(Age_1839, Age_4064, Age_65plus)) +
           lr3(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)) +
@@ -193,7 +194,7 @@ expect_equal(
       alr(x, ivar = 2)
     }
     tt <- election[1:20, ]
-    res2 <- transformationSummary(lm(
+    res2 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~
         lr2(cbind(Age_1839, Age_4064, Age_65plus)) +
           lr3(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)) +
@@ -217,7 +218,7 @@ expect_equal(
       alr(x, ivar = 3)
     }
     tt <- election[1:20, ]
-    res1 <- transformationSummary(lm(
+    res1 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~
         lr2(cbind(Age_1839, Age_4064, Age_65plus)) +
           lr3(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)) +
@@ -237,7 +238,7 @@ expect_equal(
       alr(x, ivar = 2)
     }
     tt <- election[1:20, ]
-    res2 <- transformationSummary(lm(
+    res2 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~
         lr2(cbind(Age_1839, Age_4064, Age_65plus)) +
           lr3(cbind(Educ_BeforeHighschool, Educ_Highschool, Educ_Higher)) +
@@ -256,7 +257,7 @@ expect_equal(
       ilr(x)
     }
     tt <- election[1:20, ]
-    res1 <- transformationSummary(lm(
+    res1 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~ unemp_rate,
       data = tt
     ))
@@ -267,7 +268,7 @@ expect_equal(
       alr(x, ivar = 3)
     }
     tt <- election[1:20, ]
-    res2 <- transformationSummary(lm(
+    res2 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~ unemp_rate,
       data = tt
     ))
@@ -282,7 +283,7 @@ expect_equal(
       alr(x, ivar = 1)
     }
     tt <- election[1:20, ]
-    res1 <- transformationSummary(lm(
+    res1 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~ unemp_rate,
       data = tt
     ))
@@ -293,7 +294,7 @@ expect_equal(
       alr(x, ivar = 3)
     }
     tt <- election[1:20, ]
-    res2 <- transformationSummary(lm(
+    res2 <- CoDaImpact:::transformationSummary(lm(
       lr1(cbind(left, right, extreme_right)) ~ unemp_rate,
       data = tt
     ))
@@ -310,7 +311,7 @@ expect_equal(
       ilr(x, V)
     }
     tt <- rice_yields[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       YIELD ~ PRECIPITATION + lr(TEMPERATURES),
       data = tt
     ))
@@ -323,7 +324,7 @@ expect_equal(
       ilr(x, V)
     }
     tt <- rice_yields[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       YIELD ~ PRECIPITATION + lr(TEMPERATURES),
       data = tt
     ))
@@ -339,7 +340,7 @@ expect_equal(
       alr(x, ivar = 1)
     }
     tt <- rice_yields[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       YIELD ~ PRECIPITATION + lr(TEMPERATURES),
       data = tt
     ))
@@ -350,7 +351,7 @@ expect_equal(
       alr(x, ivar = 3)
     }
     tt <- rice_yields[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       YIELD ~ PRECIPITATION + lr(TEMPERATURES),
       data = tt
     ))
@@ -363,7 +364,7 @@ expect_equal(
   {
     lr <- compositions::ilr
     tt <- rice_yields[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       YIELD ~ PRECIPITATION + lr(TEMPERATURES),
       data = tt
     ))
@@ -372,7 +373,7 @@ expect_equal(
   {
     lr <- compositions::alr
     tt <- rice_yields[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       YIELD ~ PRECIPITATION + lr(TEMPERATURES),
       data = tt
     ))
@@ -384,7 +385,7 @@ expect_equal(
 expect_equivalent(
   {
     tt <- rice_yields[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
       data = tt,
       weights = 1:20
@@ -393,7 +394,7 @@ expect_equivalent(
   },
   {
     tt <- rice_yields[1:20, ]
-    res <- transformationSummary(lm(
+    res <- CoDaImpact:::transformationSummary(lm(
       YIELD ~ PRECIPITATION + ilr(TEMPERATURES),
       data = tt
     ))
