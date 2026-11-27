@@ -11,5 +11,6 @@
 ^CRAN-SUBMISSION$
 ^CLAUDE\.md$
 ^\.claude$
+^\.vscode$
 ^PRs$
 
